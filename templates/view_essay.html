@@ -1,0 +1,48 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+	</head>
+	<body>
+		<h1>iSanaysay - View Essay</h1>
+		<form role="form" action="" method="POST">
+		    {% csrf_token %}
+			<table class="table table-bordered table-striped">
+				<tbody>
+					<tr>
+						<th>Course Name</th>
+						<th>{{ essay.course }}</th>
+					</tr>
+					<tr>
+						<th>Essay Name</th>
+						<th>{{ essay.name }}</th>
+					</tr>
+					<tr>
+						<th>Essay Code</th>
+						<th>{{ essay.essay_code }}</th>
+					</tr>
+					<tr>
+						<th>Essay Content</th>
+						<th>{{ essay.content }}</th>
+					</tr>
+				</tbody>
+			</table><br/>
+			<h2> Mispelled Words</h2>
+			{% for words in mispelled_list %}
+				{% for x in words %}
+					{% if forloop.first %}
+
+					Mispelled Word: {{ x }}<br/>
+					{% endif %}
+					{% if forloop.last %}
+
+					Suggested Word/s: {{ x }}<br/><br/>
+					{% endif %}
+				{% endfor %}
+			{% endfor %}
+
+			<h2> Frequency of Words</h2>
+			Commond Words: {{ common_words }}<br/>
+			Unique Words: {{ unique_words }}
+		</form>
+	</body>
+</html>

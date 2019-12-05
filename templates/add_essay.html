@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+	</head>
+	<body>
+		<h1>iSanaysay - Add Essay</h1>
+		<form role="form" action="" method="POST">
+		    {% csrf_token %}
+			<table class="table table-bordered table-striped">
+				<tbody>
+					<tr>
+						<th>Course Name</th>
+						<th>{{ essay_form.course }}</th>
+					</tr>
+					<tr>
+						<th>Essay Name</th>
+						<th>{{ essay_form.name }}</th>
+					</tr>
+					<tr>
+						<th>Essay Code</th>
+						<th>{{ essay_form.essay_code }}</th>
+					</tr>
+					<tr>
+						<th>Essay Content</th>
+						<th>{{ essay_form.content }}</th>
+					</tr>
+				</tbody>
+			</table>
+			<button type="submit" class="btn btn-success">Save</button>
+		</form>
+	</body>
+</html>

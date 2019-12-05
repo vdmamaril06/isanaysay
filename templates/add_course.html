@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+	</head>
+	<body>
+		<h1>iSanaysay - Add Course</h1>
+		<form role="form" action="" method="POST">
+		    {% csrf_token %}
+			<table class="table table-bordered table-striped">
+				<tbody>
+					<tr>
+						<th>Course Name</th>
+						<th>{{ course_form.name }}</th>
+					</tr>
+					<tr>
+						<th>Course Code</th>
+						<th>{{ course_form.course_code }}</th>
+					</tr>
+					<tr>
+						<th>Course Description</th>
+						<th>{{ course_form.course_description }}</th>
+					</tr>
+				</tbody>
+			</table>
+			<button type="submit" class="btn btn-success">Save</button>
+		</form>
+	</body>
+</html>
