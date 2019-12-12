@@ -34,7 +34,7 @@ class Essay(models.Model):
     essay_code = models.CharField(verbose_name="Essay Code", max_length=100)
     content = models.CharField(verbose_name="Essay Content", max_length=3000)
     start_date_time = models.DateTimeField(auto_now_add=True)
-    end_date_time = models.DateTimeField()
+    end_date_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return "%s" % self.name
