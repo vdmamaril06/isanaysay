@@ -1,7 +1,6 @@
-<html>
-	<head>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-	</head>
+{% extends 'base.html' %}
+{% block title %}Add Courses{% endblock %}
+{% block content %}
 	<body>
 		<h1>iSanaysay - Add Course</h1>
 		<form role="form" action="" method="POST">
@@ -20,9 +19,14 @@
 						<th>Course Description</th>
 						<th>{{ course_form.course_description }}</th>
 					</tr>
+					<tr>
+						<th>Course End Date</th>
+						<th>{{ course_form.end_date }}</th>
+					</tr>
 				</tbody>
 			</table>
 			<button type="submit" class="btn btn-success">Save</button>
+			<a href="{% url 'view-courses' %}" class="btn btn-info">Back</a>  
 		</form>
 	</body>
-</html>
+{% endblock %}

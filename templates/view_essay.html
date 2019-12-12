@@ -1,7 +1,6 @@
-<html>
-	<head>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-	</head>
+{% extends 'base.html' %}
+{% block title %}Add Essay{% endblock %}
+{% block content %}
 	<body>
 		<h1>iSanaysay - View Essay</h1>
 		<form role="form" action="" method="POST">
@@ -44,5 +43,7 @@
 			Commond Words: {{ common_words }}<br/>
 			Unique Words: {{ unique_words }}
 		</form>
+		<a href="{% url 'view-essays' %}" class="btn btn-info">Back</a> 
 	</body>
-</html>
+
+{% endblock %}

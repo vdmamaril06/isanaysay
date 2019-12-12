@@ -12,7 +12,7 @@
 					<th>Course Name</th>
 					<th>Course Code</th>
 					<th>Course Description</th>
-					<th></th>
+					<th>Start Date</th>
 					<th></th>
 					<th></th>
 				</tr>
@@ -23,9 +23,7 @@
 					<td>{{ course.name }}</td>
 					<td>{{ course.course_code }}</td>
 					<td>{{ course.course_description }}</td>
-					<td>
-						<a href="" class="btn btn-info">View</a>
-					</td>
+					<td>{{ course.start_date }}</td>
 					<td>
 						<a href="{% url 'update-course' course.id %}" class="btn btn-primary">Update</a>
 					</td>

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Add Enrollment{% endblock %}
+{% block content %}
+	<body>
+		<h1>iSanaysay - Add Enrollment</h1>
+		<form role="form" action="" method="POST">
+		    {% csrf_token %}
+			<table class="table table-bordered table-striped">
+				<tbody>
+					<tr>
+						<th>Student Name</th>
+						<th>{{ enrollment_form.student.username }}</th>
+					</tr>
+					<tr>
+						<th>Course Name</th>
+						<th>{{ enrollment_form.course/name }}</th>
+					</tr>
+				</tbody>
+			</table>
+			<button type="submit" class="btn btn-success">Save</button>
+			<a href="{% url 'view-enrollments' %}" class="btn btn-info">Back</a> 
+		</form>
+	</body>
+
+{% endblock %}

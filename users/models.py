@@ -22,6 +22,8 @@ class Course(models.Model):
     name = models.CharField(verbose_name="Course Name", max_length=128)
     course_code = models.CharField(verbose_name="Course Code", max_length=128)
     course_description = models.CharField(verbose_name="Course Code", max_length=500)
+    start_date = models.DateField(auto_now_add=True)
+    end_date = models.DateField()
 
     def __str__(self):
         return "%s" % self.course_code
@@ -31,6 +33,8 @@ class Essay(models.Model):
     name = models.CharField(verbose_name="Essay Name", max_length=300)
     essay_code = models.CharField(verbose_name="Essay Code", max_length=100)
     content = models.CharField(verbose_name="Essay Content", max_length=3000)
+    start_date_time = models.DateTimeField(auto_now_add=True)
+    end_date_time = models.DateTimeField()
 
     def __str__(self):
         return "%s" % self.name
@@ -41,3 +45,7 @@ class Word(models.Model):
 
     def __str__(self):
         return "%s" % self.essay
+
+class Enrollment(models.Model):
+    course = models.ForeignKey(Course, verbose_name="Course", on_delete = models.CASCADE)
+    student = models.ForeignKey(CustomUser, verbose_name="Student", on_delete = models.CASCADE)
