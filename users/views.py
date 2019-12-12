@@ -19,19 +19,44 @@ class SignUpView(CreateView):
 
 def add_course(request):
     template = "add_course.html"
-
     if request.method == "POST":
-        
         form = CourseForm(request.POST)
 
         if form.is_valid():
             form.save()
 
-            return HttpResponseRedirect(reverse_lazy('home'))
+            return HttpResponseRedirect(reverse_lazy('view-course'))
     else:
         context = {
             'course_form': CourseForm(),
         }
+    return render(request, template, context)
+
+def delete_course(request, course_id):
+    course = Course.objects.get(id=int(course_id))
+    course.delete()
+    return HttpResponseRedirect(reverse_lazy('view-courses'))
+
+def update_course(request, course_id):
+    template = "update_course.html"
+    course = Course.objects.get(id=int(course_id))
+    if request.method == "POST":
+        form = CourseForm(request.POST, instance=course)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse_lazy('view-courses'))
+    else:
+        context = {
+            'course_form': CourseForm(instance=course),
+        }
+    return render(request, template, context)
+
+def view_courses(request):
+    template = "list_course.html"
+    courses = Course.objects.all()
+    context = {
+        'courses': courses,
+    }
     return render(request, template, context)
 
 def add_essay(request):
@@ -50,6 +75,34 @@ def add_essay(request):
             'essay_form': EssayForm(),
         }
     return render(request, template, context)
+
+def view_essays(request):
+    template = "list_essay.html"
+    essays = Essay.objects.all()
+    context = {
+        'essays': essays,
+    }
+    return render(request, template, context)
+
+def delete_essay(request, essay_id):
+    essay = Essay.objects.get(id=int(essay_id))
+    essay.delete()
+    return HttpResponseRedirect(reverse_lazy('view-essays'))
+
+def update_essay(request, essay_id):
+    template = "update_essay.html"
+    essay = Essay.objects.get(id=int(essay_id))
+    if request.method == "POST":
+        form = EssayForm(request.POST, instance=essay)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse_lazy('view-essays'))
+    else:
+        context = {
+            'essay_form': EssayForm(instance=essay),
+        }
+    return render(request, template, context)
+
 
 def view_essay(request,essay_id):
 	template = "view_essay.html"
@@ -80,3 +133,20 @@ def view_essay(request,essay_id):
 		'unique_words' : unique_words,
 	}
 	return render(request, template, context)
+
+def add_word(request):
+    template = "add_word.html"
+
+    if request.method == "POST":
+        
+        form = WordForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return HttpResponseRedirect(reverse_lazy('home'))
+    else:
+        context = {
+            'word_form': WordForm(),
+        }
+    return render(request, template, context)

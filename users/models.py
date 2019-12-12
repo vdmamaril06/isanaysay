@@ -33,4 +33,11 @@ class Essay(models.Model):
     content = models.CharField(verbose_name="Essay Content", max_length=3000)
 
     def __str__(self):
-        return "%s" % self.course
+        return "%s" % self.name
+
+class Word(models.Model):
+    essay = models.ForeignKey(Essay, verbose_name="Essay", on_delete = models.CASCADE)
+    word = models.CharField(verbose_name="word", max_length=100)
+
+    def __str__(self):
+        return "%s" % self.essay

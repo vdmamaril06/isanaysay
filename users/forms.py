@@ -21,7 +21,13 @@ class CourseForm(forms.ModelForm):
 		fields = '__all__'
 
 class EssayForm(forms.ModelForm):
-
+	content = forms.CharField(widget=forms.Textarea(attrs={"rows":20, "cols":120}))
 	class Meta:
 		model = Essay
+		fields = '__all__'
+
+class WordForm(forms.ModelForm):
+
+	class Meta:
+		model = Word
 		fields = '__all__'
