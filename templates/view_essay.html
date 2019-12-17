@@ -3,8 +3,6 @@
 {% block content %}
 	<body>
 		<h1>iSanaysay - View Essay</h1>
-		<form role="form" action="" method="POST">
-		    {% csrf_token %}
 			<table class="table table-bordered table-striped">
 				<tbody>
 					<tr>
@@ -20,29 +18,23 @@
 						<th>{{ essay.essay_code }}</th>
 					</tr>
 					<tr>
-						<th>Essay Content</th>
-						<th>{{ essay.content }}</th>
+						<th>Maximum Length</th>
+						<th>{{ essay.maximum_length }}</th>
+					</tr>
+					<tr>
+						<th>Duration</th>
+						<th>{{ essay.duration }}</th>
+					</tr>
+					<tr>
+						<th>Start Date</th>
+						<th>{{ essay.start_date_time }}</th>
+					</tr>
+					<tr>
+						<th>End Date</th>
+						<th>{{ essay.end_date_time }}</th>
 					</tr>
 				</tbody>
 			</table><br/>
-			<h2> Mispelled Words</h2>
-			{% for words in mispelled_list %}
-				{% for x in words %}
-					{% if forloop.first %}
-
-					Mispelled Word: {{ x }}<br/>
-					{% endif %}
-					{% if forloop.last %}
-
-					Suggested Word/s: {{ x }}<br/><br/>
-					{% endif %}
-				{% endfor %}
-			{% endfor %}
-
-			<h2> Frequency of Words</h2>
-			Commond Words: {{ common_words }}<br/>
-			Unique Words: {{ unique_words }}
-		</form>
 		<a href="{% url 'view-essays' %}" class="btn btn-info">Back</a> 
 	</body>
 

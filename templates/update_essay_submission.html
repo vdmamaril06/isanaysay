@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Add Essay{% endblock %}
+{% block content %}
+	<body>
+		<h1>iSanaysay - Add Essay Submission</h1>
+		<form role="form" action="" method="POST">
+		    {% csrf_token %}
+			<table class="table table-bordered table-striped">
+				<tbody>
+					<tr>
+						<th>Essay Name</th>
+						<th>{{ essay_submission_form.essay }}</th>
+					</tr>
+					<tr>
+						<th>Student Name</th>
+						<th>{{ essay_submission_form.student }}</th>
+					</tr>
+					<tr>
+						<th>Content</th>
+						<th>{{ essay_submission_form.content }}</th>
+					</tr>
+				</tbody>
+			</table>
+			<button type="submit" class="btn btn-success">Save</button>
+			<a href="{% url 'view-essays' %}" class="btn btn-info">Back</a> 
+		</form>
+	</body>
+
+{% endblock %}

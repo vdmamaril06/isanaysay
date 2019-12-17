@@ -21,10 +21,8 @@ def add_course(request):
     template = "add_course.html"
     if request.method == "POST":
         form = CourseForm(request.POST)
-
         if form.is_valid():
             form.save()
-
             return HttpResponseRedirect(reverse_lazy('view-courses'))
     else:
         context = {
@@ -54,8 +52,10 @@ def update_course(request, course_id):
 def view_courses(request):
     template = "list_course.html"
     courses = Course.objects.all()
+    enrollments = Enrollment.objects.all()
     context = {
         'courses': courses,
+        'enrollments': enrollments,
     }
     return render(request, template, context)
 
@@ -69,7 +69,7 @@ def add_essay(request):
         if form.is_valid():
             form.save()
 
-            return HttpResponseRedirect(reverse_lazy('home'))
+            return HttpResponseRedirect(reverse_lazy('view_essays'))
     else:
         context = {
             'essay_form': EssayForm(),
@@ -192,3 +192,79 @@ def add_word(request):
             'word_form': WordForm(),
         }
     return render(request, template, context)
+
+def add_essay_submission(request):
+    template = "add_essay_submission.html"
+
+    if request.method == "POST":
+        
+        form = EssaySubmissionForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return HttpResponseRedirect(reverse_lazy('view-essay-submissions'))
+    else:
+        context = {
+            'essay_submission_form': EssaySubmissionForm(),
+        }
+    return render(request, template, context)
+
+def view_essay_submissions(request):
+    template = "list_essay_submission.html"
+    essay_submissions = EssaySubmission.objects.all()
+    context = {
+        'essay_submissions': essay_submissions,
+    }
+    return render(request, template, context)
+
+def delete_essay_submission(request, essay_submission_id):
+    essay_submission = Essay.objects.get(id=int(essay_submission_id))
+    essay_submission.delete()
+    return HttpResponseRedirect(reverse_lazy('view-essay-submissions'))
+
+def update_essay_submission(request, essay_submission_id):
+    template = "update_essay_submission.html"
+    essay_submission = EssaySubmission.objects.get(id=int(essay_submission_id))
+    if request.method == "POST":
+        form = EssayForm(request.POST, instance=essay_submission)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse_lazy('view-essay-submissions'))
+    else:
+        context = {
+            'essay_submission_form': EssaySubmissionForm(instance=essay_submission),
+        }
+    return render(request, template, context)
+
+
+def view_essay_submission(request,essay_submission_id):
+	template = "view_essay_submission.html"
+	essay_submission = EssaySubmission.objects.get(id=int(essay_submission_id))
+
+	spell = SpellChecker()
+	# find those words that may be misspelled
+	misspelled = spell.unknown(essay_submission.content.split())
+	mispelled_list = []
+	for word in misspelled:
+		current_list = [word,spell.correction(word),spell.candidates(word)]
+		mispelled_list.append(current_list)
+
+	complete_text = essay_submission.content
+	complete_doc = nlp(complete_text)
+	# Remove stop words and punctuation symbols
+	words = [token.text for token in complete_doc
+	         if not token.is_stop and not token.is_punct]
+	word_freq = Counter(words)
+	# 5 commonly occurring words with their frequencies
+	common_words = word_freq.most_common(5)
+
+	# Unique words
+	unique_words = [word for (word, freq) in word_freq.items() if freq == 1]
+	context = {
+		'essay_submission': essay_submission,
+		'mispelled_list': mispelled_list,
+		'common_words': common_words,
+		'unique_words' : unique_words,
+	}
+	return render(request, template, context)

@@ -11,6 +11,10 @@
 				<tr>
 					<th>Course Name</th>
 					<th>Essay Name</th>
+					<th>Maximum Length</th>
+					<th>Duration</th>
+					<th>Start Date</th>
+					<th>End Date</th>
 					<th></th>
 					<th></th>
 					<th></th>
@@ -21,6 +25,10 @@
 				<tr>
 					<td>{{ essay.course.name }}</td>
 					<td>{{ essay.name }}</td>
+					<td>{{ essay.maximum_length }}</td>
+					<td>{{ essay.duration }}</td>
+					<td>{{ essay.start_date_time }}</td>
+					<td>{{ essay.end_date_time }}</td>
 					<td>
 						<a href="{% url 'view-essay' essay.id %}" class="btn btn-info">View</a>
 					</td>

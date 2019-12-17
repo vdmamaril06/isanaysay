@@ -16,7 +16,7 @@ class CustomUser(AbstractUser):
     isStudent = models.CharField(max_length=1,choices=isStudent_Choices, default='S', verbose_name="Student or Teacher")
 
     def __str__(self):
-        return self.username
+        return self.first_name + " " + self.middle_name + " " + self.last_name
 
 class Course(models.Model):
     name = models.CharField(verbose_name="Course Name", max_length=128)
@@ -32,12 +32,19 @@ class Essay(models.Model):
     course = models.ForeignKey(Course, verbose_name="Course", on_delete = models.CASCADE)
     name = models.CharField(verbose_name="Essay Name", max_length=300)
     essay_code = models.CharField(verbose_name="Essay Code", max_length=100)
-    content = models.CharField(verbose_name="Essay Content", max_length=3000)
-    start_date_time = models.DateTimeField(auto_now_add=True)
-    end_date_time = models.DateTimeField(auto_now_add=True)
+    maximum_length = models.IntegerField(verbose_name="Maximum Length")
+    start_date_time = models.DateTimeField()
+    end_date_time = models.DateTimeField()
+    duration = models.IntegerField(verbose_name="Duration")
 
     def __str__(self):
         return "%s" % self.name
+
+class EssaySubmission(models.Model):
+    essay = models.ForeignKey(Essay, verbose_name="Essay", on_delete = models.CASCADE)
+    student = models.ForeignKey(CustomUser, verbose_name="Student", on_delete = models.CASCADE)
+    content = models.CharField(verbose_name="Essay Content", max_length=3000)
+    submitted_date = models.DateTimeField(auto_now_add=True)
 
 class Word(models.Model):
     essay = models.ForeignKey(Essay, verbose_name="Essay", on_delete = models.CASCADE)

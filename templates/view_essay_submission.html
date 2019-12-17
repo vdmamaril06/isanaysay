@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}View Essay{% endblock %}
+{% block content %}
+	<body>
+		<h1>iSanaysay - View Essay Submission</h1>
+			<table class="table table-bordered table-striped">
+				<tbody>
+					<tr>
+						<th>Course Name</th>
+						<th>{{ essay_submission.essay.course }}</th>
+					</tr>
+					<tr>
+						<th>Essay Name</th>
+						<th>{{ essay_submission.essay }}</th>
+					</tr>
+					<tr>
+						<th>Essay Code</th>
+						<th>{{ essay_submission.essay.essay_code }}</th>
+					</tr>
+					<tr>
+						<th>Essay Content</th>
+						<th>{{ essay_submission.content }}</th>
+					</tr>
+				</tbody>
+			</table><br/>
+			<h2> Mispelled Words</h2>
+			{% for words in mispelled_list %}
+				{% for x in words %}
+					{% if forloop.first %}
+
+					Mispelled Word: {{ x }}<br/>
+					{% endif %}
+					{% if forloop.last %}
+
+					Suggested Word/s: {{ x }}<br/><br/>
+					{% endif %}
+				{% endfor %}
+			{% endfor %}
+
+			<h2> Frequency of Words</h2>
+			Commond Words: {{ common_words }}<br/>
+			Unique Words: {{ unique_words }}<br/><br/>
+		<a href="{% url 'view-essays' %}" class="btn btn-info">Back</a> 
+	</body>
+
+{% endblock %}

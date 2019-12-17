@@ -13,8 +13,9 @@
 					<th>Course Code</th>
 					<th>Course Description</th>
 					<th>Start Date</th>
-					<th></th>
-					<th></th>
+					<th>Enrollment List</th>
+					<th>Update Course</th>
+					<th>Delete Course</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -24,6 +25,9 @@
 					<td>{{ course.course_code }}</td>
 					<td>{{ course.course_description }}</td>
 					<td>{{ course.start_date }}</td>
+					<td>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal{{ course.id }}">Enrollments</button>
+					</td>
 					<td>
 						<a href="{% url 'update-course' course.id %}" class="btn btn-primary">Update</a>
 					</td>
@@ -38,4 +42,41 @@
 				{% endfor %}
 			</tbody>
 		</table>
+<!-- Trigger the modal with a button -->
+  
+
+				{% for course in courses %}
+  <!-- Modal -->
+  <div class="modal fade" id="myModal{{course.id}}" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">{{course.name}}</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>List of Enrollees</p>
+          <ol>
+          	{% with no_enrollees="True" %}
+          	{% for enrollment in enrollments %}
+          		{% if enrollment.course.id == course.id %}
+          			{% for no_enrollees in enrollments %}
+          			{% endfor %}
+					<li>{{ enrollment.student }}</li>
+				{% endif %}
+			{% endfor %}
+		</ol>
+			{% endwith %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  {% endfor %}
+				
 {% endblock %}
