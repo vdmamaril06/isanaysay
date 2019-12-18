@@ -23,10 +23,9 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ('username', 'email', 'first_name', 'middle_name', 'last_name', 'id_number','isStudent')
 
 class CustomUserChangeForm(UserChangeForm):
-
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'first_name', 'middle_name', 'last_name', 'id_number','isStudent')
+        fields = ('email', 'first_name', 'middle_name', 'last_name', 'id_number')
 
 class CourseForm(forms.ModelForm):
 	end_date = forms.DateField(label='What is the course end date?', widget=forms.SelectDateWidget)
@@ -36,6 +35,7 @@ class CourseForm(forms.ModelForm):
 
 class EssayForm(forms.ModelForm):
 #	content = forms.CharField(widget=forms.Textarea(attrs={"rows":20, "cols":120}))
+	essay_description = forms.CharField(widget=forms.Textarea(attrs={"rows":10, "cols":50}))
 	start_date_time = forms.DateTimeField(label='What is the essay start date?', widget=forms.SelectDateWidget)
 	end_date_time = forms.DateTimeField(label='What is the essay end date?', widget=forms.SelectDateWidget)
 
@@ -48,6 +48,9 @@ class EssaySubmissionForm(forms.ModelForm):
 	class Meta:
 		model = EssaySubmission
 		fields = '__all__'
+	def __init__(self, *args, **kwargs):
+		super(EssaySubmissionForm, self).__init__(*args, **kwargs)
+		self.fields['student'].queryset = CustomUser.objects.filter(isStudent='S')
 
 class EnrollmentForm(forms.ModelForm):
 	class Meta:

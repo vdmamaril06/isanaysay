@@ -138,10 +138,8 @@ def add_enrollment(request):
     template = "add_enrollment.html"
     if request.method == "POST":
         form = EnrollmentForm(request.POST)
-
         if form.is_valid():
             form.save()
-
             return HttpResponseRedirect(reverse_lazy('view-enrollments'))
     else:
         context = {
@@ -268,3 +266,19 @@ def view_essay_submission(request,essay_submission_id):
 		'unique_words' : unique_words,
 	}
 	return render(request, template, context)
+
+def update_profile(request, user_id):
+    template = "update_profile.html"
+    user = CustomUser.objects.get(id=int(user_id))
+    print(user)
+    if request.method == "POST":
+        form = CustomUserChangeForm(request.POST, instance=user)
+        print(form.is_valid())
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse_lazy('home'))
+    else:
+        context = {
+            'update_profile_form': CustomUserChangeForm(instance=user),
+        }
+    return render(request, template, context)

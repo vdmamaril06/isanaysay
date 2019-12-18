@@ -12,6 +12,10 @@
 						<th>{{ essay_submission_form.essay }}</th>
 					</tr>
 					<tr>
+						<th>Essay Name</th>
+						<th>{{ essay_submission_form.essay.description }}</th>
+					</tr>
+					<tr>
 						<th>Student Name</th>
 						<th>{{ essay_submission_form.student }}</th>
 					</tr>
@@ -22,7 +26,7 @@
 				</tbody>
 			</table>
 			<button type="submit" class="btn btn-success">Save</button>
-			<a href="{% url 'view-essays' %}" class="btn btn-info">Back</a> 
+			<a href="{% url 'view-essay-submissions' %}" class="btn btn-info">Back</a> 
 		</form>
 	</body>
 

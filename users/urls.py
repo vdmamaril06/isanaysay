@@ -24,6 +24,6 @@ urlpatterns = [
     url(r'^add_enrollment$', add_enrollment, name='add-enrollment'),
     url(r'^update_enrollment/(?P<enrollment_id>\d+)$', update_enrollment, name='update-enrollment'),
     url(r'^delete_enrollment/(?P<enrollment_id>\d+)$', delete_enrollment, name='delete-enrollment'),
-    url(r'^view_essay/(?P<essay_id>\d+)$', view_essay, name='view-essay'),
+    url(r'^update_profile/(?P<user_id>\d+)$', update_profile, name='update-profile'),
     url(r'^add_word$', add_word, name='add-word'),
 ]

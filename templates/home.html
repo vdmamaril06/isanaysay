@@ -10,19 +10,12 @@
     <div class="jumbotron" style="background-color:#F3CD05">
       <div class="container">
 {% if user.is_authenticated %}
-{% if user.isStudent == "S" %}
-        <h1 class="display-3">Hello, student {{ user.username }}!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+        <h1 class="display-3">Hello, {{ user.username }}!</h1>
+        <p>The iSanaysay web application will serve as an essay grading system for both student and teachers.</p>
         <p><a class="btn btn-primary btn-lg" href="{% url 'logout' %}" role="button">Logout</a></p>
 {% else %}
-        <h1 class="display-3">Hello, teacher {{ user.username }}!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" href="{% url 'logout' %}" role="button">Logout</a></p>
-{% endif %}
-{% else %}
-        <h1 class="display-3">Hello, user!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-  <p>You are not logged in</p>
+        <h1 class="display-3">Welcome to iSanaysay!</h1>
+        <p>The iSanaysay web application will serve as an essay grading system for both student and teachers.</p>
         <p><a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Login here »</a></p>
 {% endif %}
       </div>
@@ -32,25 +25,35 @@
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-md-4">
-          <h2>Heading</h2>
+          <h2>Spelling Checking</h2>
           <img style="height:200px;width:300px;" src="{% static 'sunset1.jpeg' %}" alt="" class="img-thumbnail">
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+          <p>This feature is capable of detecting any spelling error found on the essay of the student. </p>
         </div>
         <div class="col-md-4">
-          <h2>Heading</h2>
+          <h2>Grammar Checking</h2>
           <img style="height:200px;width:300px;" src="{% static 'sunset2.jpg' %}" alt="" class="img-thumbnail">
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+          <p>This application has a grammar checking feature which automatically checks the grammar of the essay in order to know the consistency. </p>
+          <!--<p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>-->
        </div>
         <div class="col-md-4">
-          <h2>Heading</h2>
+          <h2>Content of the Essay</h2>
           <img style="height:200px;width:300px;" src="{% static 'sunset3.jpg' %}" alt="" class="img-thumbnail">
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+          <p>This feature is capable to know whether the content of the essay is on the topic given by the teacher through keywords that is relatively found on any passage of the essay’s content.</p>
         </div>
       </div>
 
+      <hr>
+    <div class="container">
+      <!-- Example row of columns -->
+      <div style="text-align: center" class="row">
+        <div style="display: inline-block" class="col-md-12">
+          <h2> Contact Information </h2>
+          <p> <b>Sheila Mae Dela Fuente</b>: qsheidelafuente@gmail.com <br/>
+          <b>Joshua Jamela</b>: josh.jamela@gmail.com <br/>
+          <b>Charlotte Raquel</b>: charlotteraquel27@gmail.com </p>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.5159968983335!2d121.05930811441647!3d14.626625889785942!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b796aecb8763%3A0xaa026ea7350f82e7!2sTechnological%20Institute%20of%20the%20Philippines%2C%20Inc.!5e0!3m2!1sen!2sph!4v1576630703208!5m2!1sen!2sph" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+        </div>
+      </div>
       <hr>
 
       <footer>
