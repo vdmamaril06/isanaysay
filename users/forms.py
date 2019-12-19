@@ -45,6 +45,8 @@ class EssayForm(forms.ModelForm):
 
 class EssaySubmissionForm(forms.ModelForm):
 	content = forms.CharField(widget=forms.Textarea(attrs={"rows":20, "cols":120}))
+	submitted_date = forms.DateTimeField(label='What is the essay submission date?', widget=forms.SelectDateWidget)
+
 	class Meta:
 		model = EssaySubmission
 		fields = '__all__'

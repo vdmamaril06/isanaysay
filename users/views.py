@@ -112,30 +112,8 @@ def update_essay(request, essay_id):
 def view_essay(request,essay_id):
 	template = "view_essay.html"
 	essay = Essay.objects.get(id=int(essay_id))
-	spell = SpellChecker()
-	# find those words that may be misspelled
-	misspelled = spell.unknown(essay.content.split())
-	mispelled_list = []
-	for word in misspelled:
-		current_list = [word,spell.correction(word),spell.candidates(word)]
-		mispelled_list.append(current_list)
-
-	complete_text = essay.content
-	complete_doc = nlp(complete_text)
-	# Remove stop words and punctuation symbols
-	words = [token.text for token in complete_doc
-	         if not token.is_stop and not token.is_punct]
-	word_freq = Counter(words)
-	# 5 commonly occurring words with their frequencies
-	common_words = word_freq.most_common(5)
-
-	# Unique words
-	unique_words = [word for (word, freq) in word_freq.items() if freq == 1]
 	context = {
 		'essay': essay,
-		'mispelled_list': mispelled_list,
-		'common_words': common_words,
-		'unique_words' : unique_words,
 	}
 	return render(request, template, context)
 
