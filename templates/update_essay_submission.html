@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
-{% block title %}Add Essay{% endblock %}
+{% block title %}Update Essay{% endblock %}
 {% block content %}
 	<div id="parent"><div id="child"><br/><br/>
-		<h1>iSanaysay - Add Essay Submission</h1>
+		<h1>iSanaysay - Update Essay Submission</h1>
 		<form role="form" action="" method="POST">
 		    {% csrf_token %}
 			<table class="table table-bordered table-striped">
@@ -18,6 +18,30 @@
 					<tr>
 						<th>Content</th>
 						<th>{{ essay_submission_form.content }}</th>
+					</tr>
+					<tr>
+						<th>is Checked Already?</th>
+						<th>{{ essay_submission_form.isChecked }}</th>
+					</tr>
+					<tr>
+						<th>Submitted Date</th>
+						<th>{{ essay_submission_form.submitted_date }}</th>
+					</tr>
+					<tr>
+						<th>Grammar Score</th>
+						<th>{{ essay_submission_form.grammar_score }}</th>
+					</tr>
+					<tr>
+						<th>Spelling Score</th>
+						<th>{{ essay_submission_form.spelling_score }}</th>
+					</tr>
+					<tr>
+						<th>Content Score</th>
+						<th>{{ essay_submission_form.content_score }}</th>
+					</tr>
+					<tr>
+						<th>Ambiguity Score</th>
+						<th>{{ essay_submission_form.ambiguity_score  }}</th>
 					</tr>
 				</tbody>
 			</table>

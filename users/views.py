@@ -201,7 +201,7 @@ def view_essay_submissions(request):
     return render(request, template, context)
 
 def delete_essay_submission(request, essay_submission_id):
-    essay_submission = Essay.objects.get(id=int(essay_submission_id))
+    essay_submission = EssaySubmission.objects.get(id=int(essay_submission_id))
     essay_submission.delete()
     return HttpResponseRedirect(reverse_lazy('view-essay-submissions'))
 
@@ -209,7 +209,7 @@ def update_essay_submission(request, essay_submission_id):
     template = "update_essay_submission.html"
     essay_submission = EssaySubmission.objects.get(id=int(essay_submission_id))
     if request.method == "POST":
-        form = EssayForm(request.POST, instance=essay_submission)
+        form = EssaySubmissionForm(request.POST, instance=essay_submission)
         if form.is_valid():
             form.save()
             #return HttpResponseRedirect(reverse_lazy('view-essay-submissions'))
