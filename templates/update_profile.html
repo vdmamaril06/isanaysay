@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Update Profile{% endblock %}
 {% block content %}
-	<body>
+	<div id="parent"><div id="child"><br/><br/>
 		<h1>iSanaysay - Update Profile</h1>
 		<form role="form" action="" method="POST">
 		    {% csrf_token %}
@@ -32,5 +32,5 @@
 			<button type="submit" class="btn btn-success">Save</button>
 			<a href="{% url 'home' %}" class="btn btn-info">Back</a> 
 		</form>
-	</body>
+	</div></div>
 {% endblock %}

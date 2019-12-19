@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Add Essay{% endblock %}
 {% block content %}
-	<body>
+	<div id="parent"><div id="child"><br/><br/>
 		<h1>iSanaysay - Add Essay Submission</h1>
 		<form role="form" action="" method="POST">
 		    {% csrf_token %}
@@ -28,6 +28,6 @@
 			<button type="submit" class="btn btn-success">Save</button>
 			<a href="{% url 'view-essay-submissions' %}" class="btn btn-info">Back</a> 
 		</form>
-	</body>
+	</div></div>
 
 {% endblock %}

@@ -2,9 +2,11 @@ from django.urls import path
 from .views import *
 from django.contrib.auth import views
 from django.conf.urls import url
+from django.urls import reverse_lazy
 
 urlpatterns = [
     path('signup/', SignUpView.as_view(), name='signup'),
+    path('password/change/', views.PasswordChangeView.as_view(template_name='password_change.html',success_url=reverse_lazy('home')), name='password-change'),
     path('login/',views.LoginView.as_view(template_name="registration/login.html",authentication_form=UserLoginForm),name='login'),
     url(r'^view_courses$', view_courses, name='view-courses'),
     url(r'^add_course$', add_course, name='add-course'),

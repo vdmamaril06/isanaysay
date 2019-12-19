@@ -11,13 +11,36 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <style>
+  	.navbar-light .navbar-brand {
+    	color: white;
+	}
+	.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+    	color: white;
+	}
+	.navbar-light .navbar-nav .nav-link {
+    	color: rgba(255,255,255,.5);
+	}
+	#parent {
+	   display: table;
+	   width: 100%;
+	}
+	#child {
+	   display: table-cell;
+	   text-align: center;
+	   vertical-align: middle;
+	}
+	.jumbotron {
+		border-radius: 0rem;
+	}
+  </style>
   <meta charset="utf-8">
 	{% block style %} {% endblock %}
   <title>{% block title %}iSanaysay Application{% endblock %}</title>
 
       {% if user.is_authenticated %}
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">iSanaysay<!--<img style="height:100px;width:200px;" src="{% static 'isanaysay_logo.png' %}"/>--></a>
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#36688D;border-color: black;">
+  <a class="navbar-brand" href="{% url 'home' %}">iSanaysay<!--<img style="height:100px;width:200px;" src="{% static 'isanaysay_logo.png' %}"/>--></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -44,6 +67,9 @@
         <a class="nav-link" href="{% url 'view-essay-submissions' %}">Essay Submissions</a>
       </li>
       {% endif %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'password-change' %}">Change Password</a>
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'update-profile' user.id %}">Profile</a>
       </li>

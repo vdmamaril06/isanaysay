@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}My Courses{% endblock %}
 {% block content %}
-	<body>
+	<div id="parent"><div id="child"><br/><br/>
 
 		<h1>List of Courses</h1>
 		<a href="{% url 'add-course' %}" class="btn btn-success">Add Course</a> <br /><br />
@@ -37,7 +37,7 @@
 				</tr>
 				{% empty %}
 				<tr>
-					<td colspan=6>No Courses yet</td>
+					<td colspan=7>No Courses yet</td>
 				</tr>
 				{% endfor %}
 			</tbody>
@@ -78,5 +78,5 @@
     </div>
   </div>
   {% endfor %}
-				
+	</div></div>			
 {% endblock %}

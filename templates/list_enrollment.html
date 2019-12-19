@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}My Enrollments{% endblock %}
 {% block content %}
-	<body>
-
+	<div id="parent"><div id="child"><br/><br/>
 		<h1>List of Enrollments</h1>
 		<a href="{% url 'add-enrollment' %}" class="btn btn-success">Add Enrollment</a> <br /><br />
 
@@ -36,4 +35,5 @@
 				{% endfor %}
 			</tbody>
 		</table>
+	</div></div>
 {% endblock %}

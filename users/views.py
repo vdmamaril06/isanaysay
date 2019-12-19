@@ -42,7 +42,9 @@ def update_course(request, course_id):
         form = CourseForm(request.POST, instance=course)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse_lazy('view-courses'))
+            context = {
+                'course_form': CourseForm(instance=course),
+            }
     else:
         context = {
             'course_form': CourseForm(instance=course),
@@ -69,7 +71,7 @@ def add_essay(request):
         if form.is_valid():
             form.save()
 
-            return HttpResponseRedirect(reverse_lazy('view_essays'))
+            return HttpResponseRedirect(reverse_lazy('view-essays'))
     else:
         context = {
             'essay_form': EssayForm(),
@@ -96,7 +98,10 @@ def update_essay(request, essay_id):
         form = EssayForm(request.POST, instance=essay)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse_lazy('view-essays'))
+            #return HttpResponseRedirect(reverse_lazy('view-essays'))
+            context = {
+                'essay_form': EssayForm(instance=essay),
+            }
     else:
         context = {
             'essay_form': EssayForm(instance=essay),
@@ -159,7 +164,10 @@ def update_enrollment(request, enrollment_id):
         form = EnrollmentForm(request.POST, instance=enrollment)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse_lazy('view-enrollments'))
+            #return HttpResponseRedirect(reverse_lazy('view-enrollments'))
+            context = {
+                'enrollment_form': EnrollmentForm(instance=enrollment),
+            }
     else:
         context = {
             'enrollment_form': EnrollmentForm(instance=enrollment),
@@ -183,7 +191,6 @@ def add_word(request):
 
         if form.is_valid():
             form.save()
-
             return HttpResponseRedirect(reverse_lazy('home'))
     else:
         context = {
@@ -200,7 +207,6 @@ def add_essay_submission(request):
 
         if form.is_valid():
             form.save()
-
             return HttpResponseRedirect(reverse_lazy('view-essay-submissions'))
     else:
         context = {
@@ -228,7 +234,10 @@ def update_essay_submission(request, essay_submission_id):
         form = EssayForm(request.POST, instance=essay_submission)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse_lazy('view-essay-submissions'))
+            #return HttpResponseRedirect(reverse_lazy('view-essay-submissions'))
+            context = {
+                'essay_submission_form': EssaySubmissionForm(instance=essay_submission),
+            }
     else:
         context = {
             'essay_submission_form': EssaySubmissionForm(instance=essay_submission),
@@ -276,7 +285,10 @@ def update_profile(request, user_id):
         print(form.is_valid())
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse_lazy('home'))
+            #return HttpResponseRedirect(reverse_lazy('home'))
+            context = {
+                'update_profile_form': CustomUserChangeForm(instance=user),
+            }
     else:
         context = {
             'update_profile_form': CustomUserChangeForm(instance=user),

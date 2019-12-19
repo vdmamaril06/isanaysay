@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}My Essays{% endblock %}
 {% block content %}
-	<body>
+	<div id="parent"><div id="child"><br/><br/>
 
 		<h1>List of Essays</h1>
 		<a href="{% url 'add-essay' %}" class="btn btn-success">Add Essay</a> <br /><br />
@@ -41,9 +41,10 @@
 				</tr>
 				{% empty %}
 				<tr>
-					<td colspan=6>No Essays yet</td>
+					<td colspan=9>No Essays yet</td>
 				</tr>
 				{% endfor %}
 			</tbody>
 		</table>
+		</div></div>
 {% endblock %}

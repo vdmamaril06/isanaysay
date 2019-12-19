@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Add Essay{% endblock %}
 {% block content %}
-	<body>
+	<div id="parent"><div id="child"><br/><br/>
 		<h1>iSanaysay - View Essay</h1>
 			<table class="table table-bordered table-striped">
 				<tbody>
@@ -36,6 +36,6 @@
 				</tbody>
 			</table><br/>
 		<a href="{% url 'view-essays' %}" class="btn btn-info">Back</a> 
-	</body>
+	</div></div>
 
 {% endblock %}
