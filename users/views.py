@@ -52,11 +52,13 @@ def update_course(request, course_id):
     return render(request, template, context)
 
 def view_courses(request):
+    print(request.user.id)
     template = "list_course.html"
-    courses = Course.objects.all()
+##    courses = Course.objects.all()
+    assignments = Assignment.objects.select_related('teacher','course')
     enrollments = Enrollment.objects.all()
     context = {
-        'courses': courses,
+        'assignments': assignments,
         'enrollments': enrollments,
     }
     return render(request, template, context)
