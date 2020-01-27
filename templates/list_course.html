@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% block title %}My Courses{% endblock %}
 {% block content %}
-	<div id="parent"><div id="child"><br/><br/>
+	<div id="parent"><div style="padding-left:20px; padding-right:20px"id="child"><br/><br/>
 
 		<h1>List of Courses</h1>
 		<a href="{% url 'add-course' %}" class="btn btn-success">Add Course</a> <br /><br />
 
-		<table class="table table-striped table-bordered">
+		<table  class="ui-responsive table table-striped table-bordered">
 			<thead>
 				<tr>
 					<th>Course Name</th>
-					<th>Course Code</th>
+					<th>Course Details</th>
 					<th>Course Description</th>
 					<th>Start Date</th>
 					<th>Enrollment List</th>
@@ -19,11 +19,18 @@
 				</tr>
 			</thead>
 			<tbody>
+    {% for c in course_school_years %}
+				{% for course in course_semesters %}
 
+				<tr>
+					<td colspan=7 style="color:blue; text-align:left"> <b>{% ifequal course.course_semester "A" %} First Semester {% endifequal %} {% ifequal course.course_semester "B" %} Second Semester {% endifequal %} {% ifequal course.course_semester "C" %} Summer {% endifequal %} {% ifequal c.course_school_year "1" %} 2019-2020 {% endifequal %}{% ifequal c.course_school_year "2" %} 2020-2021 {% endifequal %}{% ifequal c.course_school_year "3" %} 2021-2022 {% endifequal %}</b></td>
+				</tr>
 				{% for assignment in assignments %}
+				{% ifequal course.course_semester assignment.course.course_semester %}
+				{% ifequal c.course_school_year assignment.course.course_school_year %}
 				<tr>
 					<td>{{ assignment.course.name }}</td>
-					<td>{{ assignment.course.course_code }}</td>
+					<td>{{ assignment.course.course_code }} - {{ assignment.course.course_detail }}</td>
 					<td>{{ assignment.course.course_description }}</td>
 					<td>{{ assignment.course.start_date }}</td>
 					<td>
@@ -36,11 +43,16 @@
 						<a href="{% url 'delete-course' assignment.course.id %}" class="btn btn-danger">Delete</a>
 					</td>
 				</tr>
+				{% endifequal %}
+				{% endifequal %}
+				{% endfor %}
+			{% endfor %}
+
 				{% empty %}
 				<tr>
 					<td colspan=7>No Courses yet</td>
 				</tr>
-				{% endfor %}
+		{% endfor %}
 			</tbody>
 		</table>
 <!-- Trigger the modal with a button -->

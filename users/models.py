@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from datetime import date
 
 class CustomUser(AbstractUser):
     pass
@@ -19,10 +20,24 @@ class CustomUser(AbstractUser):
         return self.first_name + " " + self.middle_name + " " + self.last_name
 
 class Course(models.Model):
+    pass
+    semester_Choices = (
+        ('A', 'First Semester'),
+        ('B', 'Second Semester'),
+        ('C', 'Summer'),
+    )
+    shoolYear_Choices = (
+        ('1', '2019-2020'),
+        ('2', '2020-2021'),
+        ('3', '2021-2022'),
+    )
     name = models.CharField(verbose_name="Course Name", max_length=128)
     course_code = models.CharField(verbose_name="Course Code", max_length=128)
     course_description = models.CharField(verbose_name="Course Description", max_length=500)
-    start_date = models.DateField(verbose_name="Course Start Date", auto_now_add=True)
+    course_detail = models.CharField(verbose_name="Course Detail", max_length=100)
+    course_semester = models.CharField(max_length=1,choices=semester_Choices, default='A', verbose_name="Semester")
+    course_school_year = models.CharField(max_length=1,choices=shoolYear_Choices, default='20', verbose_name="School Year")
+    start_date = models.DateField(verbose_name="Course Start Date")
     end_date = models.DateField(verbose_name="Course End Date")
 
     def __str__(self):
@@ -86,6 +101,12 @@ class Enrollment(models.Model):
     course = models.ForeignKey(Course, verbose_name="Course", on_delete = models.CASCADE)
     student = models.ForeignKey(CustomUser, verbose_name="Student", on_delete = models.CASCADE)
 
+    def __str__(self):
+        return "%s" % self.course
+
 class Assignment(models.Model):
     course = models.ForeignKey(Course, verbose_name="Course", on_delete = models.CASCADE)
     teacher = models.ForeignKey(CustomUser, verbose_name="Teacher", on_delete = models.CASCADE)
+
+    def __str__(self):
+        return "%s" % self.course

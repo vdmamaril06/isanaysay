@@ -7,6 +7,8 @@ from django.http import HttpResponseRedirect
 from .forms import CustomUserCreationForm
 from spellchecker import SpellChecker
 from collections import Counter
+from django.db.models.query import QuerySet
+from django.db.models import Count
 import spacy
 nlp = spacy.load('en_core_web_sm')
 
@@ -17,12 +19,16 @@ class SignUpView(CreateView):
     success_url = reverse_lazy('login')
     template_name = 'signup.html'
 
-def add_course(request):
+def add_course(request):    
     template = "add_course.html"
     if request.method == "POST":
         form = CourseForm(request.POST)
         if form.is_valid():
             form.save()
+            c = Course.objects.order_by('-id')[0]
+            t = CustomUser.objects.get(id=request.user.id)
+            assignment_x = Assignment(course=c,teacher=t)
+            assignment_x.save()
             return HttpResponseRedirect(reverse_lazy('view-courses'))
     else:
         context = {
@@ -54,10 +60,13 @@ def update_course(request, course_id):
 def view_courses(request):
     print(request.user.id)
     template = "list_course.html"
-##    courses = Course.objects.all()
+    course_school_years = Course.objects.values('course_school_year').annotate(dcount=Count('course_school_year'))
+    course_semesters = Course.objects.values('course_semester').annotate(dcount=Count('course_semester'))
     assignments = Assignment.objects.select_related('teacher','course')
     enrollments = Enrollment.objects.all()
     context = {
+        'course_school_years': course_school_years,
+        'course_semesters': course_semesters,
         'assignments': assignments,
         'enrollments': enrollments,
     }

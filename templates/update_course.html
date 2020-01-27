@@ -1,34 +1,48 @@
 {% extends 'base.html' %}
-{% block title %}Update Course{% endblock %}
+{% block title %}Update Courses{% endblock %}
 {% block content %}
 	<div id="parent"><div id="child"><br/><br/>
-		<h1>Update Course</h1>
-
+		<h1>iSanaysay - Update Course</h1>
 		<form role="form" action="" method="POST">
-			{% csrf_token %}
-
-			<table class="table table-striped table-bordered">
-				<tr>
-					<th>Course Name</th>
-					<th>{{ course_form.name }}</th>
-				</tr>
-				<tr>
-					<th>Course Code</th>
-					<th>{{ course_form.course_code }}</th>
-				</tr>
-				<tr>
-					<th>Course Description</th>
-					<th>{{ course_form.course_description }}</th>
-				</tr>
-				<tr>
-					<th>Course End Date</th>
-					<th>{{ course_form.end_date }}</th>
-				</tr>
+		    {% csrf_token %}
+			<table class="table table-bordered table-striped">
+				<tbody>
+					<tr>
+						<th>Course Name</th>
+						<th>{{ course_form.name }}</th>
+					</tr>
+					<tr>
+						<th>Course Code</th>
+						<th>{{ course_form.course_code }}</th>
+					</tr>
+					<tr>
+						<th>Course Description</th>
+						<th>{{ course_form.course_description }}</th>
+					</tr>
+					<tr>
+						<th>Course Details</th>
+						<th>{{ course_form.course_detail }}</th>
+					</tr>
+					<tr>
+						<th>School Year</th>
+						<th>{{ course_form.course_school_year }}</th>
+					</tr>
+					<tr>
+						<th>Semester</th>
+						<th>{{ course_form.course_semester }}</th>
+					</tr>
+					<tr>
+						<th>Course Start Date</th>
+						<th>{{ course_form.start_date }}</th>
+					</tr>
+					<tr>
+						<th>Course End Date</th>
+						<th>{{ course_form.end_date }}</th>
+					</tr>
+				</tbody>
 			</table>
-
-			<button class="btn btn-success" type="submit">Save</button>
+			<button type="submit" class="btn btn-success">Save</button>
 			<a href="{% url 'view-courses' %}" class="btn btn-info">Back</a>  
 		</form>
-
 	</div></div>
 {% endblock %}
