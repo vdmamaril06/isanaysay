@@ -41,5 +41,61 @@
 				{% endfor %}
 			</tbody>
 		</table>
+	<div class="card-deck">
+				{% for essay_submission in essay_submissions %}
+  <div class="card">
+    <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+    <div class="card-body">
+      <a href="{% url 'view-essay-submission' essay_submission.id %}"><h5 class="card-title">{{ essay_submission.essay }}</h5> </a>
+      <h6 class="card-title">{{ essay_submission.essay.course }}</h6>
+      <p class="card-text"><b>Status:</b> {{ essay_submission.isChecked }}</p>
+      <p class="card-text"><b>Schedule:</b> {{ essay_submission.essay.start_date_time }} to {{ essay_submission.essay.end_date_time }}</p>
+      <p class="card-text"><b>Maximum no. of Characters:</b> {{ essay_submission.essay.maximum_length }}</p>
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">Submitted already.</small>
+    </div>
+  </div>
+  <div class="card">
+    <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+    <div class="card-body">
+      <a href="{% url 'view-essay-submission' essay_submission.id %}"><h5 class="card-title">{{ essay_submission.essay }}</h5> </a>
+      <h6 class="card-title">{{ essay_submission.essay.course }}</h6>
+      <p class="card-text"><b>Status:</b> {{ essay_submission.isChecked }}</p>
+      <p class="card-text"><b>Schedule:</b> {{ essay_submission.essay.start_date_time }} to {{ essay_submission.essay.end_date_time }}</p>
+      <p class="card-text"><b>Maximum no. of Characters:</b> {{ essay_submission.essay.maximum_length }}</p>
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">Submitted already.</small>
+    </div>
+  </div>
+  <div class="card">
+    <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+    <div class="card-body">
+      <a href="{% url 'view-essay-submission' essay_submission.id %}"><h5 class="card-title">{{ essay_submission.essay }}</h5> </a>
+      <h6 class="card-title">{{ essay_submission.essay.course }}</h6>
+      <p class="card-text"><b>Status:</b> {{ essay_submission.isChecked }}</p>
+      <p class="card-text"><b>Schedule:</b> {{ essay_submission.essay.start_date_time }} to {{ essay_submission.essay.end_date_time }}</p>
+      <p class="card-text"><b>Maximum no. of Characters:</b> {{ essay_submission.essay.maximum_length }}</p>
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">Submitted already.</small>
+    </div>
+  </div>
+  <div class="card">
+    <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+    <div class="card-body">
+      <a href="{% url 'view-essay-submission' essay_submission.id %}"><h5 class="card-title">{{ essay_submission.essay }}</h5> </a>
+      <h6 class="card-title">{{ essay_submission.essay.course }}</h6>
+      <p class="card-text"><b>Status:</b> {{ essay_submission.isChecked }}</p>
+      <p class="card-text"><b>Schedule:</b> {{ essay_submission.essay.start_date_time }} to {{ essay_submission.essay.end_date_time }}</p>
+      <p class="card-text"><b>Maximum no. of Characters:</b> {{ essay_submission.essay.maximum_length }}</p>
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">Submitted already.</small>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 	</div></div>
 {% endblock %}

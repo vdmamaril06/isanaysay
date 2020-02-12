@@ -4,7 +4,6 @@ from django.views.generic.edit import CreateView
 from .models import *
 from .forms import *
 from django.http import HttpResponseRedirect
-from .forms import CustomUserCreationForm
 from spellchecker import SpellChecker
 from collections import Counter
 from django.db.models.query import QuerySet

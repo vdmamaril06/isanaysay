@@ -7,16 +7,11 @@
 {% block content %}
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron" style="background-color:#F49F05">
+    <div class="jumbotron" style="background-image: url({% static 'homepage_banner.png' %}); width:100%;background-position: center; background-repeat: no-repeat; background-size: cover; height:374px;">
       <div class="container">
 {% if user.is_authenticated %}
-        <h1 class="display-3">Hello, {{ user.username }}!</h1>
-        <p>The iSanaysay web application will serve as an essay grading system for both student and teachers.</p>
-        <p><a class="btn btn-primary btn-lg" href="{% url 'logout' %}" role="button">Logout</a></p>
 {% else %}
-        <h1 class="display-3">Welcome to iSanaysay!</h1>
-        <p>The iSanaysay web application will serve as an essay grading system for both student and teachers.</p>
-        <p><a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Login here »</a></p>
+        <p align="center" style="postion:absolute; margin-top:26%;"><a class="btn btn-success btn-lg" href="{% url 'login' %}" role="button">Login here »</a></p>
 {% endif %}
       </div>
     </div>
