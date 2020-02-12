@@ -57,17 +57,19 @@ def update_course(request, course_id):
     return render(request, template, context)
 
 def view_courses(request):
-    print(request.user.id)
+    user_id = request.user.id
     template = "list_course.html"
-    course_school_years = Course.objects.values('course_school_year').annotate(dcount=Count('course_school_year'))
+    #course_school_years = Course.objects.values('course_school_year').annotate(dcount=Count('course_school_year'))
+    course_school_years = Assignment.objects.select_related('course','teacher').filter(teacher__id=user_id).values('course__course_school_year').annotate(dcount=Count('course__course_school_year'))
     course_semesters = Course.objects.values('course_semester').annotate(dcount=Count('course_semester'))
-    assignments = Assignment.objects.select_related('teacher','course')
+    assignments = Assignment.objects.select_related('teacher','course').filter(teacher__id=user_id)
     enrollments = Enrollment.objects.all()
     context = {
         'course_school_years': course_school_years,
         'course_semesters': course_semesters,
         'assignments': assignments,
         'enrollments': enrollments,
+        'user_id': user_id,
     }
     return render(request, template, context)
 
@@ -204,7 +206,15 @@ def add_essay_submission(request):
 
 def view_essay_submissions(request):
     template = "list_essay_submission.html"
-    essay_submissions = EssaySubmission.objects.all()
+    user_id = request.user.id
+    """
+    #course_school_years = Course.objects.values('course_school_year').annotate(dcount=Count('course_school_year'))
+    course_school_years = Assignment.objects.select_related('course','teacher').filter(teacher__id=user_id).values('course__course_school_year').annotate(dcount=Count('course__course_school_year'))
+    course_semesters = Course.objects.values('course_semester').annotate(dcount=Count('course_semester'))
+    assignments = Assignment.objects.select_related('teacher','course').filter(teacher__id=user_id)
+    enrollments = Enrollment.objects.all()
+    """
+    essay_submissions = EssaySubmission.objects.select_related('student','essay').filter(student__id=user_id)
     context = {
         'essay_submissions': essay_submissions,
     }
