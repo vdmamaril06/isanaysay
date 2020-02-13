@@ -56,6 +56,19 @@ class EssaySubmissionForm(forms.ModelForm):
 		super(EssaySubmissionForm, self).__init__(*args, **kwargs)
 		self.fields['student'].queryset = CustomUser.objects.filter(isStudent='S')
 
+class EssaySubmissionCheckingForm(forms.ModelForm):
+	content = forms.CharField(widget=forms.Textarea(attrs={"rows":20, "cols":120}))
+	submitted_date = forms.DateTimeField(label='What is the essay submission date?', widget=forms.SelectDateWidget)
+	checked_date = forms.DateTimeField(label='What is the essay submission date?', widget=forms.SelectDateWidget)
+	#student = forms.CharField(widget=forms.Textarea(attrs={"rows":20, "cols":120}))
+
+	class Meta:
+		model = EssaySubmission
+		fields = '__all__'
+	def __init__(self, *args, **kwargs):
+		super(EssaySubmissionForm, self).__init__(*args, **kwargs)
+		self.fields['student'].queryset = CustomUser.objects.filter(isStudent='S')
+
 class EnrollmentForm(forms.ModelForm):
 	class Meta:
 		model = Enrollment

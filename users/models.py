@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from datetime import date
+from django.utils.timezone import now
 
 class CustomUser(AbstractUser):
     pass
@@ -35,6 +36,7 @@ class Course(models.Model):
     course_code = models.CharField(verbose_name="Course Code", max_length=128)
     course_description = models.CharField(verbose_name="Course Description", max_length=500)
     course_detail = models.CharField(verbose_name="Course Detail", max_length=100)
+    course_unit = models.IntegerField(verbose_name="Course Units", default=3)
     course_semester = models.CharField(max_length=1,choices=semester_Choices, default='A', verbose_name="Semester")
     course_school_year = models.CharField(max_length=1,choices=shoolYear_Choices, default='20', verbose_name="School Year")
     start_date = models.DateField(verbose_name="Course Start Date")
@@ -67,10 +69,14 @@ class EssaySubmission(models.Model):
     content = models.CharField(verbose_name="Essay Content", max_length=3000)
     isChecked = models.CharField(max_length=1,choices=isChecked_Choices, default='N', verbose_name="Checked or Not Checked")
     submitted_date = models.DateTimeField(verbose_name="Essay Submission Date", auto_now_add=True)
+    checked_date = models.DateTimeField(verbose_name="Essay Checked Date", default=now)
     grammar_score = models.FloatField(verbose_name="Grammar Score", default=0)
     spelling_score = models.FloatField(verbose_name="Spelling Score", default=0)
     content_score = models.FloatField(verbose_name="Content Score", default=0)
     ambiguity_score = models.FloatField(verbose_name="Ambiguity Score", default=0)
+
+    def __str__(self):
+        return "%s" % self.essay
 
 class Word(models.Model):
     essay = models.ForeignKey(Essay, verbose_name="Essay", on_delete = models.CASCADE)

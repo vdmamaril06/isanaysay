@@ -61,7 +61,7 @@ def view_courses(request):
     template = "list_course.html"
     #course_school_years = Course.objects.values('course_school_year').annotate(dcount=Count('course_school_year'))
     course_school_years = Assignment.objects.select_related('course','teacher').filter(teacher__id=user_id).values('course__course_school_year').annotate(dcount=Count('course__course_school_year'))
-    course_semesters = Course.objects.values('course_semester').annotate(dcount=Count('course_semester'))
+    course_semesters = Assignment.objects.select_related('course','teacher').filter(teacher__id=user_id).values('course__course_semester').annotate(dcount=Count('course__course_semester'))
     assignments = Assignment.objects.select_related('teacher','course').filter(teacher__id=user_id)
     enrollments = Enrollment.objects.all()
     context = {
@@ -290,5 +290,42 @@ def update_profile(request, user_id):
     else:
         context = {
             'update_profile_form': CustomUserChangeForm(instance=user),
+        }
+    return render(request, template, context)
+
+def view_essay_submissions_for_teacher(request):
+    user_id = request.user.id
+    template = "list_essay_submission_for_teacher.html"
+    essay_submissions = EssaySubmission.objects.select_related('essay','student').order_by('isChecked')
+    essays = Essay.objects.select_related('course')
+    assignments = Assignment.objects.select_related('teacher','course').filter(teacher__id=user_id)
+    essays_owned_list = []
+    for x in assignments:
+        for y in essays:
+            if x.course.id == y.course.id:
+                essays_owned_list.append(y.id)
+    print(essays_owned_list)
+    for x in essay_submissions:
+        if x.essay.id not in essays_owned_list:
+            essay_submissions = essay_submissions.exclude(essay__id=x.essay.id)
+    context = {
+        'essay_submissions': essay_submissions,
+    }
+    return render(request, template, context)
+
+def view_essay_submission_for_checking(request, essay_submission_id):
+    template = "update_essay_submission.html"
+    essay_submission = EssaySubmission.objects.get(id=int(essay_submission_id))
+    if request.method == "POST":
+        form = EssaySubmissionForm(request.POST, instance=essay_submission)
+        if form.is_valid():
+            form.save()
+            #return HttpResponseRedirect(reverse_lazy('view-essay-submissions'))
+            context = {
+                'essay_submission_form': EssaySubmissionForm(instance=essay_submission),
+            }
+    else:
+        context = {
+            'essay_submission_form': EssaySubmissionForm(instance=essay_submission),
         }
     return render(request, template, context)

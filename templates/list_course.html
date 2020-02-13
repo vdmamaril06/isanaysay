@@ -24,16 +24,16 @@
 				{% for course in course_semesters %}
 
 				<tr>
-					<td colspan=7 style="color:blue; text-align:left"> <b>{% ifequal course.course_semester "A" %} First Semester {% endifequal %} {% ifequal course.course_semester "B" %} Second Semester {% endifequal %} {% ifequal course.course_semester "C" %} Summer {% endifequal %} {% ifequal c.course__course_school_year "1" %} 2019-2020 {% endifequal %}{% ifequal c.course__course_school_year "2" %} 2020-2021 {% endifequal %}{% ifequal c.course__course_school_year "3" %} 2021-2022 {% endifequal %}</b></td>
+					<td colspan=7 style="color:blue; text-align:left"> <b>{% ifequal course.course__course_semester "A" %} First Semester {% endifequal %} {% ifequal course.course__course_semester "B" %} Second Semester {% endifequal %} {% ifequal course.course__course_semester "C" %} Summer {% endifequal %} {% ifequal c.course__course_school_year "1" %} 2019-2020 {% endifequal %}{% ifequal c.course__course_school_year "2" %} 2020-2021 {% endifequal %}{% ifequal c.course__course_school_year "3" %} 2021-2022 {% endifequal %}</b></td>
 				</tr>
 				{% for assignment in assignments %}
 				{% ifequal user_id assignment.teacher.id %}
-				{% ifequal course.course_semester assignment.course.course_semester %}
+				{% ifequal course.course__course_semester assignment.course.course_semester %}
 				{% ifequal c.course__course_school_year assignment.course.course_school_year %}
 				<tr>
 					<td>{{ assignment.course.name }}</td>
 					<td>{{ assignment.course.course_code }} - {{ assignment.course.course_detail }}</td>
-					<td> 3 </td>
+					<td> {{ assignment.course.course_unit }} </td>
 					<td>{{ assignment.course.course_description }}</td>
 					<td>{{ assignment.course.start_date }}</td>
 					<td>

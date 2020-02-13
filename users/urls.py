@@ -28,4 +28,6 @@ urlpatterns = [
     url(r'^delete_enrollment/(?P<enrollment_id>\d+)$', delete_enrollment, name='delete-enrollment'),
     url(r'^update_profile/(?P<user_id>\d+)$', update_profile, name='update-profile'),
     url(r'^add_word$', add_word, name='add-word'),
+    url(r'^view_essay_submissions_for_teacher$', view_essay_submissions_for_teacher, name='view-essay-submissions-for-teacher'),
+    url(r'^view_essay_submission_for_checking/(?P<essay_submission_id>\d+)$', view_essay_submission_for_checking, name='view-essay-submission-for-checking'),
 ]

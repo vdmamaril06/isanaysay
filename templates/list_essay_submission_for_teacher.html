@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Essay Submissions{% endblock %}
+{% block content %}
+	<div id="parent"><div id="child"><br/><br/>
+		<h1>List of Essay Submissions</h1> <br /><br /> <br /><br />
+	<div class="card-deck">
+				{% for essay_submission in essay_submissions %}
+				{% ifequal essay_submission.isChecked 'N' %}
+  <div class="card border-danger">
+    <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+    <div class="card-body">
+      <a href="{% url 'view-essay-submission-for-checking' essay_submission.id %}"><h5 class="card-title">{{ essay_submission.essay }}</h5> </a>
+      <h6 class="card-title">{{ essay_submission.essay.course }}</h6>
+      <p class="card-text"><b>Student Name:</b> {{ essay_submission.student }}</p>
+      <p class="card-text"><b>Status:</b> {{ essay_submission.isChecked }}</p>
+      <p class="card-text"><b>Submitted Date:</b> {{ essay_submission.submitted_date }}</p>
+    </div>
+    <div class="card-footer border-danger">
+      <small class="text-muted">Not yet checked.</small>
+    </div>
+  </div>
+  {% endifequal %}
+	{% ifequal essay_submission.isChecked 'Y' %}
+  <div class="card border-success">
+    <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+    <div class="card-body">
+      <a href="{% url 'view-essay-submission-for-checking' essay_submission.id %}"><h5 class="card-title">{{ essay_submission.essay }}</h5> </a>
+      <h6 class="card-title">{{ essay_submission.essay.course }}</h6>
+      <p class="card-text"><b>Student Name:</b> {{ essay_submission.student }}</p>
+      <p class="card-text"><b>Status:</b> {{ essay_submission.isChecked }}</p>
+      <p class="card-text"><b>Submitted Date:</b> {{ essay_submission.submitted_date }}</p>
+    </div>
+    <div class="card-footer border-success">
+      <small class="text-muted">Checked on {{ essay_submission.checked_date }}.</small>
+    </div>
+  </div>
+  {% endifequal %}
+  {% endfor %}
+</div>
+	</div></div>
+{% endblock %}
