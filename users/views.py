@@ -20,18 +20,21 @@ class SignUpView(CreateView):
 
 def add_course(request):    
     template = "add_course.html"
+    user_id = request.user.id
     if request.method == "POST":
         form = CourseForm(request.POST)
         if form.is_valid():
             form.save()
+            """
             c = Course.objects.order_by('-id')[0]
             t = CustomUser.objects.get(id=request.user.id)
             assignment_x = Assignment(course=c,teacher=t)
             assignment_x.save()
+            """
             return HttpResponseRedirect(reverse_lazy('view-courses'))
     else:
         context = {
-            'course_form': CourseForm(),
+            'course_form': CourseForm(initial={'teacher': user_id}),
         }
     return render(request, template, context)
 
@@ -42,17 +45,18 @@ def delete_course(request, course_id):
 
 def update_course(request, course_id):
     template = "update_course.html"
+    user_id = request.user.id
     course = Course.objects.get(id=int(course_id))
     if request.method == "POST":
         form = CourseForm(request.POST, instance=course)
         if form.is_valid():
             form.save()
             context = {
-                'course_form': CourseForm(instance=course),
+                'course_form': CourseForm(instance=course,initial={'teacher': user_id}),
             }
     else:
         context = {
-            'course_form': CourseForm(instance=course),
+            'course_form': CourseForm(instance=course,initial={'teacher': user_id}),
         }
     return render(request, template, context)
 
@@ -60,15 +64,13 @@ def view_courses(request):
     user_id = request.user.id
     template = "list_course.html"
     #course_school_years = Course.objects.values('course_school_year').annotate(dcount=Count('course_school_year'))
-    course_school_years = Assignment.objects.select_related('course','teacher').filter(teacher__id=user_id).values('course__course_school_year').annotate(dcount=Count('course__course_school_year'))
-    course_semesters = Assignment.objects.select_related('course','teacher').filter(teacher__id=user_id).values('course__course_semester').annotate(dcount=Count('course__course_semester'))
-    assignments = Assignment.objects.select_related('teacher','course').filter(teacher__id=user_id)
-    enrollments = Enrollment.objects.all()
+    course_school_years = Course.objects.select_related('teacher').filter(teacher__id=user_id).values('course_school_year').annotate(dcount=Count('course_school_year'))
+    course_semesters = Course.objects.select_related('teacher').filter(teacher__id=user_id).values('course_semester').annotate(dcount=Count('course_semester'))
+    courses = Course.objects.select_related('teacher').filter(teacher__id=user_id)
     context = {
         'course_school_years': course_school_years,
         'course_semesters': course_semesters,
-        'assignments': assignments,
-        'enrollments': enrollments,
+        'courses': courses,
         'user_id': user_id,
     }
     return render(request, template, context)
@@ -128,7 +130,7 @@ def view_essay(request,essay_id):
 		'essay': essay,
 	}
 	return render(request, template, context)
-
+"""
 def add_enrollment(request):
     template = "add_enrollment.html"
     if request.method == "POST":
@@ -163,7 +165,7 @@ def update_enrollment(request, enrollment_id):
             'enrollment_form': EnrollmentForm(instance=enrollment),
         }
     return render(request, template, context)
-
+"""
 def view_enrollments(request):
     template = "list_enrollment.html"
     enrollments = Enrollment.objects.all()

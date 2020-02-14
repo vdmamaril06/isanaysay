@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block title %}My Courses{% endblock %}
 {% block content %}
-	<div id="parent"><div id="child"><br/><br/>
 
+	<div id="parent"><div id="child"><br/><br/>
 		<h1>List of Courses</h1>
 		<a href="{% url 'add-course' %}" class="btn btn-success">Add Course</a> <br /><br />
 
@@ -20,72 +20,47 @@
 				</tr>
 			</thead>
 			<tbody>
-    {% for c in course_school_years %}
-				{% for course in course_semesters %}
-
+				{% for course in courses %}
 				<tr>
-					<td colspan=7 style="color:blue; text-align:left"> <b>{% ifequal course.course__course_semester "A" %} First Semester {% endifequal %} {% ifequal course.course__course_semester "B" %} Second Semester {% endifequal %} {% ifequal course.course__course_semester "C" %} Summer {% endifequal %} {% ifequal c.course__course_school_year "1" %} 2019-2020 {% endifequal %}{% ifequal c.course__course_school_year "2" %} 2020-2021 {% endifequal %}{% ifequal c.course__course_school_year "3" %} 2021-2022 {% endifequal %}</b></td>
-				</tr>
-				{% for assignment in assignments %}
-				{% ifequal user_id assignment.teacher.id %}
-				{% ifequal course.course__course_semester assignment.course.course_semester %}
-				{% ifequal c.course__course_school_year assignment.course.course_school_year %}
-				<tr>
-					<td>{{ assignment.course.name }}</td>
-					<td>{{ assignment.course.course_code }} - {{ assignment.course.course_detail }}</td>
-					<td> {{ assignment.course.course_unit }} </td>
-					<td>{{ assignment.course.course_description }}</td>
-					<td>{{ assignment.course.start_date }}</td>
+					<td>{{ course.name }}</td>
+					<td>{{ course.course_code }} - {{ course.course_detail }}</td>
+					<td>{{ course.course_unit }} </td>
+					<td>{{ course.course_description }}</td>
+					<td>{{ course.start_date }}</td>
 					<td>
-						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal{{ assignment.course.id }}">Enrollments</button>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal{{ course.id }}">Enrollments</button>
 					</td>
 					<td>
-						<a href="{% url 'update-course' assignment.course.id %}" class="btn btn-primary">Update</a>
+						<a href="{% url 'update-course' course.id %}" class="btn btn-primary">Update</a>
 					</td>
 					<td>
-						<a href="{% url 'delete-course' assignment.course.id %}" class="btn btn-danger">Delete</a>
+						<a href="{% url 'delete-course' course.id %}" class="btn btn-danger">Delete</a>
 					</td>
 				</tr>
-				{% endifequal %}
-				{% endifequal %}
-				{% endifequal %}
 				{% endfor %}
-			{% endfor %}
 
-				{% empty %}
-				<tr>
-					<td colspan=7>No Courses yet</td>
-				</tr>
-		{% endfor %}
 			</tbody>
 		</table>
 <!-- Trigger the modal with a button -->
   
 
-				{% for assignment in assignments %}
+				{% for course in courses %}
   <!-- Modal -->
-  <div class="modal fade" id="myModal{{assignment.course.id}}" role="dialog">
+  <div class="modal fade" id="myModal{{course.id}}" role="dialog">
     <div class="modal-dialog">
-    
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">{{assignment.course.name}}</h4>
+          <h4 class="modal-title">{{ course.name }}</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
           <p>List of Enrollees</p>
           <ol>
-          	{% with no_enrollees="True" %}
-          	{% for enrollment in enrollments %}
-          		{% if enrollment.course.id == assignment.course.id %}
-          			{% for no_enrollees in enrollments %}
-          			{% endfor %}
-					<li>{{ enrollment.student }}</li>
-				{% endif %}
+          	{% for student in course.students.all|dictsort:"last_name" %}
+					<li>{{ student }}</li>
 			{% endfor %}
 		</ol>
-			{% endwith %}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

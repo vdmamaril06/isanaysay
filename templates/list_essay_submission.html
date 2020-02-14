@@ -2,86 +2,9 @@
 {% block title %}My Enrollments{% endblock %}
 {% block content %}
 	<div id="parent"><div id="child"><br/><br/>
-		<h1>List of Essay Submissions</h1>
-		<a href="{% url 'add-essay-submission' %}" class="btn btn-success">Submit Essay</a> <br /><br />
-{{ essay_submissions }}
-		<table class="table table-striped table-bordered">
-			<thead>
-				<tr>
-					<th>Essay Submission ID</th>
-					<th>Student Name</th>
-					<th>Course Name</th>
-					<th>Submitted Date</th>
-					<th>View Submission</th>
-					<th>Edit Submission</th>
-					<th>Delete Submission</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for essay_submission in essay_submissions %}
-				<tr>
-					<td>{{ essay_submission.id }}</td>
-					<td>{{ essay_submission.student }}</td>
-					<td>{{ essay_submission.essay.course }}</td>
-					<td>{{ essay_submission.submitted_date }}</td>
-					<td>
-						<a href="{% url 'view-essay-submission' essay_submission.id %}" class="btn btn-primary">View</a>
-					</td>
-					<td>
-						<a href="{% url 'update-essay-submission' essay_submission.id %}" class="btn btn-primary">Update</a>
-					</td>
-					<td>
-						<a href="{% url 'delete-essay-submission' essay_submission.id %}" class="btn btn-danger">Delete</a>
-					</td>
-				</tr>
-				{% empty %}
-				<tr>
-					<td colspan=7>No Essay Submissions yet</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+		<h1>List of Essay Submissions</h1><br/><br/>
 	<div class="card-deck">
 				{% for essay_submission in essay_submissions %}
-  <div class="card">
-    <!--<img class="card-img-top" src="..." alt="Card image cap">-->
-    <div class="card-body">
-      <a href="{% url 'view-essay-submission' essay_submission.id %}"><h5 class="card-title">{{ essay_submission.essay }}</h5> </a>
-      <h6 class="card-title">{{ essay_submission.essay.course }}</h6>
-      <p class="card-text"><b>Status:</b> {{ essay_submission.isChecked }}</p>
-      <p class="card-text"><b>Schedule:</b> {{ essay_submission.essay.start_date_time }} to {{ essay_submission.essay.end_date_time }}</p>
-      <p class="card-text"><b>Maximum no. of Characters:</b> {{ essay_submission.essay.maximum_length }}</p>
-    </div>
-    <div class="card-footer">
-      <small class="text-muted">Submitted already.</small>
-    </div>
-  </div>
-  <div class="card">
-    <!--<img class="card-img-top" src="..." alt="Card image cap">-->
-    <div class="card-body">
-      <a href="{% url 'view-essay-submission' essay_submission.id %}"><h5 class="card-title">{{ essay_submission.essay }}</h5> </a>
-      <h6 class="card-title">{{ essay_submission.essay.course }}</h6>
-      <p class="card-text"><b>Status:</b> {{ essay_submission.isChecked }}</p>
-      <p class="card-text"><b>Schedule:</b> {{ essay_submission.essay.start_date_time }} to {{ essay_submission.essay.end_date_time }}</p>
-      <p class="card-text"><b>Maximum no. of Characters:</b> {{ essay_submission.essay.maximum_length }}</p>
-    </div>
-    <div class="card-footer">
-      <small class="text-muted">Submitted already.</small>
-    </div>
-  </div>
-  <div class="card">
-    <!--<img class="card-img-top" src="..." alt="Card image cap">-->
-    <div class="card-body">
-      <a href="{% url 'view-essay-submission' essay_submission.id %}"><h5 class="card-title">{{ essay_submission.essay }}</h5> </a>
-      <h6 class="card-title">{{ essay_submission.essay.course }}</h6>
-      <p class="card-text"><b>Status:</b> {{ essay_submission.isChecked }}</p>
-      <p class="card-text"><b>Schedule:</b> {{ essay_submission.essay.start_date_time }} to {{ essay_submission.essay.end_date_time }}</p>
-      <p class="card-text"><b>Maximum no. of Characters:</b> {{ essay_submission.essay.maximum_length }}</p>
-    </div>
-    <div class="card-footer">
-      <small class="text-muted">Submitted already.</small>
-    </div>
-  </div>
   <div class="card">
     <!--<img class="card-img-top" src="..." alt="Card image cap">-->
     <div class="card-body">

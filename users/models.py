@@ -41,6 +41,8 @@ class Course(models.Model):
     course_school_year = models.CharField(max_length=1,choices=shoolYear_Choices, default='20', verbose_name="School Year")
     start_date = models.DateField(verbose_name="Course Start Date")
     end_date = models.DateField(verbose_name="Course End Date")
+    students = models.ManyToManyField(CustomUser, related_name='students_enrolled')
+    teacher = models.ForeignKey(CustomUser, verbose_name="Teacher", on_delete = models.CASCADE)
 
     def __str__(self):
         return "%s" % self.course_code
@@ -54,6 +56,10 @@ class Essay(models.Model):
     start_date_time = models.DateTimeField(verbose_name="Essay Start Date")
     end_date_time = models.DateTimeField(verbose_name="Essay End Date")
     duration = models.IntegerField(verbose_name="Duration")
+    criteria_no_1 = models.FloatField(verbose_name="Grammar",default=0)
+    criteria_no_2 = models.FloatField(verbose_name="Spelling",default=0)
+    criteria_no_3 = models.FloatField(verbose_name="Content",default=0)
+    criteria_no_4 = models.FloatField(verbose_name="Ambiguous Words",default=0)
 
     def __str__(self):
         return "%s" % self.name
@@ -102,17 +108,3 @@ class Score(models.Model):
 
     def __str__(self):
         return "%s" % self.essaySubmission
-
-class Enrollment(models.Model):
-    course = models.ForeignKey(Course, verbose_name="Course", on_delete = models.CASCADE)
-    student = models.ForeignKey(CustomUser, verbose_name="Student", on_delete = models.CASCADE)
-
-    def __str__(self):
-        return "%s" % self.course
-
-class Assignment(models.Model):
-    course = models.ForeignKey(Course, verbose_name="Course", on_delete = models.CASCADE)
-    teacher = models.ForeignKey(CustomUser, verbose_name="Teacher", on_delete = models.CASCADE)
-
-    def __str__(self):
-        return "%s" % self.course

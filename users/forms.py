@@ -30,9 +30,14 @@ class CustomUserChangeForm(UserChangeForm):
 class CourseForm(forms.ModelForm):
 	start_date = forms.DateField(label='What is the course start date?', widget=forms.SelectDateWidget)
 	end_date = forms.DateField(label='What is the course end date?', widget=forms.SelectDateWidget)
+
 	class Meta:
 		model = Course
 		fields = '__all__'
+	def __init__(self, *args, **kwargs):
+		super(CourseForm, self).__init__(*args, **kwargs)
+		self.fields['students'] = forms.ModelMultipleChoiceField(label="Add Enrolled Students",widget=forms.CheckboxSelectMultiple,queryset=CustomUser.objects.filter(isStudent='S'))
+		self.fields['teacher'].widget = forms.HiddenInput()
 
 class EssayForm(forms.ModelForm):
 #	content = forms.CharField(widget=forms.Textarea(attrs={"rows":20, "cols":120}))
@@ -67,14 +72,6 @@ class EssaySubmissionCheckingForm(forms.ModelForm):
 		fields = '__all__'
 	def __init__(self, *args, **kwargs):
 		super(EssaySubmissionForm, self).__init__(*args, **kwargs)
-		self.fields['student'].queryset = CustomUser.objects.filter(isStudent='S')
-
-class EnrollmentForm(forms.ModelForm):
-	class Meta:
-		model = Enrollment
-		fields = '__all__'
-	def __init__(self, *args, **kwargs):
-		super(EnrollmentForm, self).__init__(*args, **kwargs)
 		self.fields['student'].queryset = CustomUser.objects.filter(isStudent='S')
 
 class WordForm(forms.ModelForm):
