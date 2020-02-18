@@ -1,11 +1,28 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block style %}
+<script>
+    $(document).ready(function(){          
+      $("#id_username").attr("placeholder", "Username");
+      $("#id_email").attr("placeholder", "Email Address");
+      $("#id_first_name").attr("placeholder", "First Name");
+      $("#id_middle_name").attr("placeholder", "Middle Name");
+      $("#id_last_name").attr("placeholder", "Last Name");
+      $("#id_id_number").attr("placeholder", "ID Number");
+      $("#id_password1").attr("placeholder", "Password");
+      $("#id_password2").attr("placeholder", "Retype Password");
+    });
+</script> 
 <style>
 html,
 body {
   height: 100%;
 }
 
+main {
+  border: solid;
+  padding-top: 21px;
+}
 body {
   display: -ms-flexbox;
   display: -webkit-box;
@@ -18,7 +35,7 @@ body {
   justify-content: center;
   padding-top: 40px;
   padding-bottom: 40px;
-  background-color: #f5f5f5;
+  background-color: #49505740;
 }
 
 .form-signin {
@@ -55,13 +72,37 @@ body {
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-<div class="container">
-  <h2>Sign up</h2>
+<div class="col s12 m6 push-m3 l4 push-l4" style="
+    border: 1px;
+">
+<div class="contentForm loginForm">
+
+    <div style="
+    display: flex;
+    align-items: center;
+    justify-content: center;
+">
+<a href="{% url 'home' %}"/><img style="height:100px;width:400px;"src={% static 'logo2.png' %} /></a>
+</div>
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Sign up</button>
-	<a href="{% url 'login' %}" class="btn btn-info">Back</a>  
+    {% for f in form %}
+    <div class="form-group" style="
+    display: flex;
+    align-items: center;
+    justify-content: center;
+">
+        {{ f }}
+    </div>
+    {% endfor %}
+    <div class="form-group" style="
+    display: flex;
+    align-items: center;
+    justify-content: center;
+">
+    <button type="submit" class="btn btn-success">Sign up</button>&nbsp;
+	<a href="{% url 'login' %}" class="btn btn-info">Back</a>  </div>
   </form>
+</div>
 </div>
 {% endblock %}
