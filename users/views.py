@@ -191,32 +191,26 @@ def add_word(request):
         }
     return render(request, template, context)
 
-def add_essay_submission(request):
+def add_essay_submission(request,essay_id):
     template = "add_essay_submission.html"
-
+    user_id = request.user.id
+    essay = Essay.objects.get(id=essay_id)
+    date_today = datetime.datetime.now().replace(tzinfo=utc)
     if request.method == "POST":
-        
         form = EssaySubmissionForm(request.POST)
-
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse_lazy('view-essay-submissions'))
     else:
         context = {
-            'essay_submission_form': EssaySubmissionForm(),
+            'essay_submission_form': EssaySubmissionForm(initial={'essay':essay.id,'student': user_id,'isChecked':'N','grammar_score':0,'spelling_score':0,'content_score':0,'submitted_date':date_today,'checked_date':date_today}),
+            'essay': essay,
         }
     return render(request, template, context)
 
 def view_essay_submissions(request):
     template = "list_essay_submission.html"
     user_id = request.user.id
-    """
-    #course_school_years = Course.objects.values('course_school_year').annotate(dcount=Count('course_school_year'))
-    course_school_years = Assignment.objects.select_related('course','teacher').filter(teacher__id=user_id).values('course__course_school_year').annotate(dcount=Count('course__course_school_year'))
-    course_semesters = Course.objects.values('course_semester').annotate(dcount=Count('course_semester'))
-    assignments = Assignment.objects.select_related('teacher','course').filter(teacher__id=user_id)
-    enrollments = Enrollment.objects.all()
-    """
     #essay_submissions = EssaySubmission.objects.select_related('student','essay').filter(student__id=user_id)
     essays = Essay.objects.select_related('course')
     essay_submissions = EssaySubmission.objects.select_related('student','essay').filter(student__id=user_id)
@@ -230,6 +224,14 @@ def view_essay_submissions(request):
                     break
             if not present:
                 essays = essays.exclude(id=essay.id)
+    for essay in essays:
+        present = False
+        for es in essay_submissions:
+            if essay.id == es.essay.id:
+                present = True
+                break
+        if present:
+            essays = essays.exclude(id=essay.id)
     date_today = datetime.datetime.now().replace(tzinfo=utc)
 
     context = {

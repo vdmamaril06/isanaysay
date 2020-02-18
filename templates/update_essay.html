@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+<script>
+$("#id_start_date_time_0").datepicker();
+</script>
 {% block title %}Update Essay{% endblock %}
 {% block content %}
 	<div id="parent"><div id="child"><br/><br/>
@@ -32,12 +35,24 @@
 						<th>{{ essay_form.duration }}</th>
 					</tr>
 					<tr>
-						<th>Start Date</th>
+						<th>Start Date and Time</th>
 						<th>{{ essay_form.start_date_time }}</th>
 					</tr>
 					<tr>
-						<th>End Date</th>
+						<th>End Date and Time</th>
 						<th>{{ essay_form.end_date_time }}</th>
+					</tr>
+					<tr>
+						<th>Grammar Checking Percentage</th>
+						<th>{{ essay_form.criteria_no_1 }}</th>
+					</tr>
+					<tr>
+						<th>Spelling Checking Percentage</th>
+						<th>{{ essay_form.criteria_no_2 }}</th>
+					</tr>
+					<tr>
+						<th>Content of the Essay Percentage</th>
+						<th>{{ essay_form.criteria_no_3 }}</th>
 					</tr>
 				</tbody>
 			</table>
@@ -45,4 +60,5 @@
 			<a href="{% url 'view-essays' %}" class="btn btn-info">Back</a> 
 		</form>
 	</div></div>
+
 {% endblock %}

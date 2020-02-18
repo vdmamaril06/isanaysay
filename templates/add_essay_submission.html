@@ -1,53 +1,226 @@
 {% extends 'base.html' %}
+{% block style %}
+<script>
+    $(document).ready(function(){ 
+        $("#myModal").modal({
+            backdrop: 'static',
+            keyboard: false
+        });         
+    	$("#myModal").modal('show');
+    	$("#essay_code").keyup(function(){
+    		var essay_code = $("#essay_code").val();
+		  if (essay_code.localeCompare("{{essay.essay_code}}") == 0){
+		  	$("#proceed").attr("hidden",false);
+		  } else{
+		  	$("#proceed").attr("hidden",true);
+		  }
+		});
+		$("#id_content").keyup(function(){
+		var myLength = $("#id_content").val().replace( /[\r\n]+/gm, "" ).length;
+		if (myLength > {{ essay.maximum_length }}){
+			document.getElementById("maxreached").innerHTML = "Maximum number of " + {{ essay.maximum_length }} + " characters reached! You will not be able to submit your essay.";
+			$("#finish").attr("disabled", true);
+		}else{
+			document.getElementById("maxreached").innerHTML = "";
+			$("#finish").attr("disabled", false);
+
+		}
+	});
+    });
+
+</script> 
+<style >
+#cover {
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   opacity: 0.80;
+   background: #aaa;
+   z-index: 10;
+   display: none;
+}
+.countdown {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.countdown span {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 3rem;
+    margin-left: 0.8rem;
+}
+
+.countdown span:first-of-type {
+    margin-left: 0;
+}
+
+.countdown-circles {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.countdown-circles span {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.countdown-circles span:first-of-type {
+    margin-left: 0;
+}
+
+
+/*
+*
+* ==================================================
+* FOR DEMO PURPOSES
+* ==================================================
+*
+*/
+body {
+    min-height: 100vh;
+}
+
+.bg-gradient-1 {
+    background: #36688d;
+    padding-top: 0px;
+}
+
+.bg-gradient-2 {
+    background: #654ea3;
+    background: -webkit-linear-gradient(to right, #654ea3, #eaafc8);
+    background: linear-gradient(to right, #654ea3, #eaafc8);
+}
+
+.bg-gradient-3 {
+    background: #ff416c;
+    background: -webkit-linear-gradient(to right, #ff416c, #ff4b2b);
+    background: linear-gradient(to right, #ff416c, #ff4b2b);
+}
+
+.bg-gradient-4 {
+    background: #007991;
+    background: -webkit-linear-gradient(to right, #007991, #78ffd6);
+    background: linear-gradient(to right, #007991, #78ffd6);
+}
+
+.rounded {
+    border-radius: 1rem !important;
+}
+
+.btn-demo {
+    padding: 0.5rem 2rem !important;
+    border-radius: 30rem !important;
+    background: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold !important;
+}
+
+.btn-demo:hover, .btn-demo:focus {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.5);
+}
+</style>
+
+<script>
+// Set the date we're counting down to
+var dateEnd = "{{ essay.end_date_time|date:'M d, Y H:i:s' }}"
+
+var countDownDate = new Date(dateEnd).getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+    
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("demo").innerHTML = days + "d " + hours + "h " 
+  + minutes + "m " + seconds + "s";
+    
+  // If the count down is over, write some text 
+  if (distance < 0) {
+  	$("#finish").click();
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "EXPIRED";
+  }
+}, 1000);
+</script>
+{% endblock %}
 {% block title %}Add Essay{% endblock %}
 {% block content %}
+
+
 	<div id="parent"><div id="child"><br/><br/>
-		<h1>iSanaysay - Add Essay Submission</h1>
+		<div class="rounded bg-gradient-1 text-white shadow pt-3 text-center " style="
+    width: 150px;
+    height: 115px;
+    float: right;
+">
+                    <p class="font-weight-bold text-uppercase">ends in</p>
+                    <div id="demo" class="countdown-circles d-flex flex-wrap justify-content-center pt-3"></div>
+                </div>
+		<h1>{{ essay }}</h1>
+		<h4>Instructions for this essay</h4>
+		{{ essay.essay_description }}<br/><br/>
+		Maximum number of characters: {{ essay.maximum_length }}<br/><br/>
+		Criteria for checking<br/>
+		Grammar Score: {{ essay.criteria_no_1 }}%<br/>
+		Spelling Score: {{ essay.criteria_no_2 }}%<br/>
+		Content Score: {{ essay.criteria_no_3 }}%<br/>
 		<form role="form" action="" method="POST">
 		    {% csrf_token %}
-			<table class="table table-bordered table-striped">
-				<tbody>
-					<tr>
-						<th>Essay Name</th>
-						<th>{{ essay_submission_form.essay }}</th>
-					</tr>
-					<tr>
-						<th>Student Name</th>
-						<th>{{ essay_submission_form.student }}</th>
-					</tr>
-					<tr>
-						<th>Content</th>
-						<th>{{ essay_submission_form.content }}</th>
-					</tr>
-					<tr>
-						<th>is Checked Already?</th>
-						<th>{{ essay_submission_form.isChecked }}</th>
-					</tr>
-					<tr>
-						<th>Submitted Date</th>
-						<th>{{ essay_submission_form.submitted_date }}</th>
-					</tr>
-					<tr>
-						<th>Grammar Score</th>
-						<th>{{ essay_submission_form.grammar_score }}</th>
-					</tr>
-					<tr>
-						<th>Spelling Score</th>
-						<th>{{ essay_submission_form.spelling_score }}</th>
-					</tr>
-					<tr>
-						<th>Content Score</th>
-						<th>{{ essay_submission_form.content_score }}</th>
-					</tr>
-					<tr>
-						<th>Ambiguity Score</th>
-						<th>{{ essay_submission_form.ambiguity_score  }}</th>
-					</tr>
-				</tbody>
-			</table>
-			<button type="submit" class="btn btn-success">Save</button>
-			<a href="{% url 'view-essay-submissions' %}" class="btn btn-info">Back</a> 
+					{{ essay_submission_form.essay }}
+					{{ essay_submission_form.student }}
+					{{ essay_submission_form.isChecked }}
+					{{ essay_submission_form.grammar_score }}
+					{{ essay_submission_form.spelling_score }}
+					{{ essay_submission_form.content_score }}
+					{{ essay_submission_form.submitted_date }}
+					{{ essay_submission_form.checked_date }}
+					<h4>Content of your Essay</h4>
+					{{ essay_submission_form.content }}<br/>
+					<p id="maxreached"></p>
+			<button id="finish" type="submit" class="btn btn-success">Submit Essay</button>
 		</form>
 	</div></div>
 
+
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+
+          <h4 class="modal-title">Please input the Essay Code</h4>
+        </div>
+        <div class="modal-body">
+        	<input id="essay_code" style="margin: auto; display: block;" type="text" />
+        </div>
+        <div class="cover"></div>
+        <div class="modal-footer">
+			<a hidden id="proceed" href="" class="btn btn-success" data-dismiss="modal">Proceed </a> 
+			<a href="{% url 'view-essay-submissions' %}" class="btn btn-info">Back</a> 
+        </div>
+      </div>
+      
+    </div>
+  </div>
 {% endblock %}

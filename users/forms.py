@@ -53,6 +53,7 @@ class EssayForm(forms.ModelForm):
 class EssaySubmissionForm(forms.ModelForm):
 	content = forms.CharField(widget=forms.Textarea(attrs={"rows":20, "cols":120}))
 	submitted_date = forms.DateTimeField(label='What is the essay submission date?', widget=forms.SelectDateWidget)
+	checked_date = forms.DateTimeField(label='What is the essay check date?', widget=forms.SelectDateWidget)
 	#student = forms.CharField(widget=forms.Textarea(attrs={"rows":20, "cols":120}))
 
 	class Meta:
@@ -61,6 +62,14 @@ class EssaySubmissionForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(EssaySubmissionForm, self).__init__(*args, **kwargs)
 		self.fields['student'].queryset = CustomUser.objects.filter(isStudent='S')
+		self.fields['student'].widget = forms.HiddenInput()		
+		self.fields['essay'].widget = forms.HiddenInput()	
+		self.fields['isChecked'].widget = forms.HiddenInput()
+		self.fields['grammar_score'].widget = forms.HiddenInput()
+		self.fields['spelling_score'].widget = forms.HiddenInput()
+		self.fields['content_score'].widget = forms.HiddenInput()
+		#self.fields['submitted_date'].widget = forms.HiddenInput()
+		#self.fields['checked_date'].widget = forms.HiddenInput()
 
 class EssaySubmissionCheckingForm(forms.ModelForm):
 	content = forms.CharField(widget=forms.Textarea(attrs={"rows":20, "cols":120}))

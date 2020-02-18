@@ -3,79 +3,83 @@
 {% block content %}
 	<div id="parent"><div id="child"><br/><br/>
 		<h1>List of Essay Submissions</h1><br/><br/>
-	<div class="card-deck">
-    {{ date_today }}
+    <h2>Ongoing Essays</h2><br/><br/>
 				{% for essay in essays %}
         {% if essay.is_ongoing %}
-  <div class="card border-warning mb-3">
+  <div class="card border-warning mb-3" style="max-width:350px;">
     <!--<img class="card-img-top" src="..." alt="Card image cap">-->
-      <div class="card-header border-warning" ><a style="float:left;" href="{% url 'view-essay-submission' essay.id %}"><h5 class="card-title">{{ essay.name }}</h5> </a></div>
+      <div class="card-header border-warning" ><a style="float:left;" href="{% url 'add-essay-submission' essay.id %}"><h5 class="card-title">{{ essay.name }}</h5> </a></div>
     <div class="card-body">
       <p class="card-text" style="float:left;margin-bottom:0px;"><b>Course:</b> {{ essay.course.name }}</p><br/>
-      <p class="card-text" style="float:left;"><b>Schedule:</b> {{ essay.start_date_time }} to {{ essay.end_date_time }}</p>
+      <p class="card-text" style="float:left; text-align: left;"><b>Schedule:</b> {{ essay.start_date_time }} to {{ essay.end_date_time }}</p>
     </div>
     <div class="card-footer border-warning">
       <small class="text-muted" style="float:left;">Status: Ongoing.</small>
     </div>
   </div>
         {% elif essay.is_past_due %}
-  <div class="card border-danger mb-3">
+  <div class="card border-danger mb-3" style="max-width:350px;">
     <!--<img class="card-img-top" src="..." alt="Card image cap">-->
-      <div class="card-header border-danger" ><a style="float:left;" href="{% url 'view-essay-submission' essay.id %}"><h5 class="card-title">{{ essay.name }}</h5> </a></div>
+      <div class="card-header border-danger" ><div style="float:left;" ><h5 class="card-title">{{ essay.name }}</h5> </div></div>
     <div class="card-body">
       <p class="card-text" style="float:left;margin-bottom:0px;"><b>Course:</b> {{ essay.course.name }}</p><br/>
-      <p class="card-text" style="float:left;"><b>Schedule:</b> {{ essay.start_date_time }} to {{ essay.end_date_time }}</p>
+      <p class="card-text" style="float:left; text-align: left;"><b>Schedule:</b> {{ essay.start_date_time }} to {{ essay.end_date_time }}</p>
     </div>
     <div class="card-footer border-danger">
       <small class="text-muted" style="float:left;">Status: Did not submit on time.</small>
     </div>
   </div>
   {% else %}
-  <div class="card border-secondary mb-3">
+  <div class="card border-secondary mb-3" style="max-width:350px;">
     <!--<img class="card-img-top" src="..." alt="Card image cap">-->
-      <div class="card-header border-secondary" ><a style="float:left;" href="{% url 'view-essay-submission' essay.id %}"><h5 class="card-title">{{ essay.name }}</h5> </a></div>
+      <div class="card-header border-secondary" ><div style="float:left;" ><h5 class="card-title">{{ essay.name }}</h5> </div></div>
     <div class="card-body">
       <p class="card-text" style="float:left;margin-bottom:0px;"><b>Course:</b> {{ essay.course.name }}</p><br/>
-      <p class="card-text" style="float:left;"><b>Schedule:</b> {{ essay.start_date_time }} to {{ essay.end_date_time }}</p>
+      <p class="card-text" style="float:left; text-align: left;"><b>Schedule:</b> {{ essay.start_date_time }} to {{ essay.end_date_time }}</p>
     </div>
     <div class="card-footer border-secondary">
       <small class="text-muted" style="float:left;">Status: Not yet started.</small>
     </div>
   </div>
         {% endif %}
+        {% empty %}
+        <h5> No ongoing essays yet. </h5>
   {% endfor %}
-
-        {% for essay_submission in essay_submissions %}
+    <h2>Finished Essays</h2><br/><br/>
+    {% for essay_submission in essay_submissions %}
         {% if not essay_submission.check_submission %}
-  <div class="card border-primary mb-3">
+  <div class="card border-primary mb-3" style="max-width:350px;">
     <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+      <div class="card-header border-primary" ><div style="float:left;" ><h5 class="card-title">{{ essay_submission.essay.name }}</h5> </div></div>
     <div class="card-body">
-      <a href="{% url 'view-essay-submission' essay.id %}"><h5 class="card-title">{{ essay.essay }}</h5> </a>
-      <h6 class="card-title">{{ essay.essay.course }}</h6>
-      <p class="card-text"><b>Status:</b> {{ essay.isChecked }}</p>
-      <p class="card-text"><b>Schedule:</b> {{ essay.essay.start_date_time }} to {{ essay.essay.end_date_time }}</p>
-      <p class="card-text"><b>Maximum no. of Characters:</b> {{ essay.essay.maximum_length }}</p>
+      <p class="card-text" style="float:left;margin-bottom:0px;"><b>Course:</b> {{ essay_submission.essay.course.name }}</p><br/>
+      <p class="card-text" style="float:left; text-align: left;"><b>Schedule:</b> {{ essay_submission.essay.start_date_time }} to {{ essay_submission.essay.end_date_time }}</p>
     </div>
     <div class="card-footer border-primary">
-      <small class="text-muted">Submitted already.</small>
+      <small class="text-muted" style="float:left;">Status: Submitted for checking.</small>
     </div>
+  </div>
 
         {% else %}
   <div class="card border-success mb-3">
     <!--<img class="card-img-top" src="..." alt="Card image cap">-->
     <div class="card-body">
-      <a href="{% url 'view-essay-submission' essay.id %}"><h5 class="card-title">{{ essay.essay }}</h5> </a>
+      <a href="{% url 'view-essay-submission' essay_submission.id %}"><h5 class="card-title">{{ essay.essay }}</h5> </a>
       <h6 class="card-title">{{ essay.essay.course }}</h6>
       <p class="card-text"><b>Status:</b> {{ essay.isChecked }}</p>
       <p class="card-text"><b>Schedule:</b> {{ essay.essay.start_date_time }} to {{ essay.essay.end_date_time }}</p>
       <p class="card-text"><b>Maximum no. of Characters:</b> {{ essay.essay.maximum_length }}</p>
     </div>
     <div class="card-footer border-success">
-      <small class="text-muted">Checked already.</small>
+      <small class="text-muted">Status: Checked already.</small>
     </div>
 
         {% endif %}
+        {% empty %}
+        <h5> No essay submitted yet. </h5>
         {% endfor %}
+
+        
 </div>
 	</div></div>
 {% endblock %}

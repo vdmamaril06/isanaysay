@@ -89,7 +89,7 @@ class EssaySubmission(models.Model):
     content = models.CharField(verbose_name="Essay Content", max_length=3000)
     isChecked = models.CharField(max_length=1,choices=isChecked_Choices, default='N', verbose_name="Checked or Not Checked")
     submitted_date = models.DateTimeField(verbose_name="Essay Submission Date", auto_now_add=True)
-    checked_date = models.DateTimeField(verbose_name="Essay Checked Date", default=now)
+    checked_date = models.DateTimeField(verbose_name="Essay Checked Date", auto_now_add=True)
     grammar_score = models.FloatField(verbose_name="Grammar Score", default=0)
     spelling_score = models.FloatField(verbose_name="Spelling Score", default=0)
     content_score = models.FloatField(verbose_name="Content Score", default=0)
