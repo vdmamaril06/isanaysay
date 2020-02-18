@@ -1,7 +1,11 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+import datetime
+import pytz
 from datetime import date
 from django.utils.timezone import now
+
+utc=pytz.UTC
 
 class CustomUser(AbstractUser):
     pass
@@ -53,16 +57,26 @@ class Essay(models.Model):
     essay_description = models.CharField(verbose_name="Essay Description", max_length=1500)
     essay_code = models.CharField(verbose_name="Essay Code", max_length=100)
     maximum_length = models.IntegerField(verbose_name="Maximum Length")
-    start_date_time = models.DateTimeField(verbose_name="Essay Start Date")
-    end_date_time = models.DateTimeField(verbose_name="Essay End Date")
+    start_date_time = models.DateTimeField(verbose_name="Essay Start Date and Time")
+    end_date_time = models.DateTimeField(verbose_name="Essay End Date and Time")
     duration = models.IntegerField(verbose_name="Duration")
     criteria_no_1 = models.FloatField(verbose_name="Grammar",default=0)
     criteria_no_2 = models.FloatField(verbose_name="Spelling",default=0)
     criteria_no_3 = models.FloatField(verbose_name="Content",default=0)
-    criteria_no_4 = models.FloatField(verbose_name="Ambiguous Words",default=0)
 
     def __str__(self):
         return "%s" % self.name
+
+    def is_past_due(self):
+        date_today = datetime.datetime.now().replace(tzinfo=utc)
+        essay_end_date = self.end_date_time.replace(tzinfo=utc)
+        return date_today > essay_end_date
+
+    def is_ongoing(self):
+        date_today = datetime.datetime.now().replace(tzinfo=utc)
+        essay_end_date = self.end_date_time.replace(tzinfo=utc)
+        essay_start_date = self.start_date_time.replace(tzinfo=utc)
+        return date_today > essay_start_date and date_today < essay_end_date
 
 class EssaySubmission(models.Model):
     pass
@@ -79,10 +93,14 @@ class EssaySubmission(models.Model):
     grammar_score = models.FloatField(verbose_name="Grammar Score", default=0)
     spelling_score = models.FloatField(verbose_name="Spelling Score", default=0)
     content_score = models.FloatField(verbose_name="Content Score", default=0)
-    ambiguity_score = models.FloatField(verbose_name="Ambiguity Score", default=0)
 
     def __str__(self):
         return "%s" % self.essay
+
+    def checked_submission(self):
+        if isChecked == 'N':
+            return False
+        return True
 
 class Word(models.Model):
     essay = models.ForeignKey(Essay, verbose_name="Essay", on_delete = models.CASCADE)

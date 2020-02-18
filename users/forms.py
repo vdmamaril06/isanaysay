@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.forms import AuthenticationForm
 from .models import *
+from django.contrib.admin.widgets import AdminDateWidget,AdminSplitDateTime
 
 class UserLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
@@ -42,8 +43,8 @@ class CourseForm(forms.ModelForm):
 class EssayForm(forms.ModelForm):
 #	content = forms.CharField(widget=forms.Textarea(attrs={"rows":20, "cols":120}))
 	essay_description = forms.CharField(widget=forms.Textarea(attrs={"rows":10, "cols":50}))
-	start_date_time = forms.DateTimeField(label='What is the essay start date?', widget=forms.SelectDateWidget)
-	end_date_time = forms.DateTimeField(label='What is the essay end date?', widget=forms.SelectDateWidget)
+	start_date_time = forms.SplitDateTimeField(label='What is the essay start date and time?', widget=forms.SplitDateTimeWidget(date_attrs={'type':'date'},time_attrs={'type':'time'}))
+	end_date_time = forms.SplitDateTimeField(label='What is the essay end date and time?', widget=forms.SplitDateTimeWidget(date_attrs={'type':'date'},time_attrs={'type':'time'}))
 
 	class Meta:
 		model = Essay

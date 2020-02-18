@@ -8,6 +8,7 @@ from spellchecker import SpellChecker
 from collections import Counter
 from django.db.models.query import QuerySet
 from django.db.models import Count
+import datetime
 import spacy
 nlp = spacy.load('en_core_web_sm')
 
@@ -216,9 +217,26 @@ def view_essay_submissions(request):
     assignments = Assignment.objects.select_related('teacher','course').filter(teacher__id=user_id)
     enrollments = Enrollment.objects.all()
     """
+    #essay_submissions = EssaySubmission.objects.select_related('student','essay').filter(student__id=user_id)
+    essays = Essay.objects.select_related('course')
     essay_submissions = EssaySubmission.objects.select_related('student','essay').filter(student__id=user_id)
+    courses = Course.objects.all()
+    for essay in essays:
+        for c in courses:
+            present = False
+            for s in c.students.all():
+                if s.id == user_id:
+                    present = True
+                    break
+            if not present:
+                essays = essays.exclude(id=essay.id)
+    date_today = datetime.datetime.now().replace(tzinfo=utc)
+
     context = {
+        'essays': essays,
+        'courses': courses,
         'essay_submissions': essay_submissions,
+        'date_today': date_today,
     }
     return render(request, template, context)
 
