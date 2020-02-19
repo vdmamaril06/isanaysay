@@ -95,7 +95,8 @@ def add_essay(request):
 
 def view_essays(request):
     template = "list_essay.html"
-    essays = Essay.objects.all()
+    user_id = request.user.id
+    essays = Essay.objects.filter(course__teacher__id=user_id)
     context = {
         'essays': essays,
     }
@@ -320,11 +321,11 @@ def view_essay_submissions_for_teacher(request):
     template = "list_essay_submission_for_teacher.html"
     essay_submissions = EssaySubmission.objects.select_related('essay','student').order_by('isChecked')
     essays = Essay.objects.select_related('course')
-    assignments = Assignment.objects.select_related('teacher','course').filter(teacher__id=user_id)
+    courses = Course.objects.select_related('teacher').filter(teacher__id=user_id)
     essays_owned_list = []
-    for x in assignments:
+    for x in courses:
         for y in essays:
-            if x.course.id == y.course.id:
+            if x.id == y.course.id:
                 essays_owned_list.append(y.id)
     print(essays_owned_list)
     for x in essay_submissions:

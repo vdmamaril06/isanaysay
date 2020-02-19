@@ -59,7 +59,6 @@ class Essay(models.Model):
     maximum_length = models.IntegerField(verbose_name="Maximum Length")
     start_date_time = models.DateTimeField(verbose_name="Essay Start Date and Time")
     end_date_time = models.DateTimeField(verbose_name="Essay End Date and Time")
-    duration = models.IntegerField(verbose_name="Duration")
     criteria_no_1 = models.FloatField(verbose_name="Grammar",default=0)
     criteria_no_2 = models.FloatField(verbose_name="Spelling",default=0)
     criteria_no_3 = models.FloatField(verbose_name="Content",default=0)

@@ -177,8 +177,9 @@ var x = setInterval(function() {
                     <p class="font-weight-bold text-uppercase">ends in</p>
                     <div id="demo" class="countdown-circles d-flex flex-wrap justify-content-center pt-3"></div>
                 </div>
-		<h1>{{ essay }}</h1>
-		<h4>Instructions for this essay</h4>
+                <div id="child_content" style="display:flow-root;">
+		<h1>{{ essay }}</h1><br/><br/>
+		<h4>Instructions</h4>
 		{{ essay.essay_description }}<br/><br/>
 		Maximum number of characters: {{ essay.maximum_length }}<br/><br/>
 		Criteria for checking<br/>
@@ -195,9 +196,9 @@ var x = setInterval(function() {
 					{{ essay_submission_form.content_score }}
 					{{ essay_submission_form.submitted_date }}
 					{{ essay_submission_form.checked_date }}
-					<h4>Content of your Essay</h4>
+					<hr /><h4>Content of your Essay</h4>
 					{{ essay_submission_form.content }}<br/>
-					<p id="maxreached"></p>
+					<p id="maxreached" style="color:red;"></p>
 			<button id="finish" type="submit" class="btn btn-success">Submit Essay</button>
 		</form>
 	</div></div>
@@ -209,7 +210,7 @@ var x = setInterval(function() {
       <div class="modal-content">
         <div class="modal-header">
 
-          <h4 class="modal-title">Please input the Essay Code</h4>
+          <h4 class="modal-title">Please input the Class Code</h4>
         </div>
         <div class="modal-body">
         	<input id="essay_code" style="margin: auto; display: block;" type="text" />
