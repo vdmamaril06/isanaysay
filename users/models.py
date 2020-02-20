@@ -101,6 +101,9 @@ class EssaySubmission(models.Model):
             return False
         return True
 
+    def get_total_score(self):
+        return (self.grammar_score  * self.essay.criteria_no_1 / 100) + (self.spelling_score * self.essay.criteria_no_2 / 100 ) + (self.content_score * self.essay.criteria_no_3 / 100 )
+
 class Word(models.Model):
     essay = models.ForeignKey(Essay, verbose_name="Essay", on_delete = models.CASCADE)
     word = models.CharField(verbose_name="Word", max_length=100)
