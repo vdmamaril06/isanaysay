@@ -74,13 +74,14 @@
       <p class="card-text" style="float:left;margin-bottom:0px;"><b>Teacher:</b> {{ essay_submission.essay.course.teacher }}</p><br/>
       <p class="card-text" style="float:left; margin-bottom:0px;text-align: left; clear:both;"><b>Submitted Date:</b> {{ essay_submission.submitted_date }}</p><br/><br/>
       <p class="card-text" style="float:left; margin-bottom:0px;text-align: left;"><b>Total Score:</b> {{ essay_submission.get_total_score }}%</p>
-      <p class="card-text" style="float:left; margin-bottom:0px;text-align: left;"><b>Grammar Score ({{essay_submission.essay.criteria_no_1}}%)::</b> {{ essay_submission.grammar_score }}%</p>
-      <p class="card-text" style="float:left; margin-bottom:0px;text-align: left;"><b>Spelling Score ({{essay_submission.essay.criteria_no_2}}%)::</b> {{ essay_submission.spelling_score }}%</p>
+      <p class="card-text" style="float:left; margin-bottom:0px;text-align: left;"><b>Grammar Score ({{essay_submission.essay.criteria_no_1}}%):</b> {{ essay_submission.grammar_score }}%</p>
+      <p class="card-text" style="float:left; margin-bottom:0px;text-align: left;"><b>Spelling Score ({{essay_submission.essay.criteria_no_2}}%):</b> {{ essay_submission.spelling_score }}%</p>
       <p class="card-text" style="float:left; margin-bottom:0px;text-align: left;"><b>Content Score ({{essay_submission.essay.criteria_no_3}}%):</b> {{ essay_submission.content_score }}%</p>
     </div>
     <div class="card-footer border-success">
       <small class="text-muted">Status: Checked already.</small>
     </div>
+  </div>
 
         {% endif %}
         {% empty %}

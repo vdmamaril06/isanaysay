@@ -196,14 +196,19 @@ def add_essay_submission(request,essay_id):
     user_id = request.user.id
     essay = Essay.objects.get(id=essay_id)
     date_today = datetime.datetime.now().replace(tzinfo=utc)
+
     if request.method == "POST":
         form = EssaySubmissionForm(request.POST)
         if form.is_valid():
-            form.save()
+            print("This is the content score: " + str(form.cleaned_data['content_score']))
+            instance = form.save(commit=False)
+            instance.content_score = grade_for_essay_content(essay.words,form['content'].value())
+            print("This is the content score 2: " + str(instance.content_score))
+            instance.save()
             return HttpResponseRedirect(reverse_lazy('view-essay-submissions'))
     else:
         context = {
-            'essay_submission_form': EssaySubmissionForm(initial={'essay':essay.id,'student': user_id,'isChecked':'N','grammar_score':0,'spelling_score':0,'content_score':0,'submitted_date':date_today,'checked_date':date_today}),
+            'essay_submission_form': EssaySubmissionForm(initial={'essay':essay.id,'student': user_id,'isChecked':'N','grammar_score':0,'spelling_score':0,'submitted_date':date_today,'checked_date':date_today}),
             'essay': essay,
         }
     return render(request, template, context)
@@ -354,3 +359,11 @@ def view_essay_submission_for_checking(request, essay_submission_id):
             'essay_submission_form': CheckEssaySubmissionForm(instance=essay_submission,initial={'essay':essay_submission.essay.id,'student': user_id,'submitted_date':essay_submission.submitted_date,'checked_date':date_today}),
         }
     return render(request, template, context)
+
+def grade_for_essay_content(words,essay):
+    words = words.split(',')
+    counter = 0
+    for word in words:
+        if word.lower() in essay.lower():
+            counter += 1
+    return (counter/len(words))*100

@@ -62,7 +62,7 @@ class Essay(models.Model):
     criteria_no_1 = models.FloatField(verbose_name="Grammar",default=0)
     criteria_no_2 = models.FloatField(verbose_name="Spelling",default=0)
     criteria_no_3 = models.FloatField(verbose_name="Content",default=0)
-    word = models.CharField(verbose_name="Words",max_length=10000,default="")
+    words = models.CharField(verbose_name="Words",max_length=10000,default="")
 
     def __str__(self):
         return "%s" % self.name
