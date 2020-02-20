@@ -107,18 +107,19 @@ def delete_essay(request, essay_id):
 
 def update_essay(request, essay_id):
     template = "update_essay.html"
+    user_id = request.user.id
     essay = Essay.objects.get(id=int(essay_id))
     if request.method == "POST":
-        form = EssayForm(request.POST, instance=essay)
+        form = EssayForm(user_id,request.POST, instance=essay)
         if form.is_valid():
             form.save()
             #return HttpResponseRedirect(reverse_lazy('view-essays'))
             context = {
-                'essay_form': EssayForm(instance=essay),
+                'essay_form': EssayForm(user_id,instance=essay),
             }
     else:
         context = {
-            'essay_form': EssayForm(instance=essay),
+            'essay_form': EssayForm(user_id,instance=essay),
         }
     return render(request, template, context)
 

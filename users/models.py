@@ -62,6 +62,7 @@ class Essay(models.Model):
     criteria_no_1 = models.FloatField(verbose_name="Grammar",default=0)
     criteria_no_2 = models.FloatField(verbose_name="Spelling",default=0)
     criteria_no_3 = models.FloatField(verbose_name="Content",default=0)
+    word = models.CharField(verbose_name="Words",max_length=10000,default="")
 
     def __str__(self):
         return "%s" % self.name
@@ -103,28 +104,3 @@ class EssaySubmission(models.Model):
 
     def get_total_score(self):
         return (self.grammar_score  * self.essay.criteria_no_1 / 100) + (self.spelling_score * self.essay.criteria_no_2 / 100 ) + (self.content_score * self.essay.criteria_no_3 / 100 )
-
-class Word(models.Model):
-    essay = models.ForeignKey(Essay, verbose_name="Essay", on_delete = models.CASCADE)
-    word = models.CharField(verbose_name="Word", max_length=100)
-    weight = models.FloatField(verbose_name="Weight", default=0)
-
-    def __str__(self):
-        return "%s" % self.essay
-
-class Criterion(models.Model):
-    essay = models.ForeignKey(Essay, verbose_name="Essay", on_delete = models.CASCADE)
-    name = models.CharField(verbose_name="Criterion Name", max_length=100)
-    description = models.CharField(verbose_name="Criterion Description", max_length=300)
-    percentage = models.FloatField(verbose_name="Percentage")
-
-    def __str__(self):
-        return "%s" % self.essay
-
-class Score(models.Model):
-    essaySubmission = models.ForeignKey(EssaySubmission, verbose_name="Essay Submission", on_delete = models.CASCADE)
-    criterion = models.ForeignKey(Criterion, verbose_name="Criterion", on_delete = models.CASCADE)
-    score = models.FloatField(verbose_name="Raw Score")
-
-    def __str__(self):
-        return "%s" % self.essaySubmission

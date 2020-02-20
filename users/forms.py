@@ -104,8 +104,3 @@ class EssaySubmissionCheckingForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(EssaySubmissionForm, self).__init__(*args, **kwargs)
 		self.fields['student'].queryset = CustomUser.objects.filter(isStudent='S')
-
-class WordForm(forms.ModelForm):
-	class Meta:
-		model = Word
-		fields = '__all__'
