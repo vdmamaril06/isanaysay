@@ -3,7 +3,7 @@
 {% block content %}
 	<div id="parent"><div id="child"><br/><br/>
 		<h1>List of Essay Submissions</h1><br/><br/>
-    <h2>Ongoing Essays</h2><br/><br/>
+    <h2>Essays not submitted</h2><br/><br/>
 				{% for essay in essays %}
         {% if essay.is_ongoing %}
   <div class="card border-warning mb-3" style="max-width:350px;">
@@ -45,9 +45,9 @@
         {% empty %}
         <h5> No ongoing essays yet. </h5>
   {% endfor %}
-    <h2>Finished Essays</h2><br/><br/>
+    <h2>Submitted Essays</h2><br/><br/>
     {% for essay_submission in essay_submissions %}
-        {% if not essay_submission.check_submission %}
+        {% if not essay_submission.checked_submission %}
   <div class="card border-primary mb-3" style="max-width:350px;">
     <!--<img class="card-img-top" src="..." alt="Card image cap">-->
       <div class="card-header border-primary" ><div style="float:left;" ><h5 class="card-title">{{ essay_submission.essay.name }}</h5> </div></div>

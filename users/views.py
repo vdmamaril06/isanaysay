@@ -78,18 +78,16 @@ def view_courses(request):
 
 def add_essay(request):
     template = "add_essay.html"
-
+    user_id = request.user.id
+    form = EssayForm(user_id)
     if request.method == "POST":
-        
-        form = EssayForm(request.POST)
-
+        form = EssayForm(user_id,request.POST)
         if form.is_valid():
             form.save()
-
             return HttpResponseRedirect(reverse_lazy('view-essays'))
     else:
         context = {
-            'essay_form': EssayForm(),
+            'essay_form': form,
         }
     return render(request, template, context)
 
@@ -212,19 +210,19 @@ def add_essay_submission(request,essay_id):
 def view_essay_submissions(request):
     template = "list_essay_submission.html"
     user_id = request.user.id
+    print(user_id)
     #essay_submissions = EssaySubmission.objects.select_related('student','essay').filter(student__id=user_id)
     essays = Essay.objects.select_related('course')
     essay_submissions = EssaySubmission.objects.select_related('student','essay').filter(student__id=user_id)
     courses = Course.objects.all()
     for essay in essays:
-        for c in courses:
-            present = False
-            for s in c.students.all():
-                if s.id == user_id:
-                    present = True
-                    break
-            if not present:
-                essays = essays.exclude(id=essay.id)
+        present = False
+        for s in essay.course.students.all():
+            if s.id == user_id:
+                present = True
+                break
+        if not present:
+            essays = essays.exclude(id=essay.id)
     for essay in essays:
         present = False
         for es in essay_submissions:
@@ -337,18 +335,21 @@ def view_essay_submissions_for_teacher(request):
     return render(request, template, context)
 
 def view_essay_submission_for_checking(request, essay_submission_id):
-    template = "update_essay_submission.html"
+    user_id = request.user.id
+    date_today = datetime.datetime.now().replace(tzinfo=utc)
+    template = "check_essay_submission.html"
     essay_submission = EssaySubmission.objects.get(id=int(essay_submission_id))
+    #print(essay_submission_essay)
     if request.method == "POST":
-        form = EssaySubmissionForm(request.POST, instance=essay_submission)
+        form = CheckEssaySubmissionForm(request.POST, instance=essay_submission)
         if form.is_valid():
             form.save()
             #return HttpResponseRedirect(reverse_lazy('view-essay-submissions'))
             context = {
-                'essay_submission_form': EssaySubmissionForm(instance=essay_submission),
+                'essay_submission_form': CheckEssaySubmissionForm(instance=essay_submission,initial={'essay':essay_submission.essay.id,'student': user_id,'submitted_date':essay_submission.submitted_date,'checked_date':date_today}),
             }
     else:
         context = {
-            'essay_submission_form': EssaySubmissionForm(instance=essay_submission),
+            'essay_submission_form': CheckEssaySubmissionForm(instance=essay_submission,initial={'essay':essay_submission.essay.id,'student': user_id,'submitted_date':essay_submission.submitted_date,'checked_date':date_today}),
         }
     return render(request, template, context)

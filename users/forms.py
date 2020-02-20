@@ -49,6 +49,10 @@ class EssayForm(forms.ModelForm):
 	class Meta:
 		model = Essay
 		fields = '__all__'
+	def __init__(self,user_id, *args, **kwargs):
+		print(user_id)
+		super(EssayForm, self).__init__(*args, **kwargs)
+		self.fields['course'].queryset = Course.objects.filter(teacher__id=user_id)
 
 class EssaySubmissionForm(forms.ModelForm):
 	content = forms.CharField(widget=forms.Textarea(attrs={"rows":20, "cols":120}))
@@ -71,6 +75,23 @@ class EssaySubmissionForm(forms.ModelForm):
 		#self.fields['submitted_date'].widget = forms.HiddenInput()
 		#self.fields['checked_date'].widget = forms.HiddenInput()
 
+class CheckEssaySubmissionForm(forms.ModelForm):
+	content = forms.CharField(widget=forms.Textarea(attrs={"rows":20, "cols":120}))
+	submitted_date = forms.DateTimeField(label='What is the essay submission date?', widget=forms.SelectDateWidget)
+	checked_date = forms.DateTimeField(label='What is the essay check date?', widget=forms.SelectDateWidget)
+	#student = forms.CharField(widget=forms.Textarea(attrs={"rows":20, "cols":120}))
+
+	class Meta:
+		model = EssaySubmission
+		fields = '__all__'
+	def __init__(self, *args, **kwargs):
+		super(CheckEssaySubmissionForm, self).__init__(*args, **kwargs)
+		self.fields['student'].queryset = CustomUser.objects.filter(isStudent='S')
+		#self.fields['student'].widget = forms.HiddenInput()		
+		#self.fields['essay'].widget = forms.HiddenInput()	
+		#self.fields['submitted_date'].widget = forms.HiddenInput()
+		#self.fields['checked_date'].widget = forms.HiddenInput()
+
 class EssaySubmissionCheckingForm(forms.ModelForm):
 	content = forms.CharField(widget=forms.Textarea(attrs={"rows":20, "cols":120}))
 	submitted_date = forms.DateTimeField(label='What is the essay submission date?', widget=forms.SelectDateWidget)
@@ -85,7 +106,6 @@ class EssaySubmissionCheckingForm(forms.ModelForm):
 		self.fields['student'].queryset = CustomUser.objects.filter(isStudent='S')
 
 class WordForm(forms.ModelForm):
-
 	class Meta:
 		model = Word
 		fields = '__all__'

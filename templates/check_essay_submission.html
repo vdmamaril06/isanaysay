@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Check Essay{% endblock %}
+{% block content %}
+	<div id="parent"><div id="child"><br/><br/>
+		<h1>Check Essay Submission</h1>
+		<form role="form" action="" method="POST">
+		    {% csrf_token %}
+			<table class="table table-bordered table-striped">
+				<tbody>
+					<tr>
+						<th>Essay Name</th>
+						<th>{{ essay_submission_form.essay }}</th>
+					</tr>
+					<tr>
+						<th>Student Name</th>
+						<th>{{ essay_submission_form.student }}</th>
+					</tr>
+					<tr>
+						<th>Content</th>
+						<th>{{ essay_submission_form.content }}</th>
+					</tr>
+					<tr>
+						<th>is Checked Already?</th>
+						<th>{{ essay_submission_form.isChecked }}</th>
+					</tr>
+					<tr>
+						<th>Submitted Date</th>
+						<th>{{ essay_submission_form.submitted_date }}</th>
+					</tr>
+					<tr>
+						<th>Grammar Score</th>
+						<th>{{ essay_submission_form.grammar_score }}</th>
+					</tr>
+					<tr>
+						<th>Spelling Score</th>
+						<th>{{ essay_submission_form.spelling_score }}</th>
+					</tr>
+					<tr>
+						<th>Content Score</th>
+						<th>{{ essay_submission_form.content_score }}</th>
+					</tr>
+				</tbody>
+			</table>
+			<button type="submit" class="btn btn-success">Save</button>
+			<a href="{% url 'view-essay-submissions' %}" class="btn btn-info">Back</a> 
+		</form>
+	</div></div>
+
+{% endblock %}

@@ -97,7 +97,7 @@ class EssaySubmission(models.Model):
         return "%s" % self.essay
 
     def checked_submission(self):
-        if isChecked == 'N':
+        if self.isChecked == 'N':
             return False
         return True
 

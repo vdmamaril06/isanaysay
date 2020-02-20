@@ -6,14 +6,12 @@
 		<h1>List of Essays</h1>
 		<a href="{% url 'add-essay' %}" class="btn btn-success">Add Essay</a> <br /><br />
 
-				
 		<table class="table table-striped table-bordered">
 			<thead>
 				<tr>
 					<th>Course Name</th>
 					<th>Essay Name</th>
 					<th>Maximum Length</th>
-					<th>Duration</th>
 					<th>Start Date</th>
 					<th>End Date</th>
 					<th></th>
@@ -27,7 +25,6 @@
 					<td>{{ essay.course.name }}</td>
 					<td>{{ essay.name }}</td>
 					<td>{{ essay.maximum_length }}</td>
-					<td>{{ essay.duration }}</td>
 					<td>{{ essay.start_date_time }}</td>
 					<td>{{ essay.end_date_time }}</td>
 					<td>
