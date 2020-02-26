@@ -11,6 +11,7 @@ from django.db.models import Count
 import datetime
 import spacy
 nlp = spacy.load('en_core_web_sm')
+from nltk.corpus import wordnet
 
 # Create your views here.
 
@@ -305,8 +306,21 @@ def grade_for_essay_content(words,essay):
     words = words.split(',')
     counter = 0
     for word in words:
-        for essay_word in essay:
+        word_found = False
+        for essay_word in essay.split():
+            print(essay_word)
             if word.lower() == essay_word.lower():
                 counter += 1
+                word_found = True
                 break
+            else:
+                for syn in wordnet.synsets(essay_word):
+                    if word_found:
+                        break
+                    for l in syn.lemmas():
+                        print(l.name().lower())
+                        if word.lower() == l.name().lower():
+                            counter += 1
+                            word_found = True
+                            break
     return (counter/len(words))*100
