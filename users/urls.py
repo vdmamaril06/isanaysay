@@ -22,9 +22,7 @@ urlpatterns = [
     url(r'^update_essay_submission/(?P<essay_submission_id>\d+)$', update_essay_submission, name='update-essay-submission'),
     url(r'^delete_essay_submission/(?P<essay_submission_id>\d+)$', delete_essay_submission, name='delete-essay-submission'),
     url(r'^view_essay_submission/(?P<essay_submission_id>\d+)$', view_essay_submission, name='view-essay-submission'),
-    url(r'^view_enrollment$', view_enrollments, name='view-enrollments'),
     url(r'^update_profile/(?P<user_id>\d+)$', update_profile, name='update-profile'),
-    url(r'^add_word$', add_word, name='add-word'),
     url(r'^view_essay_submissions_for_teacher$', view_essay_submissions_for_teacher, name='view-essay-submissions-for-teacher'),
     url(r'^view_essay_submission_for_checking/(?P<essay_submission_id>\d+)$', view_essay_submission_for_checking, name='view-essay-submission-for-checking'),
 ]

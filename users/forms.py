@@ -49,7 +49,7 @@ class EssayForm(forms.ModelForm):
 	class Meta:
 		model = Essay
 		fields = '__all__'
-	def __init__(self,user_id, *args, **kwargs):
+	def __init__(self, user_id, *args, **kwargs):
 		print(user_id)
 		super(EssayForm, self).__init__(*args, **kwargs)
 		self.fields['course'].queryset = Course.objects.filter(teacher__id=user_id)

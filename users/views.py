@@ -131,65 +131,6 @@ def view_essay(request,essay_id):
 		'essay': essay,
 	}
 	return render(request, template, context)
-"""
-def add_enrollment(request):
-    template = "add_enrollment.html"
-    if request.method == "POST":
-        form = EnrollmentForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse_lazy('view-enrollments'))
-    else:
-        context = {
-            'enrollment_form': EnrollmentForm(),
-        }
-    return render(request, template, context)
-
-def delete_enrollment(request, enrollment_id):
-    enrollment = Enrollment.objects.get(id=int(enrollment_id))
-    enrollment.delete()
-    return HttpResponseRedirect(reverse_lazy('view-enrollments'))
-
-def update_enrollment(request, enrollment_id):
-    template = "update_enrollment.html"
-    enrollment = Enrollment.objects.get(id=int(enrollment_id))
-    if request.method == "POST":
-        form = EnrollmentForm(request.POST, instance=enrollment)
-        if form.is_valid():
-            form.save()
-            #return HttpResponseRedirect(reverse_lazy('view-enrollments'))
-            context = {
-                'enrollment_form': EnrollmentForm(instance=enrollment),
-            }
-    else:
-        context = {
-            'enrollment_form': EnrollmentForm(instance=enrollment),
-        }
-    return render(request, template, context)
-"""
-def view_enrollments(request):
-    template = "list_enrollment.html"
-    enrollments = Enrollment.objects.all()
-    context = {
-        'enrollments': enrollments,
-    }
-    return render(request, template, context)
-
-def add_word(request):
-    template = "add_word.html"
-
-    if request.method == "POST":
-        
-        form = WordForm(request.POST)
-
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse_lazy('home'))
-    else:
-        context = {
-            'word_form': WordForm(),
-        }
-    return render(request, template, context)
 
 def add_essay_submission(request,essay_id):
     template = "add_essay_submission.html"
@@ -364,6 +305,8 @@ def grade_for_essay_content(words,essay):
     words = words.split(',')
     counter = 0
     for word in words:
-        if word.lower() in essay.lower():
-            counter += 1
+        for essay_word in essay:
+            if word.lower() == essay_word.lower():
+                counter += 1
+                break
     return (counter/len(words))*100
