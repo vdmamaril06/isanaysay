@@ -11,7 +11,10 @@ from django.db.models import Count
 import datetime
 import spacy
 nlp = spacy.load('en_core_web_sm')
-from nltk.corpus import wordnet
+import nltk
+from nltk.corpus import wordnet, stopwords
+import grammar_check
+stop_words_en = set(stopwords.words('english'))
 
 # Create your views here.
 
@@ -144,7 +147,9 @@ def add_essay_submission(request,essay_id):
         if form.is_valid():
             print("This is the content score: " + str(form.cleaned_data['content_score']))
             instance = form.save(commit=False)
-            instance.content_score = grade_for_essay_content(essay.words,form['content'].value())
+            instance.content_score = grade_for_essay_content(essay.words,form['content'].value())['counter']
+            instance.spelling_score = grade_for_spelling(form['content'].value())
+            instance.grammar_score = grade_for_grammar(form['content'].value())
             print("This is the content score 2: " + str(instance.content_score))
             instance.save()
             return HttpResponseRedirect(reverse_lazy('view-essay-submissions'))
@@ -287,30 +292,37 @@ def view_essay_submission_for_checking(request, essay_submission_id):
     date_today = datetime.datetime.now().replace(tzinfo=utc)
     template = "check_essay_submission.html"
     essay_submission = EssaySubmission.objects.get(id=int(essay_submission_id))
+    essay_content_result = grade_for_essay_content(essay_submission.essay.words,essay_submission.content)
     #print(essay_submission_essay)
     if request.method == "POST":
         form = CheckEssaySubmissionForm(request.POST, instance=essay_submission)
         if form.is_valid():
             form.save()
-            #return HttpResponseRedirect(reverse_lazy('view-essay-submissions'))
+            return HttpResponseRedirect(reverse_lazy('view-essay-submissions-for-teacher'))
+            """
             context = {
-                'essay_submission_form': CheckEssaySubmissionForm(instance=essay_submission,initial={'essay':essay_submission.essay.id,'student': user_id,'submitted_date':essay_submission.submitted_date,'checked_date':date_today}),
-            }
+                'essay_submission_form': CheckEssaySubmissionForm(instance=essay_submission,initial={'essay':essay_submission.essay.id,'student': essay_submission.student,'isChecked':'Y','submitted_date':essay_submission.submitted_date,'checked_date':date_today}),
+                'essay_submission' : essay_submission,
+            }"""
     else:
         context = {
-            'essay_submission_form': CheckEssaySubmissionForm(instance=essay_submission,initial={'essay':essay_submission.essay.id,'student': user_id,'submitted_date':essay_submission.submitted_date,'checked_date':date_today}),
+            'essay_submission_form': CheckEssaySubmissionForm(instance=essay_submission,initial={'essay':essay_submission.essay.id,'student': essay_submission.student,'isChecked':'Y','submitted_date':essay_submission.submitted_date,'checked_date':date_today}),
+            'essay_submission' : essay_submission,
+            'unmatched_words': essay_content_result["unmatched_words"],
+            'matched_words': essay_content_result["matched_words"],
         }
     return render(request, template, context)
 
 def grade_for_essay_content(words,essay):
     words = words.split(',')
+    result = {'counter':0,'matched_words':[],'unmatched_words':[]}
     counter = 0
     for word in words:
         word_found = False
         for essay_word in essay.split():
             print(essay_word)
             if word.lower() == essay_word.lower():
-                counter += 1
+                result["counter"] += 1
                 word_found = True
                 break
             else:
@@ -320,7 +332,51 @@ def grade_for_essay_content(words,essay):
                     for l in syn.lemmas():
                         print(l.name().lower())
                         if word.lower() == l.name().lower():
-                            counter += 1
+                            result["counter"] += 1
                             word_found = True
                             break
-    return (counter/len(words))*100
+        if not word_found:
+            result["unmatched_words"].append(word)
+        else: 
+            result["matched_words"].append(word)
+    result["counter"] = (result["counter"]/len(words))*100
+    return result
+
+def tokens(sent):
+        return nltk.word_tokenize(sent)
+
+def grade_for_spelling(line):
+    line = removePunct(line.lower())
+    number_of_mispelled_words = 0
+    total = 0
+    for i in tokens(line):
+        strip = i.rstrip()
+        if not wordnet.synsets(strip):
+            if strip in stop_words_en:    # <--- Check whether it's in stopword list
+                total += 1
+                continue
+            else:
+                total += 1
+                number_of_mispelled_words += 1
+        else: 
+            total += 1
+            continue
+    number_of_correct = total - number_of_mispelled_words
+    return number_of_correct / total * 100
+
+
+def removePunct(str):
+        return  "".join(c for c in str if c not in ('!','.',':',',','-','&','#','%','$'))
+
+def grade_for_grammar(essay):
+    sentences = essay.split('.')
+    sentences = [string for string in sentences if string != ""]
+    tool = grammar_check.LanguageTool('en-US')
+    incorrect = 0
+    for sentence in sentences:
+        matches = tool.check(sentence)
+        if len(matches) > 0:
+            incorrect += 1
+    number_of_correct_grammar = len(sentences) - incorrect
+    return number_of_correct_grammar / len(sentences) * 100
+

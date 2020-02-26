@@ -8,12 +8,17 @@
 				{% ifequal essay_submission.isChecked 'N' %}
   <div class="card border-danger">
     <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+      <div class="card-header border-danger" ><div style="float:left;" >
+      <a href="{% url 'view-essay-submission-for-checking' essay_submission.id %}"><h5 class="card-title">{{ essay_submission.essay }}</h5> </a></div></div>
     <div class="card-body">
-      <a href="{% url 'view-essay-submission-for-checking' essay_submission.id %}"><h5 class="card-title">{{ essay_submission.essay }}</h5> </a>
-      <h6 class="card-title">{{ essay_submission.essay.course }}</h6>
-      <p class="card-text"><b>Student Name:</b> {{ essay_submission.student }}</p>
-      <p class="card-text"><b>Status:</b> {{ essay_submission.isChecked }}</p>
-      <p class="card-text"><b>Submitted Date:</b> {{ essay_submission.submitted_date }}</p>
+      <p class="card-text" style="float:left;margin-bottom:0px;"><b>Course:</b> {{ essay_submission.essay.course }}</p><br/>
+      <p class="card-text" style="float:left;margin-bottom:0px;"><b>Student:</b> {{ essay_submission.student }}</p>
+      <p class="card-text" style="float:left;margin-bottom:0px;"><b>Submitted Date:</b> {{ essay_submission.submitted_date }}</p>
+      <p class="card-text" style="float:left; text-align: left;"><b>Schedule:</b> {{ essay_submission.essay.start_date_time }} to {{ essay_submission.essay.end_date_time }}</p>
+      <p class="card-text" style="float:left; margin-bottom:0px;clear:both;"><b>Total Score:</b> {{ essay_submission.get_total_score }}%</p><br/><br/><br/><br/>
+      <p class="card-text" style="float:left; margin-bottom:0px;clear:both;"><b>Grammar Score ({{essay_submission.essay.criteria_no_1}}%):</b> {{ essay_submission.grammar_score }}%</p>
+      <p class="card-text" style="float:left; margin-bottom:0px;text-align: left;"><b>Spelling Score ({{essay_submission.essay.criteria_no_2}}%):</b> {{ essay_submission.spelling_score }}%</p>
+      <p class="card-text" style="float:left; margin-bottom:0px;text-align: left;"><b>Content Score ({{essay_submission.essay.criteria_no_3}}%):</b> {{ essay_submission.content_score }}%</p>
     </div>
     <div class="card-footer border-danger">
       <small class="text-muted">Not yet checked.</small>
@@ -23,12 +28,17 @@
 	{% ifequal essay_submission.isChecked 'Y' %}
   <div class="card border-success">
     <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+      <div class="card-header border-success" ><div style="float:left;" ><h5 class="card-title">{{ essay_submission.essay }}</h5></div></div>
     <div class="card-body">
-      <a href="{% url 'view-essay-submission-for-checking' essay_submission.id %}"><h5 class="card-title">{{ essay_submission.essay }}</h5> </a>
-      <h6 class="card-title">{{ essay_submission.essay.course }}</h6>
-      <p class="card-text"><b>Student Name:</b> {{ essay_submission.student }}</p>
-      <p class="card-text"><b>Status:</b> {{ essay_submission.isChecked }}</p>
-      <p class="card-text"><b>Submitted Date:</b> {{ essay_submission.submitted_date }}</p>
+      <p class="card-text" style="float:left;margin-bottom:0px;"><b>Course:</b> {{ essay_submission.essay.course }}</p><br/>
+      <p class="card-text" style="float:left;margin-bottom:0px;"><b>Student:</b> {{ essay_submission.student }}</p>
+      <p class="card-text" style="float:left;margin-bottom:0px;"><b>Submitted Date:</b> {{ essay_submission.submitted_date }}</p>
+      <p class="card-text" style="float:left;margin-bottom:0px;"><b>Checked Date:</b> {{ essay_submission.checked_date }}</p><br/><br/><br/><br/>
+      <p class="card-text" style="float:left; margin-bottom:0px;clear:both;"><b>Total Score:</b> {{ essay_submission.get_total_score }}%</p><br/>
+      <p class="card-text" style="float:left; margin-bottom:0px;"><b>Grammar Score ({{essay_submission.essay.criteria_no_1}}%):</b> {{ essay_submission.grammar_score }}%</p>
+      <p class="card-text" style="float:left; margin-bottom:0px;text-align: left;"><b>Spelling Score ({{essay_submission.essay.criteria_no_2}}%):</b> {{ essay_submission.spelling_score }}%</p>
+      <p class="card-text" style="float:left; margin-bottom:0px;text-align: left;"><b>Content Score ({{essay_submission.essay.criteria_no_3}}%):</b> {{ essay_submission.content_score }}%</p>
+
     </div>
     <div class="card-footer border-success">
       <small class="text-muted">Checked on {{ essay_submission.checked_date }}.</small>

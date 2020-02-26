@@ -87,10 +87,11 @@ class CheckEssaySubmissionForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(CheckEssaySubmissionForm, self).__init__(*args, **kwargs)
 		self.fields['student'].queryset = CustomUser.objects.filter(isStudent='S')
-		#self.fields['student'].widget = forms.HiddenInput()		
-		#self.fields['essay'].widget = forms.HiddenInput()	
-		#self.fields['submitted_date'].widget = forms.HiddenInput()
-		#self.fields['checked_date'].widget = forms.HiddenInput()
+		#self.fields['essay'].widget.attrs['disabled'] = True
+		self.fields['essay'].widget = forms.HiddenInput()		
+		self.fields['student'].widget = forms.HiddenInput()		
+		self.fields['content'].widget = forms.HiddenInput()		
+		self.fields['isChecked'].widget = forms.HiddenInput()	
 
 class EssaySubmissionCheckingForm(forms.ModelForm):
 	content = forms.CharField(widget=forms.Textarea(attrs={"rows":20, "cols":120}))

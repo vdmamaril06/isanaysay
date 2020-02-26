@@ -1,4 +1,125 @@
 {% extends 'base.html' %}
+{% block style %}
+<script>
+    $(document).ready(function(){ 
+		$("#id_submitted_date_month").hide();
+		$("#id_submitted_date_day").hide();
+		$("#id_submitted_date_year").hide();
+		$("#id_checked_date_month").hide();
+		$("#id_checked_date_day").hide();
+		$("#id_checked_date_year").hide();
+
+		
+		var totalScore = {{ essay_submission.essay.criteria_no_1 }} / 100 * $("#id_grammar_score").val() + {{ essay_submission.essay.criteria_no_2 }} / 100 * $("#id_spelling_score").val() + {{ essay_submission.essay.criteria_no_3 }} / 100 * $("#id_content_score").val();
+		$("#show_total").html(totalScore);
+		if ($("#id_spelling_score").val() >= 0 && $("#id_spelling_score").val() <= 25){
+			$("#s1").css("background-color", "#34ff34");
+		} else if ($("#id_spelling_score").val() >= 25.01 && $("#id_spelling_score").val() <= 50){
+			$("#s2").css("background-color", "#34ff34");
+		} else if ($("#id_spelling_score").val() >= 50.01 && $("#id_spelling_score").val() <= 75){
+			$("#s3").css("background-color", "#34ff34");
+		} else if ($("#id_spelling_score").val() >= 75.01 && $("#id_spelling_score").val() <= 100){
+			$("#s4").css("background-color", "#34ff34");
+		}
+		if ($("#id_content_score").val() >= 0 && $("#id_content_score").val() <= 25){
+			$("#c1").css("background-color", "#34ff34");
+		} else if ($("#id_content_score").val() >= 25.01 && $("#id_content_score").val() <= 50){
+			$("#c2").css("background-color", "#34ff34");
+		} else if ($("#id_content_score").val() >= 50.01 && $("#id_content_score").val() <= 75){
+			$("#c3").css("background-color", "#34ff34");
+		} else if ($("#id_content_score").val() >= 75.01 && $("#id_content_score").val() <= 100){
+			$("#c4").css("background-color", "#34ff34");
+		}
+		if ($("#id_grammar_score").val() >= 0 && $("#id_grammar_score").val() <= 25){
+			$("#g1").css("background-color", "#34ff34");
+		} else if ($("#id_grammar_score").val() >= 25.01 && $("#id_grammar_score").val() <= 50){
+			$("#g2").css("background-color", "#34ff34");
+		} else if ($("#id_grammar_score").val() >= 50.01 && $("#id_grammar_score").val() <= 75){
+			$("#g3").css("background-color", "#34ff34");
+		} else if ($("#id_grammar_score").val() >= 75.01 && $("#id_grammar_score").val() <= 100){
+			$("#g4").css("background-color", "#34ff34");
+		}
+		$("#id_spelling_score").keyup(function(){
+			var totalScore = {{ essay_submission.essay.criteria_no_1 }} / 100 * $("#id_grammar_score").val() + {{ essay_submission.essay.criteria_no_2 }} / 100 * $("#id_spelling_score").val() + {{ essay_submission.essay.criteria_no_3 }} / 100 * $("#id_content_score").val();
+			$("#show_total").html(totalScore);
+			var spelling_score = $("#id_spelling_score").val();
+			if (spelling_score >= 0 && spelling_score <= 25){
+				$("#s1").css("background-color", "#34ff34");
+				$("#s2").css("background-color", "white");
+				$("#s3").css("background-color", "white");
+				$("#s4").css("background-color", "white");
+			} else if (spelling_score >= 25.01 && spelling_score <= 50){
+				$("#s2").css("background-color", "#34ff34");
+				$("#s1").css("background-color", "white");
+				$("#s3").css("background-color", "white");
+				$("#s4").css("background-color", "white");
+			} else if (spelling_score >= 50.01 && spelling_score <= 75){
+				$("#s3").css("background-color", "#34ff34");
+				$("#s2").css("background-color", "white");
+				$("#s1").css("background-color", "white");
+				$("#s4").css("background-color", "white");
+			} else if (spelling_score >= 75.01 && spelling_score <= 100){
+				$("#s4").css("background-color", "#34ff34");
+				$("#s2").css("background-color", "white");
+				$("#s3").css("background-color", "white");
+				$("#s1").css("background-color", "white");
+			}
+		});
+		$("#id_content_score").keyup(function(){
+			var totalScore = {{ essay_submission.essay.criteria_no_1 }} / 100 * $("#id_grammar_score").val() + {{ essay_submission.essay.criteria_no_2 }} / 100 * $("#id_spelling_score").val() + {{ essay_submission.essay.criteria_no_3 }} / 100 * $("#id_content_score").val();
+			$("#show_total").html(totalScore);
+			var content_score = $("#id_content_score").val();
+			if (content_score >= 0 && content_score <= 25){
+				$("#c1").css("background-color", "#34ff34");
+				$("#c2").css("background-color", "white");
+				$("#c3").css("background-color", "white");
+				$("#c4").css("background-color", "white");
+			} else if (content_score >= 25.01 && content_score <= 50){
+				$("#c2").css("background-color", "#34ff34");
+				$("#c1").css("background-color", "white");
+				$("#c3").css("background-color", "white");
+				$("#c4").css("background-color", "white");
+			} else if (content_score >= 50.01 && content_score <= 75){
+				$("#c3").css("background-color", "#34ff34");
+				$("#c2").css("background-color", "white");
+				$("#c1").css("background-color", "white");
+				$("#c4").css("background-color", "white");
+			} else if (content_score >= 75.01 && content_score <= 100){
+				$("#c4").css("background-color", "#34ff34");
+				$("#c2").css("background-color", "white");
+				$("#c3").css("background-color", "white");
+				$("#c1").css("background-color", "white");
+			}
+		});
+		$("#id_grammar_score").keyup(function(){
+			var totalScore = {{ essay_submission.essay.criteria_no_1 }} / 100 * $("#id_grammar_score").val() + {{ essay_submission.essay.criteria_no_2 }} / 100 * $("#id_spelling_score").val() + {{ essay_submission.essay.criteria_no_3 }} / 100 * $("#id_content_score").val();
+			$("#show_total").html(totalScore);
+			var grammar_score = $("#id_grammar_score").val();
+			if (grammar_score >= 0 && grammar_score <= 25){
+				$("#g1").css("background-color", "#34ff34");
+				$("#g2").css("background-color", "white");
+				$("#g3").css("background-color", "white");
+				$("#g4").css("background-color", "white");
+			} else if (grammar_score >= 25.01 && grammar_score <= 50){
+				$("#g2").css("background-color", "#34ff34");
+				$("#g1").css("background-color", "white");
+				$("#g3").css("background-color", "white");
+				$("#g4").css("background-color", "white");
+			} else if (grammar_score >= 50.01 && grammar_score <= 75){
+				$("#g3").css("background-color", "#34ff34");
+				$("#g2").css("background-color", "white");
+				$("#g1").css("background-color", "white");
+				$("#g4").css("background-color", "white");
+			} else if (grammar_score >= 75.01 && grammar_score <= 100){
+				$("#g4").css("background-color", "#34ff34");
+				$("#g2").css("background-color", "white");
+				$("#g3").css("background-color", "white");
+				$("#g1").css("background-color", "white");
+			}
+		});
+    });
+</script>
+{% endblock %}
 {% block title %}Check Essay{% endblock %}
 {% block content %}
 	<div id="parent"><div id="child"><br/><br/>
@@ -9,40 +130,74 @@
 				<tbody>
 					<tr>
 						<th>Essay Name</th>
-						<th>{{ essay_submission_form.essay }}</th>
+						<th>{{ essay_submission_form.essay }}{{ essay_submission.essay }}</th>
 					</tr>
 					<tr>
 						<th>Student Name</th>
-						<th>{{ essay_submission_form.student }}</th>
+						<th>{{ essay_submission_form.student }}{{ essay_submission.student }}</th>
 					</tr>
 					<tr>
 						<th>Content</th>
-						<th>{{ essay_submission_form.content }}</th>
-					</tr>
-					<tr>
-						<th>is Checked Already?</th>
-						<th>{{ essay_submission_form.isChecked }}</th>
-					</tr>
+						<th>{{ essay_submission_form.content }}{{ essay_submission.content }}</th>
+					</tr>{{ essay_submission_form.isChecked }}
 					<tr>
 						<th>Submitted Date</th>
-						<th>{{ essay_submission_form.submitted_date }}</th>
-					</tr>
-					<tr>
-						<th>Grammar Score</th>
-						<th>{{ essay_submission_form.grammar_score }}</th>
-					</tr>
-					<tr>
-						<th>Spelling Score</th>
-						<th>{{ essay_submission_form.spelling_score }}</th>
-					</tr>
-					<tr>
-						<th>Content Score</th>
-						<th>{{ essay_submission_form.content_score }}</th>
-					</tr>
+						<th>{{ essay_submission.submitted_date }}{{ essay_submission_form.submitted_date }}</th>
+					</tr>{{ essay_submission_form.checked_date }}
+
 				</tbody>
 			</table>
-			<button type="submit" class="btn btn-success">Save</button>
-			<a href="{% url 'view-essay-submissions-for-teacher' %}" class="btn btn-info">Back</a> 
+			<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+.tg .tg-baqh{text-align:center;vertical-align:middle}
+.tg .tg-lqy6{text-align:right;vertical-align:middle}
+.tg .tg-yf2n{font-weight:bold;background-color:#333333;color:#ffffff;text-align:center;vertical-align:middle}
+.tg .tg-0lax{text-align:left;vertical-align:middle}
+.tg .tg-i81m{background-color:#ffffff;text-align:center;vertical-align:middle}
+</style>
+<table class="tg" style="display: inline-block;">
+  <tr>
+    <th class="tg-yf2n">Criteria</th>
+    <th class="tg-yf2n">BEGINNER</th>
+    <th class="tg-yf2n">ACCEPTANCE</th>
+    <th class="tg-yf2n">PROFICIENT</th>
+    <th class="tg-yf2n">EXEMPLARY</th>
+    <th class="tg-yf2n">SCORE</th>
+  </tr>
+  <tr>
+    <td class="tg-0lax"><span style="font-weight:bold">Content ({{essay_submission.essay.criteria_no_3}}%)</span><br><span style="font-style:italic">Formula: Number of keywords found / </span><br><span style="font-style:italic">total number of keywords</span></td>
+    <td class="tg-baqh" id="c1">0% - 25%</td>
+    <td class="tg-baqh" id="c2">25.01% - 50%</td>
+    <td class="tg-i81m" id="c3">50.01% - 75%</td>
+    <td class="tg-baqh" id="c4">75.01% - 100%</td>
+    <td class="tg-baqh">{{ essay_submission_form.content_score }}</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"><span style="font-weight:bold">Spelling ({{essay_submission.essay.criteria_no_2}}%)</span><br><span style="font-style:italic">Formula: number of correctly spelled words / </span><br><span style="font-style:italic">total number of words</span></td>
+    <td class="tg-baqh" id="s1">0% - 25%</td>
+    <td class="tg-baqh" id="s2">25.01% - 50%</td>
+    <td class="tg-baqh" id="s3">50.01% - 75%</td>
+    <td class="tg-baqh" id="s4">75.01% - 100%</td>
+    <td class="tg-baqh">{{ essay_submission_form.spelling_score }}</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"><span style="font-weight:bold">Grammar ({{essay_submission.essay.criteria_no_1}}%)</span><br><span style="font-style:italic">Formula: number of sentences with correct grammar / </span><br><span style="font-style:italic">total number of sentences</span></td>
+    <td class="tg-baqh" id="g1">0% - 25%</td>
+    <td class="tg-baqh" id="g2">25.01% - 50%</td>
+    <td class="tg-baqh" id="g3">50.01% - 75%</td>
+    <td class="tg-baqh" id="g4">75.01% - 100%</td>
+    <td class="tg-baqh">{{ essay_submission_form.grammar_score }}</td>
+  </tr>
+  <tr>
+    <td class="tg-lqy6" colspan="5"><span style="font-weight:bold">TOTAL SCORE</span><br><span style="font-style:italic">Formula: (Content Score * Content Score Percentage) + (Spelling Score * Spelling Score Percentage) + (Grammar Score * Grammar Score Percentage)</span></td>
+    <b><td class="tg-baqh" id="show_total"></td></b>
+  </tr>
+</table><br/> {{ unmatched_words }}
+			<button type="submit" class="btn btn-success">Mark as Checked</button>
+			<a href="{% url 'view-essay-submissions-for-teacher' %}" class="btn btn-info">Back</a> <br/>
+			{{ matched_words }}
 		</form>
 	</div></div>
 
