@@ -167,7 +167,11 @@
     <th class="tg-yf2n">SCORE</th>
   </tr>
   <tr>
-    <td class="tg-0lax"><span style="font-weight:bold">Content ({{essay_submission.essay.criteria_no_3}}%)</span><br><span style="font-style:italic">Formula: Number of keywords found / </span><br><span style="font-style:italic">total number of keywords</span></td>
+    <td class="tg-0lax"><span style="font-weight:bold">Content ({{essay_submission.essay.criteria_no_3}}%)</span><br><span style="font-style:italic">Formula: Number of keywords found / </span><br><span style="font-style:italic">total number of keywords</span><br/><b>Notes:</b><br/>
+
+			1. The following keywords were not found: {{ unmatched_words }}<br/>
+			2. The following keywords were found: {{ matched_words }}<br/>
+			3. Add or subtract {{ essay_content_individual_score }}% to the content score for each recosidered keyword.</td>
     <td class="tg-baqh" id="c1">0% - 25%</td>
     <td class="tg-baqh" id="c2">25.01% - 50%</td>
     <td class="tg-i81m" id="c3">50.01% - 75%</td>
@@ -175,7 +179,10 @@
     <td class="tg-baqh">{{ essay_submission_form.content_score }}</td>
   </tr>
   <tr>
-    <td class="tg-0lax"><span style="font-weight:bold">Spelling ({{essay_submission.essay.criteria_no_2}}%)</span><br><span style="font-style:italic">Formula: number of correctly spelled words / </span><br><span style="font-style:italic">total number of words</span></td>
+    <td class="tg-0lax"><span style="font-weight:bold">Spelling ({{essay_submission.essay.criteria_no_2}}%)</span><br><span style="font-style:italic">Formula: number of correctly spelled words / </span><br><span style="font-style:italic">total number of words<br/></span><b>Notes:</b><br/>
+
+			1. The following words were misspelled: {{ mispelled_words }}<br/>
+			2. Add {{ spelling_individual_score }}% to the spelling score for each recosidered keyword.</td>
     <td class="tg-baqh" id="s1">0% - 25%</td>
     <td class="tg-baqh" id="s2">25.01% - 50%</td>
     <td class="tg-baqh" id="s3">50.01% - 75%</td>
@@ -183,7 +190,11 @@
     <td class="tg-baqh">{{ essay_submission_form.spelling_score }}</td>
   </tr>
   <tr>
-    <td class="tg-0lax"><span style="font-weight:bold">Grammar ({{essay_submission.essay.criteria_no_1}}%)</span><br><span style="font-style:italic">Formula: number of sentences with correct grammar / </span><br><span style="font-style:italic">total number of sentences</span></td>
+    <td class="tg-0lax"><span style="font-weight:bold">Grammar ({{essay_submission.essay.criteria_no_1}}%)</span><br><span style="font-style:italic">Formula: number of sentences with correct grammar / </span><br><span style="font-style:italic">total number of sentences</span><br/><b>Notes:</b><br/>
+
+			1. The following sentences contains more than 10% ambiguous words: {{ lexically_ambiguous_sentences }}<br/>
+			2. The following sentences are grammatically incorrect: {{ gramatically_ambiguous_sentences }}<br/>
+			3. Add or subtract {{ grammar_individual_score }}% to the grammar score for each recosidered sentence.</td>
     <td class="tg-baqh" id="g1">0% - 25%</td>
     <td class="tg-baqh" id="g2">25.01% - 50%</td>
     <td class="tg-baqh" id="g3">50.01% - 75%</td>
@@ -194,10 +205,9 @@
     <td class="tg-lqy6" colspan="5"><span style="font-weight:bold">TOTAL SCORE</span><br><span style="font-style:italic">Formula: (Content Score * Content Score Percentage) + (Spelling Score * Spelling Score Percentage) + (Grammar Score * Grammar Score Percentage)</span></td>
     <b><td class="tg-baqh" id="show_total"></td></b>
   </tr>
-</table><br/> {{ unmatched_words }}
+</table><br/> 
 			<button type="submit" class="btn btn-success">Mark as Checked</button>
-			<a href="{% url 'view-essay-submissions-for-teacher' %}" class="btn btn-info">Back</a> <br/>
-			{{ matched_words }}
+			<a href="{% url 'view-essay-submissions-for-teacher' %}" class="btn btn-info">Back</a> <br/><br/><br/>
 		</form>
 	</div></div>
 

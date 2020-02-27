@@ -15,6 +15,7 @@ from spacy.lang.en.stop_words import STOP_WORDS
 nlp = spacy.load('en_core_web_sm')
 nlp.add_pipe(WordnetAnnotator(nlp.lang), after='tagger')
 import grammar_check
+import re
 
 # Create your views here.
 
@@ -148,8 +149,8 @@ def add_essay_submission(request,essay_id):
             print("This is the content score: " + str(form.cleaned_data['content_score']))
             instance = form.save(commit=False)
             instance.content_score = grade_for_essay_content(essay.words,form['content'].value())['counter']
-            instance.spelling_score = grade_for_spelling(form['content'].value())
-            instance.grammar_score = grade_for_grammar(form['content'].value())
+            instance.spelling_score = grade_for_spelling(form['content'].value())['score']
+            instance.grammar_score = grade_for_grammar(form['content'].value())["score"]
             print("This is the content score 2: " + str(instance.content_score))
             instance.save()
             return HttpResponseRedirect(reverse_lazy('view-essay-submissions'))
@@ -293,6 +294,8 @@ def view_essay_submission_for_checking(request, essay_submission_id):
     template = "check_essay_submission.html"
     essay_submission = EssaySubmission.objects.get(id=int(essay_submission_id))
     essay_content_result = grade_for_essay_content(essay_submission.essay.words,essay_submission.content)
+    spelling_result = grade_for_spelling(essay_submission.content)
+    grammar_result = grade_for_grammar(essay_submission.content)
     #print(essay_submission_essay)
     if request.method == "POST":
         form = CheckEssaySubmissionForm(request.POST, instance=essay_submission)
@@ -310,13 +313,18 @@ def view_essay_submission_for_checking(request, essay_submission_id):
             'essay_submission' : essay_submission,
             'unmatched_words': essay_content_result["unmatched_words"],
             'matched_words': essay_content_result["matched_words"],
+            'mispelled_words': spelling_result["mispelled_words"],
+            'lexically_ambiguous_sentences': grammar_result["lexically_ambiguous_sentences"],
+            'gramatically_ambiguous_sentences': grammar_result["gramatically_ambiguous_sentences"],
+            'essay_content_individual_score': essay_content_result["individual_score"],
+            'spelling_individual_score': spelling_result["individual_score"],
+            'grammar_individual_score': grammar_result["individual_score"],
         }
     return render(request, template, context)
 
 def grade_for_essay_content(words,essay):
     words = words.split(',')
-    result = {'counter':0,'matched_words':[],'unmatched_words':[]}
-    counter = 0
+    result = {'counter':0,'matched_words':[],'unmatched_words':[],'individual_socre':0}
     for word in words:
         word_found = False
         for essay_word in essay.split():
@@ -341,6 +349,7 @@ def grade_for_essay_content(words,essay):
         else: 
             result["matched_words"].append(word)
     result["counter"] = (result["counter"]/len(words))*100
+    result["individual_score"] = 1 / len(words) * 100
     return result
 
 def tokens(sent):
@@ -349,6 +358,7 @@ def tokens(sent):
         return nlpe(sent)
 
 def grade_for_spelling(line):
+    result = {'score':0,'mispelled_words':[],'individual_socre':0}
     line = removePunct(line.lower())
     number_of_mispelled_words = 0
     total = 0
@@ -364,26 +374,53 @@ def grade_for_spelling(line):
                     continue
                 else:
                     total += 1
+                    result["mispelled_words"].append(strip)
                     number_of_mispelled_words += 1
             else: 
                 total += 1
                 continue
-    number_of_correct = total - number_of_mispelled_words
-    return number_of_correct / total * 100
+    result["score"] = (total - number_of_mispelled_words) / total * 100
+    result["individual_score"] = 1 / total * 100
+    return result 
 
 
 def removePunct(str):
         return  "".join(c for c in str if c not in ('!','.',':',',','-','&','#','%','$'))
 
 def grade_for_grammar(essay):
-    sentences = essay.split('.')
-    sentences = [string for string in sentences if string != ""]
+    result = {'score':0,'lexically_ambiguous_sentences':[],'gramatically_ambiguous_sentences':[],'individual_socre':0}
+    regex_sentences = essay.split('.')
+    regex_sentences = [string for string in regex_sentences if string != ""]
+    sentences = []
+    for x in regex_sentences:
+        r = re.findall(r"[^\s]",x)
+        if r:
+            sentences.append(x.replace("\r","").replace("\n","").replace("\t",""))
+    print("The sentences are the following: " + str(sentences))
     tool = grammar_check.LanguageTool('en-US')
     incorrect = 0
     for sentence in sentences:
         matches = tool.check(sentence)
+        words = sentence.split()
+        lexical_ambiguous_words_count = 0
         if len(matches) > 0:
             incorrect += 1
-    number_of_correct_grammar = len(sentences) - incorrect
-    return number_of_correct_grammar / len(sentences) * 100
+            result["gramatically_ambiguous_sentences"].append(sentence)
+            continue
+        for word in words:
+            if word != "":
+                token = nlp(word)[0]
+                if token._.wordnet.synsets():
+                    lexeme = nlp.vocab[word]
+                    if lexeme.is_stop != True:    # <--- Check whether it's in stopword list
+                        if len(token._.wordnet.synsets()) >= 5:
+                            print(str(word) + " has " + str(len(token._.wordnet.synsets())) + " meanings.")
+                            lexical_ambiguous_words_count += 1
+        if (lexical_ambiguous_words_count / len(words)) > 0.1:
+            incorrect += 1
+            result["lexically_ambiguous_sentences"].append(sentence)
+            continue
+    result["score"] = (len(sentences) - incorrect) / len(sentences) * 100
+    result["individual_score"] = 1 / len(sentences) * 100
+    return result 
 
