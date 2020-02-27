@@ -10,11 +10,11 @@ from django.db.models.query import QuerySet
 from django.db.models import Count
 import datetime
 import spacy
+from spacy_wordnet.wordnet_annotator import WordnetAnnotator
+from spacy.lang.en.stop_words import STOP_WORDS 
 nlp = spacy.load('en_core_web_sm')
-import nltk
-from nltk.corpus import wordnet, stopwords
+nlp.add_pipe(WordnetAnnotator(nlp.lang), after='tagger')
 import grammar_check
-stop_words_en = set(stopwords.words('english'))
 
 # Create your views here.
 
@@ -326,7 +326,8 @@ def grade_for_essay_content(words,essay):
                 word_found = True
                 break
             else:
-                for syn in wordnet.synsets(essay_word):
+                token = nlp(essay_word)[0]
+                for syn in token._.wordnet.synsets():
                     if word_found:
                         break
                     for l in syn.lemmas():
@@ -343,24 +344,30 @@ def grade_for_essay_content(words,essay):
     return result
 
 def tokens(sent):
-        return nltk.word_tokenize(sent)
+        nlpe = spacy.load('en_core_web_sm')
+        print(nlpe(sent))
+        return nlpe(sent)
 
 def grade_for_spelling(line):
     line = removePunct(line.lower())
     number_of_mispelled_words = 0
     total = 0
+    print("TOKEN = " + str(tokens(line)))
     for i in tokens(line):
-        strip = i.rstrip()
-        if not wordnet.synsets(strip):
-            if strip in stop_words_en:    # <--- Check whether it's in stopword list
+        strip = i.text.rstrip()
+        if strip != "":
+            token = nlp(strip)[0]
+            if not token._.wordnet.synsets():
+                lexeme = nlp.vocab[strip]
+                if lexeme.is_stop == True:    # <--- Check whether it's in stopword list
+                    total += 1
+                    continue
+                else:
+                    total += 1
+                    number_of_mispelled_words += 1
+            else: 
                 total += 1
                 continue
-            else:
-                total += 1
-                number_of_mispelled_words += 1
-        else: 
-            total += 1
-            continue
     number_of_correct = total - number_of_mispelled_words
     return number_of_correct / total * 100
 

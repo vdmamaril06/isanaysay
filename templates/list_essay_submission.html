@@ -4,6 +4,9 @@
 	<div id="parent"><div id="child"><br/><br/>
 		<h1>List of Essay Submissions</h1><br/><br/>
     <h2>Essays not submitted</h2><br/><br/>
+    <div style="width:100%">
+    <div class="card-deck" style="display:inline-flex">
+
 				{% for essay in essays %}
         {% if essay.is_ongoing %}
   <div class="card border-warning mb-3" style="max-width:350px;">
@@ -45,10 +48,28 @@
     </div>
   </div>
         {% endif %}
+        {% if forloop.counter|divisibleby:"3" %}
+      </div></div>
+    <div style="width:100%"><div class="card-deck" style="display:inline-flex">
+        {% endif %}
+        {% if forloop.counter|divisibleby:"3" %}
+      </div> </div><div style="width:100%"><div class="card-deck" style="display:inline-flex">
+        {% endif %}
+        {% if forloop.last %}
+        {% if forloop.counter|add:-2|divisibleby:"3" %}
+  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;"></div>
+        {% endif %}
+        {% if forloop.counter|add:-1|divisibleby:"3" %}
+  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;"></div>
+  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;"></div>
+        {% endif %}{% endif %}
         {% empty %}
         <h5> No ongoing essays yet. </h5>
   {% endfor %}
-    <h2>Submitted Essays</h2><br/><br/>
+</div></div>
+    <h2>Submitted Essays</h2><br/><br/> 
+    <div style="width:100%">
+    <div class="card-deck" style="display:inline-flex; clear:both;">
     {% for essay_submission in essay_submissions %}
         {% if not essay_submission.checked_submission %}
   <div class="card border-primary mb-3" style="max-width:350px;">
@@ -85,10 +106,22 @@
   </div>
 
         {% endif %}
+        {% if forloop.counter|divisibleby:"3" %}
+      </div> </div><div style="width:100%"><div class="card-deck" style="display:inline-flex">
+        {% endif %}
+        {% if forloop.last %}
+        {% if forloop.counter|add:-2|divisibleby:"3" %}
+  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;"></div>
+        {% endif %}
+        {% if forloop.counter|add:-1|divisibleby:"3" %}
+  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;"></div>
+  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;"></div>
+        {% endif %}
+        {% endif %}
         {% empty %}
         <h5> No essay submitted yet. </h5>
         {% endfor %}
-
+</div></div>
         
 </div>
 	</div></div>

@@ -3,10 +3,12 @@
 {% block content %}
 	<div id="parent"><div id="child"><br/><br/>
 		<h1>List of Essay Submissions</h1> <br /><br /> <br /><br />
+    <div style="width:100%">
+    <div class="card-deck" style="display:inline-flex">
 	<div class="card-deck">
 				{% for essay_submission in essay_submissions %}
 				{% ifequal essay_submission.isChecked 'N' %}
-  <div class="card border-danger">
+  <div class="card border-danger mb-3" style="max-width:350px;">
     <!--<img class="card-img-top" src="..." alt="Card image cap">-->
       <div class="card-header border-danger" ><div style="float:left;" >
       <a href="{% url 'view-essay-submission-for-checking' essay_submission.id %}"><h5 class="card-title">{{ essay_submission.essay }}</h5> </a></div></div>
@@ -26,7 +28,7 @@
   </div>
   {% endifequal %}
 	{% ifequal essay_submission.isChecked 'Y' %}
-  <div class="card border-success">
+  <div class="card border-success mb-3" style="max-width:350px;">
     <!--<img class="card-img-top" src="..." alt="Card image cap">-->
       <div class="card-header border-success" ><div style="float:left;" ><h5 class="card-title">{{ essay_submission.essay }}</h5></div></div>
     <div class="card-body">
@@ -45,7 +47,25 @@
     </div>
   </div>
   {% endifequal %}
+        {% if forloop.counter|divisibleby:"3" %}
+      </div> </div><div style="width:100%"><div class="card-deck" style="display:inline-flex">
+        {% endif %}
+        {% if forloop.last %}
+        {% if forloop.counter|divisibleby:"3" %}
+      </div> </div><div style="width:100%"><div class="card-deck" style="display:inline-flex">
+        {% endif %}
+        {% if forloop.last %}
+        {% if forloop.counter|add:-2|divisibleby:"3" %}
+  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;"></div>
+        {% endif %}
+        {% if forloop.counter|add:-1|divisibleby:"3" %}
+  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;"></div>
+  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;"></div>
+        {% endif %}
+        {% endif %}
+        {% endif %}
   {% endfor %}
+  </div> </div>
 </div>
 	</div></div>
 {% endblock %}
