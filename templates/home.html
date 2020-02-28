@@ -1,61 +1,108 @@
 <!-- templates/home.html -->
 {% extends 'base.html' %}
 {% load static %}
-
+{% block style %}
+<style>
+.btn-success{
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+</style>
+{% endblock %}
 {% block title %}Home{% endblock %}
 
 {% block content %}
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron" style="background-image: url({% static 'homepage_banner.png' %}); width:100%;background-position: center; background-repeat: no-repeat; background-size: cover; height:374px;">
-      <div class="container">
+    <div class="jumbotron" style="background-image: url({% static 'homepage_banner.png' %}); width:100%;background-position: center; background-repeat: no-repeat; background-size: cover; height:374px;padding-bottom:0px;margin-bottom:0px;">
+    </div>
+  <div style="
+    background-image: url({% static '2874398.jpg' %});
+    padding-bottom: 16px;
+    ">
+    <div class="container" style="max-width:60%;">
+      <br/><br/>
+      <h5>iSanaysay Features</h5>
+      <hr/>
+
+ <table style="width: 700px;margin: 0 auto;">
+<tbody>
+<tr style="height: 250px;">
+<td style="width: 350px;">
+          <img style="height:200px;width:300px;" src="{% static 'spelling_bg3.png' %}" alt=""></td>
+<td style="width: 350px;">
+        <div class="col-md-12">
+          <h4 style="text-align:center;">Spelling Checking</h4>
+          <p style="text-align:justify;">This feature is capable of detecting any spelling error found on the essay of the student. </p>
+        </div>
+</td>
+</tr>
+<tr style="height: 250px;">
+<td style="width: 350px;">
+        <div class="col-md-12">
+          <h4 style="text-align:center;">Grammar Checking</h4>
+          <p style="text-align:justify;">This application has a grammar checking feature which automatically checks the grammar of the essay in order to know the consistency. </p>
+          <!--<p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>-->
+       </div></td>
+<td style="width: 350px;"><img style="height:200px;width:300px;" src="{% static 'grammar_bg.png' %}" alt="" ></td>
+</tr>
+<tr style="height: 250px;">
+<td style="width: 350px;"><img style="height:200px;width:300px;" src="{% static 'content_bg2.png' %}" alt="">
+</td>
+<td style="width: 350px;">
+        <div class="col-md-12">
+          <h4 style="text-align:center;">Content of the Essay</h4>
+          <p style="text-align:justify;">This feature is capable to know whether the content of the essay is on the topic given by the teacher through keywords that is relatively found on any passage of the essay’s content.</p>
+        </div>
+</td>
+</tr>
+
 {% if user.is_authenticated %}
 {% else %}
-        <p align="center" style="postion:absolute; margin-top:26%;"><a class="btn btn-success btn-lg" href="{% url 'login' %}" role="button">Login here »</a></p>
+<tr style="height: 35px;">
+<td style="width: 350px;">&nbsp;</td>
+<td style="width: 350px;">&nbsp;</td>
+</tr>
+<tr style="height: 175px;background-color: rgba(255,255,255,0.4);">
+<td style="width: 350px; padding-left: 30px;"><img style="height:120px;width:120px;" src="{% static 'teacher.png' %}" alt=""> <a class="btn btn-success btn-lg" href="{% url 'login' %}" role="button">Login Here</a></td>
+<td style="width: 350px;"><img style="height:120px;width:120px;" src="{% static 'student.png' %}" alt=""> <a class="btn btn-success btn-lg" href="{% url 'signup' %}" role="button">Sign Up Here</a></td>
+</tr>
+<tr>
+<tr style="height: 35px;">
+<td style="width: 350px;">&nbsp;</td>
+<td style="width: 350px;">&nbsp;</td>
+</tr>
 {% endif %}
-      </div>
-    </div>
-
-    <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-md-4">
-          <h2>Spelling Checking</h2>
-          <img style="height:200px;width:300px;" src="{% static 'spelling_bg2.png' %}" alt="" class="img-thumbnail">
-          <p>This feature is capable of detecting any spelling error found on the essay of the student. </p>
-        </div>
-        <div class="col-md-4">
-          <h2>Grammar Checking</h2>
-          <img style="height:200px;width:300px;" src="{% static 'grammar_bg2.png' %}" alt="" class="img-thumbnail">
-          <p>This application has a grammar checking feature which automatically checks the grammar of the essay in order to know the consistency. </p>
-          <!--<p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>-->
-       </div>
-        <div class="col-md-4">
-          <h2>Content of the Essay</h2>
-          <img style="height:200px;width:300px;" src="{% static 'content_bg2.png' %}" alt="" class="img-thumbnail">
-          <p>This feature is capable to know whether the content of the essay is on the topic given by the teacher through keywords that is relatively found on any passage of the essay’s content.</p>
-        </div>
-      </div>
-
-      <hr>
-    <div class="container">
-      <!-- Example row of columns -->
-      <div style="text-align: center" class="row">
+<td style="width: 350px;">
         <div style="display: inline-block" class="col-md-12">
-          <h2> Contact Information </h2>
+          For more details
+          <h4> Email Us: </h4>
           <p> <b>Sheila Mae Dela Fuente</b>: qsheidelafuente@gmail.com <br/>
           <b>Joshua Jamela</b>: josh.jamela@gmail.com <br/>
           <b>Charlotte Raquel</b>: charlotteraquel27@gmail.com </p>
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.5159968983335!2d121.05930811441647!3d14.626625889785942!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b796aecb8763%3A0xaa026ea7350f82e7!2sTechnological%20Institute%20of%20the%20Philippines%2C%20Inc.!5e0!3m2!1sen!2sph!4v1576630703208!5m2!1sen!2sph" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
         </div>
-      </div>
-      <hr>
+</td>
+<td style="width: 350px;">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.5159968983335!2d121.05930811441647!3d14.626625889785942!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b796aecb8763%3A0xaa026ea7350f82e7!2sTechnological%20Institute%20of%20the%20Philippines%2C%20Inc.!5e0!3m2!1sen!2sph!4v1576630703208!5m2!1sen!2sph" width="350" height="350" frameborder="0" style="border:0;" allowfullscreen=""></iframe></td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- DivTable.com -->
 
-      <footer>
-        <p>© iSanaysay 2019</p>
-      </footer>
-    </div> <!-- /container -->
+{% endblock %}
 
- 
+{% block footer %}
+
+    <footer >
+    <div style="
+    height: 50px;
+    padding-top: 16px;
+    background-color: #36688D;
+    color: white;
+">
+  <p style="margin-bottom:0px;">&nbsp;&nbsp;&nbsp;© iSanaysay 2019-2020</p>
+    </div>
+</footer>
 
 {% endblock %}

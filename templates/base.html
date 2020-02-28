@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,6 +13,21 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <style>
+  body {
+    font-family: 'Montserrat';
+}
+/* The sticky class is added to the navbar with JS when it reaches its scroll position */
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 300;
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .content {
+  padding-top: 60px;
+}
   	.navbar-light .navbar-brand {
     	color: white;
 	}
@@ -35,14 +51,20 @@
 	.jumbotron {
 		border-radius: 0rem;
 	}
+  #footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;            /* Footer height */
+  }
   </style>
   <meta charset="utf-8">
 	{% block style %} {% endblock %}
   <title>{% block title %}iSanaysay Application{% endblock %}</title>
 
       {% if user.is_authenticated %}
-  <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#36688D;border-color: black;">
-  <a class="navbar-brand" href="{% url 'home' %}">iSanaysay<!--<img style="height:100px;width:200px;" src="{% static 'isanaysay_logo.png' %}"/>--></a>
+  <nav class="sticky navbar navbar-expand-lg navbar-light" style="background-color:#36688D;border-color: black;">
+  <img style="height:30px;width:120px;margin:auto;" src="{% static 'logo3.png' %}" alt="">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -76,13 +98,17 @@
         <a class="nav-link" href="{% url 'logout' %}"><img style="height:30px;" src="{% static 'logout.png' %}" alt="Logout"></a>
 
 </nav>
+{% else %}
+ <nav class="sticky navbar navbar-expand-lg navbar-light" style="background-color:#36688D;border-color: black;"><img style="height:30px;width:120px;margin:auto;" src="{% static 'logo3.png' %}" alt=""></nav>
       {% endif %}
 
 </head>
-<body>
-  <main>
+<body style="padding-top:39px;">
+  <main >
     {% block content %}
     {% endblock %}
   </main>
 </body>
+    {% block footer %}
+    {% endblock %}
 </html>
