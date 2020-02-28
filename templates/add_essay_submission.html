@@ -2,6 +2,9 @@
 {% block style %}
 <script>
     $(document).ready(function(){ 
+      
+    document.getElementById("home").classList.remove("active");
+    document.getElementById("navs1").classList.add("active");
 
 		$("#id_submitted_date_month").hide();
 		$("#id_submitted_date_day").hide();
@@ -184,8 +187,8 @@ var x = setInterval(function() {
                     <p class="font-weight-bold text-uppercase">ends in</p>
                     <div id="demo" class="countdown-circles d-flex flex-wrap justify-content-center pt-3"></div>
                 </div>
-                <div id="child_content" style="display:flow-root;">
-		<h1>{{ essay }}</h1><br/><br/>
+                <div id="child_content" style="display:flow-root;"><br/><br/>
+		<h1><span>{{ essay }}</span></h1><br/>
 		<h4>Instructions</h4>
 		{{ essay.essay_description }}<br/><br/>
 		Maximum number of characters: {{ essay.maximum_length }}<br/><br/>

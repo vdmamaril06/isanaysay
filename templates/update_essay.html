@@ -1,11 +1,19 @@
 {% extends 'base.html' %}
+{% block style %}
 <script>
-$("#id_start_date_time_0").datepicker();
+    $(document).ready(function(){ 
+	    document.getElementById("home").classList.remove("active");
+	    document.getElementById("navt1").classList.remove("active");
+	    document.getElementById("navt2").classList.add("active");
+	    document.getElementById("navt3").classList.remove("active");
+  	});
+	$("#id_start_date_time_0").datepicker();
 </script>
+{% endblock %}
 {% block title %}Update Essay{% endblock %}
 {% block content %}
-	<div id="parent"><div id="child"><br/><br/>
-		<h1>iSanaysay - Update Essay</h1>
+	<div id="parent"><div id="child"><br/><br/><br/>
+		<h1><span>UPDATE ESSAY</span></h1><br/>
 		<form role="form" action="" method="POST">
 		    {% csrf_token %}
 			<table class="table table-bordered table-striped">

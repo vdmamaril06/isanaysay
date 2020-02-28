@@ -1,8 +1,18 @@
 {% extends 'base.html' %}
+{% block style %}
+<script>
+    $(document).ready(function(){ 
+      document.getElementById("home").classList.remove("active");
+      document.getElementById("navt1").classList.remove("active");
+      document.getElementById("navt2").classList.remove("active");
+      document.getElementById("navt3").classList.add("active");
+    });
+</script>
+{% endblock %}
 {% block title %}Essay Submissions{% endblock %}
 {% block content %}
-	<div id="parent"><div id="child"><br/><br/>
-		<h1>List of Essay Submissions</h1> <br /><br /> <br /><br />
+	<div id="parent"><div id="child"><br/><br/><br/>
+		<h1><span>LIST OF ESSAY SUBMISSIONS</span></h1> <br /><br/>
     <div style="width:100%">
     <div class="card-deck" style="display:inline-flex">
 	<div class="card-deck">

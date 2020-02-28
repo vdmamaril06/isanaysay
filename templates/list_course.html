@@ -1,39 +1,49 @@
 {% extends 'base.html' %}
+{% block style %}
+<script>
+    $(document).ready(function(){ 
+	    document.getElementById("home").classList.remove("active");
+	    document.getElementById("navt1").classList.add("active");
+	    document.getElementById("navt2").classList.remove("active");
+	    document.getElementById("navt3").classList.remove("active");
+  	});
+</script>
+{% endblock %}
 {% block title %}My Courses{% endblock %}
 {% block content %}
 
-	<div id="parent"><div id="child"><br/><br/>
-		<h1>List of Courses</h1>
+	<div id="parent"><div id="child"><br/><br/><br/>
+		<h1><span>LIST OF COURSES</span></h1><br/>
 		<a href="{% url 'add-course' %}" class="btn btn-success">Add Course</a> <br /><br />
 
-		<table  class="ui-responsive table table-striped table-bordered">
+		<table class="ui-responsive table table-striped table-bordered">
 			<thead>
 				<tr>
-					<th>Course Name</th>
-					<th>Course Section</th>
-					<th>Units</th>
-					<th>Course Description</th>
-					<th>Start Date</th>
-					<th>Enrollment List</th>
-					<th>Update Course</th>
-					<th>Delete Course</th>
+					<th style="text-align:left;">Course Name</th>
+					<th style="text-align:left;">Course Section</th>
+					<th style="text-align:left;">Units</th>
+					<th style="text-align:left;">Course Description</th>
+					<th style="text-align:left;">Start Date</th>
+					<th style="text-align:left;">Enrollment List</th>
+					<th style="text-align:left;">Update Course</th>
+					<th style="text-align:left;">Delete Course</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for course in courses %}
 				<tr>
-					<td>{{ course.name }}</td>
-					<td>{{ course.course_code }} - {{ course.course_detail }}</td>
-					<td>{{ course.course_unit }} </td>
-					<td>{{ course.course_description }}</td>
-					<td>{{ course.start_date }}</td>
-					<td>
+					<td style="text-align:left;">{{ course.name }}</td>
+					<td style="text-align:left;">{{ course.course_code }} - {{ course.course_detail }}</td>
+					<td style="text-align:left;">{{ course.course_unit }} </td>
+					<td style="text-align:left;">{{ course.course_description }}</td>
+					<td style="text-align:left;">{{ course.start_date }}</td>
+					<td style="text-align:left;">
 						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal{{ course.id }}">Enrollments</button>
 					</td>
-					<td>
+					<td style="text-align:left;">
 						<a href="{% url 'update-course' course.id %}" class="btn btn-primary">Update</a>
 					</td>
-					<td>
+					<td style="text-align:left;">
 						<a href="{% url 'delete-course' course.id %}" class="btn btn-danger">Delete</a>
 					</td>
 				</tr>
@@ -54,13 +64,13 @@
     <div class="modal-dialog">
       <!-- Modal content-->
       <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">{{ course.name }}</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-header" style="text-align:center;">
+          <h4 class="modal-title" style="margin: auto;">{{ course.name }}</h4>
+          <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
         </div>
         <div class="modal-body">
-          <p>List of Enrollees</p>
-          <ol>
+          <p >List of Enrollees</p>
+          <ol style="text-align:left;">
           	{% for student in course.students.all|dictsort:"last_name" %}
 					<li>{{ student }}</li>
 			{% endfor %}

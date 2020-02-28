@@ -13,6 +13,21 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <style>
+  h1 {
+   width: 100%; 
+   text-align: center; 
+   border-bottom: 1px solid #000; 
+   line-height: 0.1em;
+   margin: 10px 0 20px; 
+} 
+
+h1 span { 
+    background:#fff; 
+    padding:0 10px; 
+}
+  bordered th {
+    border: 0px;
+}
   body {
     font-family: 'Montserrat';
 }
@@ -70,25 +85,25 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'home' %}">Home </a>
+      <li class="nav-item" id="home">
+        <a class="nav-link" href="{% url 'home' %}">HOME</a>
       </li>
 
 	{% if user.isStudent == "T" %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'view-courses' %}">Courses</a>
+      <li class="nav-item" id="navt1">
+        <a class="nav-link" href="{% url 'view-courses' %}">COURSES</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'view-essays' %}">Essays</a>
+      <li class="nav-item" id="navt2">
+        <a class="nav-link" href="{% url 'view-essays' %}">ESSAYS</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'view-essay-submissions-for-teacher' %}">Essay Submissions</a>
+      <li class="nav-item" id="navt3">
+        <a class="nav-link" href="{% url 'view-essay-submissions-for-teacher' %}">ESSAY SUBMISSIONS</a>
       </li>
       {% endif %}
 
 	{% if user.isStudent == "S" %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'view-essay-submissions' %}">Essay Submissions</a>
+      <li class="nav-item" id="navs1">
+        <a class="nav-link" href="{% url 'view-essay-submissions' %}">ESSAY SUBMISSIONS</a>
       </li>
       {% endif %}
     </ul>
@@ -103,6 +118,11 @@
       {% endif %}
 
 </head>
+<style>
+  bordered th {
+    border: 0px;
+  }
+</style>
 <body style="padding-top:39px;">
   <main >
     {% block content %}

@@ -2,6 +2,15 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block style %}
+<script>
+    $(document).ready(function(){ 
+      document.getElementById("home").classList.add("active");
+      document.getElementById("navs1").classList.remove("active");
+      document.getElementById("navt1").classList.remove("active");
+      document.getElementById("navt2").classList.remove("active");
+      document.getElementById("navt3").classList.remove("active");
+   });
+</script>
 <style>
 .btn-success{
   padding-top: 3px;

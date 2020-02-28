@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 
- <script>
+{% block style %}
+<script>
+    $(document).ready(function(){ 
+    	$('#home').prop("active", false);
+    	$('#navs1').prop("active", true);
+   });
 // Set the date we're counting down to
 var countDownDate = new Date("Jan 5, 2021 15:37:25").getTime();
 
@@ -30,6 +35,7 @@ var x = setInterval(function() {
   }
 }, 1000);
 </script>
+{% endblock %}
 {% block title %}View Essay{% endblock %}
 {% block content %}
 

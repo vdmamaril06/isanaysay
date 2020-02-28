@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
+{% block style %}
+<script>
+    $(document).ready(function(){ 
+      document.getElementById("home").classList.remove("active");
+      document.getElementById("navs1").classList.add("active");
+   });
+</script>
+{% endblock %}
 {% block title %}My Essay Submissions{% endblock %}
 {% block content %}
-	<div id="parent"><div id="child"><br/><br/>
-		<h1>List of Essay Submissions</h1><br/><br/>
+	<div id="parent"><div id="child"><br/><br/><br/>
+		<h1><span> LIST OF ESSAY SUBMISSIONS </span></h1><br/><br/>
     <h2>Essays not submitted</h2><br/><br/>
     <div style="width:100%">
     <div class="card-deck" style="display:inline-flex">
@@ -18,7 +26,7 @@
       <p class="card-text" style="float:left; text-align: left;"><b>Schedule:</b> {{ essay.start_date_time }} to {{ essay.end_date_time }}</p>
     </div>
     <div class="card-footer border-warning">
-      <small class="text-muted" style="float:left;">Status: Ongoing.</small>
+      <small class="text-muted">Status: Ongoing.</small>
     </div>
   </div>
         {% elif essay.is_past_due %}
@@ -31,7 +39,7 @@
       <p class="card-text" style="float:left; text-align: left;"><b>Schedule:</b> {{ essay.start_date_time }} to {{ essay.end_date_time }}</p>
     </div>
     <div class="card-footer border-danger">
-      <small class="text-muted" style="float:left;">Status: Did not submit on time.</small>
+      <small class="text-muted">Status: Did not submit on time.</small>
     </div>
   </div>
   {% else %}
@@ -44,7 +52,7 @@
       <p class="card-text" style="float:left; text-align: left;"><b>Schedule:</b> {{ essay.start_date_time }} to {{ essay.end_date_time }}</p>
     </div>
     <div class="card-footer border-secondary">
-      <small class="text-muted" style="float:left;">Status: Not yet started.</small>
+      <small class="text-muted">Status: Not yet started.</small>
     </div>
   </div>
         {% endif %}
@@ -82,7 +90,7 @@
       <p class="card-text" style="float:left; margin-bottom:0px;text-align: left;"><b>Submitted Date:</b> {{ essay_submission.submitted_date }}</p>
     </div>
     <div class="card-footer border-primary">
-      <small class="text-muted" style="float:left;">Status: Submitted for checking.</small>
+      <small class="text-muted">Status: Submitted for checking.</small>
     </div>
   </div>
 

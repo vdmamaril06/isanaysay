@@ -2,6 +2,10 @@
 {% block style %}
 <script>
     $(document).ready(function(){ 
+	    document.getElementById("home").classList.remove("active");
+	    document.getElementById("navt1").classList.remove("active");
+	    document.getElementById("navt2").classList.remove("active");
+	    document.getElementById("navt3").classList.add("active");
 		$("#id_submitted_date_month").hide();
 		$("#id_submitted_date_day").hide();
 		$("#id_submitted_date_year").hide();
@@ -122,8 +126,8 @@
 {% endblock %}
 {% block title %}Check Essay{% endblock %}
 {% block content %}
-	<div id="parent"><div id="child"><br/><br/>
-		<h1>Check Essay Submission</h1>
+	<div id="parent"><div id="child"><br/><br/><br/>
+		<h1><span>CHECK ESSAY SUBMISSION</span></h1><br/>
 		<form role="form" action="" method="POST">
 		    {% csrf_token %}
 			<table class="table table-bordered table-striped">
