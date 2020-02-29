@@ -35,9 +35,9 @@
       <div class="card-header border-danger" ><div style="float:left;" >
       <a href="{% url 'view-essay-submission-for-checking' essay_submission.id %}"><h5 class="card-title">{{ essay_submission.essay }}</h5> </a></div></div>
     <div class="card-body">
-      <p class="card-text" style="float:left;margin-bottom:0px;"><b>Course:</b> {{ essay_submission.essay.course }}</p><br/>
-      <p class="card-text" style="float:left;margin-bottom:0px;"><b>Student:</b> {{ essay_submission.student }}</p>
-      <p class="card-text" style="float:left;margin-bottom:0px;"><b>Submitted Date:</b> {{ essay_submission.submitted_date }}</p>
+      <p class="card-text" style="float:left;margin-bottom:0px;text-align: left;"><b>Course:</b> {{ essay_submission.essay.course }}</p><br/>
+      <p class="card-text" style="float:left;margin-bottom:0px;text-align: left;"><b>Student:</b> {{ essay_submission.student }}</p>
+      <p class="card-text" style="float:left;margin-bottom:0px;text-align: left;"><b>Submitted Date:</b> {{ essay_submission.submitted_date }}</p>
       <p class="card-text" style="float:left; text-align: left;"><b>Schedule:</b> {{ essay_submission.essay.start_date_time }} to {{ essay_submission.essay.end_date_time }}</p>
       <p class="card-text" style="float:left; margin-bottom:0px;clear:both;"><b>Total Score:</b> {{ essay_submission.get_total_score }}%</p><br/><br/><br/><br/>
       <p class="card-text" style="float:left; margin-bottom:0px;clear:both;"><b>Grammar Score ({{essay_submission.essay.criteria_no_1}}%):</b> {{ essay_submission.grammar_score }}%</p>
@@ -54,9 +54,9 @@
     <!--<img class="card-img-top" src="..." alt="Card image cap">-->
       <div class="card-header border-success" ><div style="float:left;" ><h5 class="card-title">{{ essay_submission.essay }}</h5></div></div>
     <div class="card-body">
-      <p class="card-text" style="float:left;margin-bottom:0px;"><b>Course:</b> {{ essay_submission.essay.course }}</p><br/>
-      <p class="card-text" style="float:left;margin-bottom:0px;"><b>Student:</b> {{ essay_submission.student }}</p>
-      <p class="card-text" style="float:left;margin-bottom:0px;"><b>Submitted Date:</b> {{ essay_submission.submitted_date }}</p>
+      <p class="card-text" style="float:left;margin-bottom:0px;text-align: left;"><b>Course:</b> {{ essay_submission.essay.course }}</p><br/>
+      <p class="card-text" style="float:left;margin-bottom:0px;text-align: left;"><b>Student:</b> {{ essay_submission.student }}</p>
+      <p class="card-text" style="float:left;margin-bottom:0px;text-align: left;"><b>Submitted Date:</b> {{ essay_submission.submitted_date }}</p>
       <p class="card-text" style="float:left;margin-bottom:0px;"><b>Checked Date:</b> {{ essay_submission.checked_date }}</p><br/><br/><br/><br/>
       <p class="card-text" style="float:left; margin-bottom:0px;clear:both;"><b>Total Score:</b> {{ essay_submission.get_total_score }}%</p><br/>
       <p class="card-text" style="float:left; margin-bottom:0px;"><b>Grammar Score ({{essay_submission.essay.criteria_no_1}}%):</b> {{ essay_submission.grammar_score }}%</p>
