@@ -18,27 +18,27 @@
 		<h1><span>UPDATE PROFILE</span></h1><br/>
 		<form role="form" action="" method="POST">
 		    {% csrf_token %}
-			<table class="table table-bordered table-striped">
+			<table class="table table-bordered table-striped" style="max-width: 377px; margin-left: auto; margin-right: auto;">
 				<tbody>
 					<tr>
-						<th>First Name</th>
-						<th>{{ update_profile_form.first_name }}</th>
+						<th style="text-align:left;">First Name</th>
+						<th style="text-align:left;">{{ update_profile_form.first_name }}</th>
 					</tr>
 					<tr>
-						<th>Middle Name</th>
-						<th>{{ update_profile_form.middle_name }}</th>
+						<th style="text-align:left;">Middle Name</th>
+						<th style="text-align:left;">{{ update_profile_form.middle_name }}</th>
 					</tr>
 					<tr>
-						<th>Last Name</th>
-						<th>{{ update_profile_form.last_name }}</th>
+						<th style="text-align:left;">Last Name</th>
+						<th style="text-align:left;">{{ update_profile_form.last_name }}</th>
 					</tr>
 					<tr>
-						<th>Email Address</th>
-						<th>{{ update_profile_form.email }}</th>
+						<th style="text-align:left;">Email Address</th>
+						<th style="text-align:left;">{{ update_profile_form.email }}</th>
 					</tr>
 					<tr>
-						<th>ID Number</th>
-						<th>{{ update_profile_form.id_number }}</th>
+						<th style="text-align:left;">ID Number</th>
+						<th style="text-align:left;">{{ update_profile_form.id_number }}</th>
 					</tr>
 				</tbody>
 			</table>
