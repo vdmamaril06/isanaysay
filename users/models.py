@@ -104,3 +104,10 @@ class EssaySubmission(models.Model):
 
     def get_total_score(self):
         return (self.grammar_score  * self.essay.criteria_no_1 / 100) + (self.spelling_score * self.essay.criteria_no_2 / 100 ) + (self.content_score * self.essay.criteria_no_3 / 100 )
+    
+
+    def save(self, *args, **kwargs):
+        self.grammar_score = round(self.grammar_score, 2)
+        self.spelling_score = round(self.spelling_score, 2)
+        self.content_score = round(self.content_score, 2)
+        super(EssaySubmission, self).save(*args, **kwargs)
