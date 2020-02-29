@@ -10,8 +10,19 @@
 {% block title %}My Essay Submissions{% endblock %}
 {% block content %}
 	<div id="parent"><div id="child"><br/><br/><br/>
-		<h1><span> LIST OF ESSAY SUBMISSIONS </span></h1><br/><br/>
-    <h2>Essays not submitted</h2><br/><br/>
+		<h1><span> LIST OF ESSAY SUBMISSIONS </span></h1><br/>
+    <div style="
+    background-color: lightgray;
+    border: 1px solid;
+    max-width: 1170px;
+    margin-top: 37px;
+    margin-left: auto;
+    margin-right: auto;
+"><br>
+    <h2 style="
+    float: left;
+    margin-left: 27px;
+">Essays not submitted</h2><br/><br/>
     <div style="width:100%">
     <div class="card-deck" style="display:inline-flex">
 
@@ -65,17 +76,29 @@
         {% endif %}
         {% if forloop.last %}
         {% if forloop.counter|add:-2|divisibleby:"3" %}
-  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;"></div>
+  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;z-index:-100;"></div>
         {% endif %}
         {% if forloop.counter|add:-1|divisibleby:"3" %}
-  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;"></div>
-  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;"></div>
+  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;z-index:-100;"></div>
+  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;z-index:-100;"></div>
         {% endif %}{% endif %}
         {% empty %}
         <h5> No ongoing essays yet. </h5>
   {% endfor %}
 </div></div>
-    <h2>Submitted Essays</h2><br/><br/> 
+</div>
+<div style="
+    background-color: lightgray;
+    border: 1px solid;
+    max-width: 1170px;
+    border-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+"><br>
+    <h2 style="
+    float: left;
+    margin-left: 27px;
+">Submitted Essays</h2><br/><br/> 
     <div style="width:100%">
     <div class="card-deck" style="display:inline-flex; clear:both;">
     {% for essay_submission in essay_submissions %}
@@ -119,17 +142,18 @@
         {% endif %}
         {% if forloop.last %}
         {% if forloop.counter|add:-2|divisibleby:"3" %}
-  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;"></div>
+  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;z-index:-100;"></div>
         {% endif %}
         {% if forloop.counter|add:-1|divisibleby:"3" %}
-  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;"></div>
-  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;"></div>
+  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;z-index:-100;"></div>
+  <div class="card border-light mb-3" style="min-width:350px;max-width:350px;z-index:-100;"></div>
         {% endif %}
         {% endif %}
         {% empty %}
         <h5> No essay submitted yet. </h5>
         {% endfor %}
 </div></div>
+</div>
         
 </div>
 	</div></div>
