@@ -31,6 +31,7 @@ class CustomUserChangeForm(UserChangeForm):
 class CourseForm(forms.ModelForm):
 	start_date = forms.DateField(label='What is the course start date?', widget=forms.SelectDateWidget)
 	end_date = forms.DateField(label='What is the course end date?', widget=forms.SelectDateWidget)
+	course_description = forms.CharField(widget=forms.Textarea(attrs={"rows":5, "cols":50}))
 
 	class Meta:
 		model = Course
@@ -43,6 +44,7 @@ class CourseForm(forms.ModelForm):
 class EssayForm(forms.ModelForm):
 #	content = forms.CharField(widget=forms.Textarea(attrs={"rows":20, "cols":120}))
 	essay_description = forms.CharField(widget=forms.Textarea(attrs={"rows":10, "cols":50}))
+	words = forms.CharField(widget=forms.Textarea(attrs={"rows":3, "cols":50}))
 	start_date_time = forms.SplitDateTimeField(label='What is the essay start date and time?', widget=forms.SplitDateTimeWidget(date_attrs={'type':'date'},time_attrs={'type':'time'}))
 	end_date_time = forms.SplitDateTimeField(label='What is the essay end date and time?', widget=forms.SplitDateTimeWidget(date_attrs={'type':'date'},time_attrs={'type':'time'}))
 
