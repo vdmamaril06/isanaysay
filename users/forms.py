@@ -29,8 +29,8 @@ class CustomUserChangeForm(UserChangeForm):
         fields = ('email', 'first_name', 'middle_name', 'last_name', 'id_number')
 
 class CourseForm(forms.ModelForm):
-	start_date = forms.DateField(label='What is the course start date?', widget=forms.SelectDateWidget)
-	end_date = forms.DateField(label='What is the course end date?', widget=forms.SelectDateWidget)
+	start_date = forms.DateField(label='What is the course start date?', widget=forms.SelectDateWidget(years=range(2019,2027)))
+	end_date = forms.DateField(label='What is the course end date?', widget=forms.SelectDateWidget(years=range(2019,2027)))
 	course_description = forms.CharField(widget=forms.Textarea(attrs={"rows":5, "cols":50}))
 
 	class Meta:
