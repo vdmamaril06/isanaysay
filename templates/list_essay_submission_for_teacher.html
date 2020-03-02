@@ -13,13 +13,17 @@
 {% block content %}
 	<div id="parent"><div id="child"><br/><br/><br/>
 		<h1><span>LIST OF ESSAY SUBMISSIONS</span></h1> <br />
-    <div style="
+    
+				{% for essay_submission in essay_submissions %}
+        {% if forloop.first %}
+        <div style="
     background-color: lightgray;
     border: 1px solid;
     max-width: 1170px;
     margin-top: 37px;
     margin-left: auto;
     margin-right: auto;
+    min-height: 90px;
 "><br>
     <h2 style="
     float: left;
@@ -27,8 +31,8 @@
 ">Essays for checking</h2>
     <div style="width:100%">
     <div class="card-deck" style="display:inline-flex">
-	<div class="card-deck">
-				{% for essay_submission in essay_submissions %}
+  <div class="card-deck">
+    {% endif %}
 				{% ifequal essay_submission.isChecked 'N' %}
   <div class="card border-danger mb-3" style="max-width:350px;">
     <!--<img class="card-img-top" src="..." alt="Card image cap">-->
@@ -86,6 +90,24 @@
         {% endif %}
         {% endif %}
         {% endif %}
+  {% empty %}
+        <div style="
+    background-color: lightgray;
+    border: 1px solid;
+    max-width: 1170px;
+    margin-top: 37px;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 90px;
+"><br>
+    <h2 style="
+    float: left;
+    margin-left: 27px;
+">No Essays for checking</h2>
+    <div style="width:100%">
+    <div class="card-deck" style="display:inline-flex">
+  <div class="card-deck">
+
   {% endfor %}
   </div> </div></div>
 </div>
