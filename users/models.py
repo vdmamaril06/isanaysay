@@ -49,7 +49,7 @@ class Course(models.Model):
     teacher = models.ForeignKey(CustomUser, verbose_name="Teacher", on_delete = models.CASCADE)
 
     def __str__(self):
-        return "%s" % self.course_code
+        return self.course_code + " - " + self.course_detail
 
 class Essay(models.Model):
     course = models.ForeignKey(Course, verbose_name="Course", on_delete = models.CASCADE)
@@ -104,7 +104,7 @@ class EssaySubmission(models.Model):
 
     def get_total_score(self):
         return (self.grammar_score  * self.essay.criteria_no_1 / 100) + (self.spelling_score * self.essay.criteria_no_2 / 100 ) + (self.content_score * self.essay.criteria_no_3 / 100 )
-    
+
 
     def save(self, *args, **kwargs):
         self.grammar_score = round(self.grammar_score, 2)
