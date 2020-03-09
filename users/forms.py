@@ -24,9 +24,12 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ('username', 'email', 'first_name', 'middle_name', 'last_name', 'id_number','isStudent')
 
 class CustomUserChangeForm(UserChangeForm):
-    class Meta:
-        model = CustomUser
-        fields = ('email', 'first_name', 'middle_name', 'last_name', 'id_number')
+	class Meta:
+		model = CustomUser
+		fields = ('email', 'first_name', 'middle_name', 'last_name', 'id_number')
+	def __init__(self, *args, **kwargs):
+		super(CustomUserChangeForm, self).__init__(*args, **kwargs)
+		self.fields['id_number'].widget = forms.HiddenInput()
 
 class CourseForm(forms.ModelForm):
 	start_date = forms.DateField(label='What is the course start date?', widget=forms.SelectDateWidget(years=range(2019,2027)))
