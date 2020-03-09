@@ -4,10 +4,12 @@
 <script>
     $(document).ready(function(){ 
 	    document.getElementById("home").classList.remove("active");
-	    document.getElementById("navs1").classList.remove("active");
 	    document.getElementById("navt1").classList.remove("active");
 	    document.getElementById("navt2").classList.remove("active");
 	    document.getElementById("navt3").classList.remove("active");
+  		{% if messages %}
+        $("#deleteModal").modal('show');
+		{% endif %}
   	});
 </script>
 {% endblock %}

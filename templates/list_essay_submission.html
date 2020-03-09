@@ -2,6 +2,9 @@
 {% block style %}
 <script>
     $(document).ready(function(){ 
+        {% if messages %}
+        $("#deleteModal").modal('show');
+{% endif %}
       document.getElementById("home").classList.remove("active");
       document.getElementById("navs1").classList.add("active");
    });

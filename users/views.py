@@ -10,14 +10,26 @@ from django.db.models.query import QuerySet
 from django.db.models import Count
 import datetime
 import spacy
+from django.contrib import messages
 from spacy_wordnet.wordnet_annotator import WordnetAnnotator
 from spacy.lang.en.stop_words import STOP_WORDS 
 nlp = spacy.load('en_core_web_sm')
 nlp.add_pipe(WordnetAnnotator(nlp.lang), after='tagger')
 import grammar_check
 import re
+from django.contrib.auth.views import PasswordChangeView
 
 # Create your views here.
+
+class CustomPasswordChangeView(PasswordChangeView):
+    # Optional (default: 'registration/password_change_form.html')
+    template_name = 'password_change.html'
+    # Optional (default: `reverse_lazy('password_change_done')`)
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        messages.success(request, 'Your password has been changed.')
+        return super().form_valid(form)
 
 class SignUpView(CreateView):
     form_class = CustomUserCreationForm
@@ -38,6 +50,7 @@ def add_course(request):
                 assignment_x = Assignment(course=c,teacher=t)
                 assignment_x.save()
                 """
+                messages.success(request, 'The course has been added successfully!')
                 return HttpResponseRedirect(reverse_lazy('view-courses'))
         else:
             context = {
@@ -51,6 +64,7 @@ def delete_course(request, course_id):
     if request.user.is_authenticated:  
         course = Course.objects.get(id=int(course_id))
         course.delete()
+        messages.success(request, 'The course has been deleted successfully!')
         return HttpResponseRedirect(reverse_lazy('view-courses'))
     else:
         return HttpResponseRedirect(reverse_lazy('index'))
@@ -64,6 +78,7 @@ def update_course(request, course_id):
             form = CourseForm(request.POST, instance=course)
             if form.is_valid():
                 form.save()
+                messages.success(request, 'The course has been updated successfully!')
                 context = {
                     'course_form': CourseForm(instance=course,initial={'teacher': user_id}),
                 }
@@ -102,6 +117,7 @@ def add_essay(request):
             form = EssayForm(user_id,request.POST)
             if form.is_valid():
                 form.save()
+                messages.success(request, 'The essay has been added successfully!')
                 return HttpResponseRedirect(reverse_lazy('view-essays'))
         else:
             context = {
@@ -127,6 +143,7 @@ def delete_essay(request, essay_id):
     if request.user.is_authenticated:  
         essay = Essay.objects.get(id=int(essay_id))
         essay.delete()
+        messages.success(request, 'The essay has been deleted successfully!')
         return HttpResponseRedirect(reverse_lazy('view-essays'))
     else:
         return HttpResponseRedirect(reverse_lazy('index'))
@@ -140,6 +157,7 @@ def update_essay(request, essay_id):
             form = EssayForm(user_id,request.POST, instance=essay)
             if form.is_valid():
                 form.save()
+                messages.success(request, 'The essay has been updated successfully!')
                 #return HttpResponseRedirect(reverse_lazy('view-essays'))
                 context = {
                     'essay_form': EssayForm(user_id,instance=essay),
@@ -181,6 +199,7 @@ def add_essay_submission(request,essay_id):
                 instance.grammar_score = grade_for_grammar(form['content'].value())["score"]
                 print("This is the content score 2: " + str(instance.content_score))
                 instance.save()
+                messages.success(request, 'The essay has been submitted successfully!')
                 return HttpResponseRedirect(reverse_lazy('view-essay-submissions'))
         else:
             context = {
@@ -233,6 +252,7 @@ def delete_essay_submission(request, essay_submission_id):
     if request.user.is_authenticated:  
         essay_submission = EssaySubmission.objects.get(id=int(essay_submission_id))
         essay_submission.delete()
+        messages.success(request, 'The essay submission has been deleted successfully!')
         return HttpResponseRedirect(reverse_lazy('view-essay-submissions'))
     else:
         return HttpResponseRedirect(reverse_lazy('index'))
@@ -245,6 +265,7 @@ def update_essay_submission(request, essay_submission_id):
             form = EssaySubmissionForm(request.POST, instance=essay_submission)
             if form.is_valid():
                 form.save()
+                messages.success(request, 'The essay submission has been updated successfully!')
                 #return HttpResponseRedirect(reverse_lazy('view-essay-submissions'))
                 context = {
                     'essay_submission_form': EssaySubmissionForm(instance=essay_submission),
@@ -303,6 +324,7 @@ def update_profile(request, user_id):
             if form.is_valid():
                 form.save()
                 #return HttpResponseRedirect(reverse_lazy('home'))
+                messages.success(request, 'The profile has been updated successfully!')
                 context = {
                     'update_profile_form': CustomUserChangeForm(instance=user),
                 }
@@ -351,6 +373,7 @@ def view_essay_submission_for_checking(request, essay_submission_id):
             form = CheckEssaySubmissionForm(request.POST, instance=essay_submission)
             if form.is_valid():
                 form.save()
+                messages.success(request, 'The essay has been checked successfully!')
                 return HttpResponseRedirect(reverse_lazy('view-essay-submissions-for-teacher'))
                 """
                 context = {

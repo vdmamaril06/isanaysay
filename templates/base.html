@@ -151,4 +151,23 @@ h1 span {
   <p style="margin-bottom:0px;">&nbsp;&nbsp;&nbsp;© iSanaysay 2019-2020</p>
     </div>
 </footer>
+
+
+{% for message in messages %}
+  <div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="text-align:center;">
+          <h4 class="modal-title" style="margin: auto;">{{ message }}</h4>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+{% endfor %}
 </html>

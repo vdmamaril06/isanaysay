@@ -2,17 +2,15 @@
 {% block style %}
 <script>
     $(document).ready(function(){ 
+    	  {% if messages %}
+        $("#deleteModal").modal('show');
+{% endif %}
 	    document.getElementById("home").classList.remove("active");
 	    document.getElementById("navt1").classList.add("active");
 	    document.getElementById("navt2").classList.remove("active");
 	    document.getElementById("navt3").classList.remove("active");
   	});
 </script>
-<style>
-	ul{
-		list-style-type: none;
-	}
-</style>
 {% endblock %}
 {% block title %}Update Courses{% endblock %}
 {% block content %}

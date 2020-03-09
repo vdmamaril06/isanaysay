@@ -4,6 +4,9 @@
 {% block style %}
 <script>
     $(document).ready(function(){ 
+      {% if messages %}
+        $("#deleteModal").modal('show');
+      {% endif %}
       document.getElementById("home").classList.add("active");
       document.getElementById("navs1").classList.remove("active");
       document.getElementById("navt1").classList.remove("active");
