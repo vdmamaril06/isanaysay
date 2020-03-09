@@ -110,6 +110,7 @@ h1 span {
       {% endif %}
     </ul>
   </div>
+  <span style="color:white;">Hello, {{user.first_name}}!</span>
         <a class="nav-link" href="{% url 'password-change' %}"><img style="height:37px;" src="{% static 'change_password.png' %}" alt="Change Password"></a>
         <a class="nav-link" href="{% url 'update-profile' user.id %}"><img style="height:30px;" src="{% static 'profile.png' %}" alt="Update Profile"></a>
         <a class="nav-link" href="{% url 'logout' %}"><img style="height:30px;" src="{% static 'logout.png' %}" alt="Logout"></a>

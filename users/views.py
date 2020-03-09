@@ -305,12 +305,10 @@ def update_profile(request, user_id):
                 #return HttpResponseRedirect(reverse_lazy('home'))
                 context = {
                     'update_profile_form': CustomUserChangeForm(instance=user),
-                    'user': user,
                 }
         else:
             context = {
                 'update_profile_form': CustomUserChangeForm(instance=user),
-                'user': user,
             }
         return render(request, template, context)
     else:
